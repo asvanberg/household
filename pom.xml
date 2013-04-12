@@ -38,10 +38,12 @@
         <slf4j.version>1.7.3</slf4j.version>
         <hibernate.version>4.2.0.Final</hibernate.version>
         <hsqldb.version>2.2.9</hsqldb.version>
+        <mockito.version>1.9.5</mockito.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
+            <!-- Spring -->
             <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-core</artifactId>
@@ -83,6 +85,8 @@
                 <version>${spring.version}</version>
                 <scope>test</scope>
             </dependency>
+
+            <!-- Database -->
             <dependency>
                 <groupId>org.hibernate</groupId>
                 <artifactId>hibernate-entitymanager</artifactId>
@@ -94,6 +98,8 @@
                 <version>${hsqldb.version}</version>
                 <scope>runtime</scope>
             </dependency>
+
+            <!-- Testing -->
             <dependency>
                 <groupId>junit</groupId>
                 <artifactId>junit</artifactId>
@@ -101,10 +107,13 @@
                 <scope>test</scope>
             </dependency>
             <dependency>
-                <groupId>javax.inject</groupId>
-                <artifactId>javax.inject</artifactId>
-                <version>1</version>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-core</artifactId>
+                <version>${mockito.version}</version>
+                <scope>test</scope>
             </dependency>
+
+            <!-- Logging -->
             <dependency>
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-log4j12</artifactId>
@@ -120,6 +129,13 @@
                 <artifactId>jcl-over-slf4j</artifactId>
                 <version>${slf4j.version}</version>
             </dependency>
+
+            <!-- Other -->
+            <dependency>
+                <groupId>javax.inject</groupId>
+                <artifactId>javax.inject</artifactId>
+                <version>1</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -127,6 +143,11 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>
