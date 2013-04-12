@@ -7,6 +7,9 @@
     <artifactId>core</artifactId>
     <packaging>jar</packaging>
 
+    <name>core</name>
+    <description>Core classes for the Household application</description>
+
     <parent>
         <groupId>com.svanberg</groupId>
         <artifactId>household</artifactId>
