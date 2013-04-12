@@ -1,5 +1,6 @@
 package com.svanberg.household.service.impl;
 
+import com.svanberg.household.domain.Expense;
 import com.svanberg.household.repository.ExpenseRepository;
 import com.svanberg.household.service.ExpenseService;
 
@@ -20,6 +21,7 @@ public class ExpenseServiceImpl implements ExpenseService {
 
     @Override
     public void addExpense(Date date, String description, int cost) {
-        throw new UnsupportedOperationException("ExpenseServiceImpl#addExpense not yet implemented");
+        Expense expense = new Expense(date, description, cost);
+        repository.save(expense);
     }
 }
