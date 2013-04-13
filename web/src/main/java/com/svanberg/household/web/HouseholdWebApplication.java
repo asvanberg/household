@@ -1,19 +1,19 @@
 package com.svanberg.household.web;
 
+import com.svanberg.household.web.expense.ExpensePage;
+
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.spring.injection.annot.SpringComponentInjector;
-import org.springframework.stereotype.Component;
 
 /**
  * @author Andreas Svanberg (andreass) <andreas.svanberg@mensa.se>
  */
-@Component
 public class HouseholdWebApplication extends WebApplication {
     
     @Override
     public Class<? extends WebPage> getHomePage() {
-        return WebPage.class;
+        return ExpensePage.class;
     }
 
     @Override

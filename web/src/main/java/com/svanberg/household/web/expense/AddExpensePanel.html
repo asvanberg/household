@@ -5,7 +5,12 @@
 </head>
 <body>
 <wicket:panel>
-    <form wicket:id="form"></form>
+    <form wicket:id="form" method="get">
+        <input wicket:id="date" type="date" />
+        <input wicket:id="cost" type="number" />
+        <textarea wicket:id="description"></textarea>
+        <input type="submit" />
+    </form>
 </wicket:panel>
 </body>
 </html>
