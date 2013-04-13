@@ -13,5 +13,6 @@ public class ExpensePage extends WebPage {
         super(parameters);
 
         add(new AddExpensePanel("add"));
+        add(new ViewExpensesPanel("list"));
     }
 }
