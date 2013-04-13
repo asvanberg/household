@@ -36,6 +36,9 @@ public class DataProviderPage implements Pageable {
 
     @Override
     public Sort getSort() {
+        if (sort == null)
+            return null;
+
         return new Sort(
                 sort.isAscending() ? Sort.Direction.ASC : Sort.Direction.DESC,
                 sort.getProperty().toString());
