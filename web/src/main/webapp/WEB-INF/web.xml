@@ -9,8 +9,8 @@
         <filter-name>wicket</filter-name>
         <filter-class>org.apache.wicket.protocol.http.WicketFilter</filter-class>
         <init-param>
-            <param-name>applicationFactoryClassName</param-name>
-            <param-value>org.apache.wicket.spring.SpringWebApplicationFactory</param-value>
+            <param-name>applicationClassName</param-name>
+            <param-value>com.svanberg.household.web.HouseholdWebApplication</param-value>
         </init-param>
         <init-param>
             <param-name>configuration</param-name>
