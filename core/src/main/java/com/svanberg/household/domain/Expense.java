@@ -1,6 +1,7 @@
 package com.svanberg.household.domain;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -8,7 +9,8 @@ import java.util.Date;
  * @since 0.1.0
  */
 @Entity
-public class Expense {
+public class Expense implements Serializable {
+    private static final long serialVersionUID = 1862924711491808953L;
 
     @Id
     @GeneratedValue
