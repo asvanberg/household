@@ -55,7 +55,7 @@ public class DatabaseConfiguration {
         return factory.getObject();
     }
 
-    @Bean
+    @Bean(name = "transactionManager")
     public PlatformTransactionManager txManager() {
         return new JpaTransactionManager(entityManagerFactory());
     }
