@@ -13,7 +13,7 @@ public class HouseholdWebApplication extends WebApplication {
     
     @Override
     public Class<? extends WebPage> getHomePage() {
-        throw new UnsupportedOperationException("Still in development");
+        return WebPage.class;
     }
 
     @Override

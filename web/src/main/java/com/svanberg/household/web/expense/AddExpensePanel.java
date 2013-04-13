@@ -1,5 +1,6 @@
 package com.svanberg.household.web.expense;
 
+import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.panel.Panel;
 
 /**
@@ -10,5 +11,9 @@ public class AddExpensePanel extends Panel {
 
     public AddExpensePanel(String id) {
         super(id);
+
+        add(new Form<Void>(FORM));
     }
+
+    static final String FORM = "form";
 }

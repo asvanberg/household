@@ -2,6 +2,7 @@ package com.svanberg.household.web.expense;
 
 import com.svanberg.household.web.test.WebUnitTest;
 
+import org.apache.wicket.markup.html.form.Form;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,11 +20,16 @@ public class AddExpensePanelTest extends WebUnitTest {
 
     @Before
     public void setUp() throws Exception {
-        panel = (AddExpensePanel) tester.startComponent(new AddExpensePanel("panel"));
+        panel = tester.startComponentInPage(AddExpensePanel.class);
     }
 
     @Test
     public void testRenders() throws Exception {
         assertNotNull("Panel does not render", panel);
+    }
+
+    @Test
+    public void testContainsForm() throws Exception {
+        tester.assertComponent(AddExpensePanel.FORM, Form.class);
     }
 }
