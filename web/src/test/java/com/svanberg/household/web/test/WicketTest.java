@@ -17,7 +17,7 @@ import java.lang.reflect.Field;
  * @author Andreas Svanberg (andreass) <andreas.svanberg@mensa.se>
  */
 @RunWith(MockitoJUnitRunner.class)
-public abstract class WebUnitTest {
+public abstract class WicketTest {
 
     protected WicketTester tester;
     protected ApplicationContextMock ctx = new ApplicationContextMock();
