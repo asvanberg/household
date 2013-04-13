@@ -4,6 +4,8 @@ import com.svanberg.household.domain.Expense;
 import com.svanberg.household.repository.ExpenseRepository;
 import com.svanberg.household.service.ExpenseService;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,5 +31,15 @@ public class ExpenseServiceImpl implements ExpenseService {
     public void addExpense(Date date, String description, int cost) {
         Expense expense = new Expense(date, description, cost);
         repository.save(expense);
+    }
+
+    @Override
+    public Page<Expense> findAll(final Pageable pageable) {
+        return repository.findAll(pageable);
+    }
+
+    @Override
+    public long count() {
+        return repository.count();
     }
 }
