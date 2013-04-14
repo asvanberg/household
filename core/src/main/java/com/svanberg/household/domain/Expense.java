@@ -9,8 +9,7 @@ import java.util.Date;
  * @since 0.1.0
  */
 @Entity
-public class Expense implements Serializable {
-    private static final long serialVersionUID = 1862924711491808953L;
+public class Expense extends DomainObject {
 
     @Id
     @GeneratedValue
@@ -35,12 +34,9 @@ public class Expense implements Serializable {
         this.cost = cost;
     }
 
-    public long getId() {
+    @Override
+    public Serializable getIdentifier() {
         return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
     public Date getDate() {
