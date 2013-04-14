@@ -3,6 +3,7 @@ package com.svanberg.household.web.expense;
 import com.svanberg.household.domain.Expense;
 import com.svanberg.household.service.ExpenseService;
 import com.svanberg.household.web.spring.DataProviderPage;
+import com.svanberg.household.web.wicket.EntityModel;
 
 import org.apache.wicket.extensions.markup.html.repeater.data.table.DefaultDataTable;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
@@ -11,7 +12,6 @@ import org.apache.wicket.extensions.markup.html.repeater.data.table.export.Abstr
 import org.apache.wicket.extensions.markup.html.repeater.util.SortableDataProvider;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.Model;
 import org.apache.wicket.model.ResourceModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
@@ -55,7 +55,7 @@ public class ViewExpensesPanel extends Panel {
 
             @Override
             public IModel<Expense> model(final Expense object) {
-                return Model.of(object);
+                return new EntityModel<>(object);
             }
         };
     }
