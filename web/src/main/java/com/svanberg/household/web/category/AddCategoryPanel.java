@@ -1,5 +1,8 @@
 package com.svanberg.household.web.category;
 
+import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.form.TextArea;
+import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.panel.Panel;
 
 /**
@@ -10,5 +13,15 @@ public class AddCategoryPanel extends Panel {
 
     public AddCategoryPanel(final String id) {
         super(id);
+
+        Form<Void> form = new Form<>(FORM);
+        add(form);
+
+        form.add(new TextField<>(NAME));
+        form.add(new TextArea<>(DESCRIPTION));
     }
+
+    static final String FORM = "form";
+    static final String NAME = "name";
+    static final String DESCRIPTION = "description";
 }
