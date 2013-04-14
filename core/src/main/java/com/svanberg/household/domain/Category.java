@@ -25,6 +25,11 @@ public class Category extends DomainObject {
     public Category() {
     }
 
+    public Category(final String name, final String description) {
+        this.name = name;
+        this.description = description;
+    }
+
     @Override
     public Serializable getIdentifier() {
         return id;
