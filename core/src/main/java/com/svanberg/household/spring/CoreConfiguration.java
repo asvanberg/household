@@ -2,12 +2,14 @@ package com.svanberg.household.spring;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.dao.support.PersistenceExceptionTranslator;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.jndi.JndiObjectFactoryBean;
 import org.springframework.orm.hibernate4.HibernateExceptionTranslator;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
@@ -24,13 +26,14 @@ import javax.sql.DataSource;
 @Configuration
 @EnableJpaRepositories("com.svanberg.household.repository")
 @EnableTransactionManagement
+@ComponentScan("com.svanberg.household")
 @PropertySource("classpath:database.properties")
-public class DatabaseConfiguration {
+public class CoreConfiguration {
 
     @Value("${database.url}")       String url;
-    @Value("${database.username}")   String username;
-    @Value("${database.password}")   String password;
-    @Value("${database.driver}")     String driver;
+    @Value("${database.username}")  String username;
+    @Value("${database.password}")  String password;
+    @Value("${database.driver}")    String driver;
 
     @Bean
     public DataSource dataSource() {
@@ -39,16 +42,25 @@ public class DatabaseConfiguration {
         return dataSource;
     }
 
+    @Bean
+    public JndiObjectFactoryBean jndiDataSource() throws Exception {
+        JndiObjectFactoryBean jndi = new JndiObjectFactoryBean();
+        jndi.setJndiName("java:comp/env/jdbc/household");
+        jndi.setDefaultObject(dataSource());
+        jndi.afterPropertiesSet();
+        return jndi;
+    }
+
     // Spring fails to load the application context if this is not the exact name of the bean
     @Bean(name = "entityManagerFactory")
-    public EntityManagerFactory entityManagerFactory() {
+    public EntityManagerFactory entityManagerFactory() throws Exception {
         HibernateJpaVendorAdapter adapter = new HibernateJpaVendorAdapter();
         adapter.setGenerateDdl(true);
         adapter.setShowSql(true);
 
         LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
         factory.setJpaVendorAdapter(adapter);
-        factory.setDataSource(dataSource());
+        factory.setDataSource( (DataSource) jndiDataSource().getObject());
         factory.setPackagesToScan("com.svanberg.household.domain");
         factory.afterPropertiesSet();
 
@@ -56,7 +68,7 @@ public class DatabaseConfiguration {
     }
 
     @Bean(name = "transactionManager")
-    public PlatformTransactionManager txManager() {
+    public PlatformTransactionManager txManager() throws Exception {
         return new JpaTransactionManager(entityManagerFactory());
     }
 

@@ -14,8 +14,8 @@ import static org.junit.Assert.assertNotNull;
  * @author Andreas Svanberg (andreass) <andreas.svanberg@mensa.se>
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = DatabaseConfiguration.class)
-public class DatabaseConfigurationTest {
+@ContextConfiguration(classes = CoreConfiguration.class)
+public class CoreConfigurationTest {
 
     @Inject
     EntityManagerFactory entityManagerFactory;
