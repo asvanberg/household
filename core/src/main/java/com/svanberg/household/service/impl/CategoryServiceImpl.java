@@ -7,6 +7,7 @@ import com.svanberg.household.service.CategoryService;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
+import java.util.List;
 
 /**
  * @author Andreas Svanberg (andreass) <andreas.svanberg@mensa.se>
@@ -19,6 +20,11 @@ public class CategoryServiceImpl implements CategoryService {
     @Inject
     public CategoryServiceImpl(final CategoryRepository repository) {
         this.repository = repository;
+    }
+
+    @Override
+    public List<Category> findAll() {
+        return repository.findAll();
     }
 
     @Override
