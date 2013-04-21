@@ -25,7 +25,7 @@ import static org.mockito.Mockito.when;
  * @author Andreas Svanberg (andreass) <andreas.svanberg@mensa.se>
  */
 @RunWith(MockitoJUnitRunner.class)
-public class ExpenseServiceTest {
+public class ExpenseServiceImplTest {
 
     @Mock ExpenseRepository repository;
 
