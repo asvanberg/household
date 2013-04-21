@@ -24,6 +24,9 @@ public class Expense extends DomainObject {
     @Basic
     private int cost;
 
+    @ManyToOne
+    private Category category;
+
     public Expense() {
 
     }
@@ -61,5 +64,13 @@ public class Expense extends DomainObject {
 
     public void setCost(int cost) {
         this.cost = cost;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(final Category category) {
+        this.category = category;
     }
 }

@@ -1,10 +1,8 @@
 package com.svanberg.household.domain;
 
-import javax.persistence.Basic;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Collection;
 
 /**
  * @author Andreas Svanberg (andreass) <andreas.svanberg@mensa.se>
@@ -21,6 +19,9 @@ public class Category extends DomainObject {
 
     @Basic
     private String description;
+
+    @OneToMany(mappedBy = "category")
+    private Collection<Expense> expenses;
 
     public Category() {
     }
@@ -49,5 +50,13 @@ public class Category extends DomainObject {
 
     public void setDescription(final String description) {
         this.description = description;
+    }
+
+    public Collection<Expense> getExpenses() {
+        return expenses;
+    }
+
+    public void setExpenses(final Collection<Expense> expenses) {
+        this.expenses = expenses;
     }
 }
