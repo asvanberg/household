@@ -1,5 +1,6 @@
 package com.svanberg.household.service.impl;
 
+import com.svanberg.household.domain.Category;
 import com.svanberg.household.domain.Expense;
 import com.svanberg.household.repository.ExpenseRepository;
 import com.svanberg.household.service.ExpenseService;
@@ -62,5 +63,30 @@ public class ExpenseServiceImplTest {
         assertEquals("Saves wrong date", date, expense.getDate());
         assertEquals("Saves wrong message", description, expense.getDescription());
         assertEquals("Saves wrong cost", cost, expense.getCost());
+    }
+
+    @Test
+    public void testSetCategory() throws Exception {
+        // given
+        Category category = new Category();
+        Expense expense = new Expense();
+
+        when(repository.save(isA(Expense.class))).then(new Answer<Object>() {
+            @Override
+            public Object answer(final InvocationOnMock invocation) throws Throwable {
+                return invocation.getArguments()[0];
+            }
+        });
+
+        // when
+        Expense returnedExpense = service.setCategory(expense, category);
+
+        // then
+        ArgumentCaptor<Expense> captor = ArgumentCaptor.forClass(Expense.class);
+        verify(repository, times(1)).save(captor.capture());
+
+        Expense savedExpense = captor.getValue();
+        assertEquals("Does not update category", category, savedExpense.getCategory());
+        assertEquals("Does not return persisted expense", savedExpense, returnedExpense);
     }
 }

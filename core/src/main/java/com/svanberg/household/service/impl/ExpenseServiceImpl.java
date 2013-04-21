@@ -1,5 +1,6 @@
 package com.svanberg.household.service.impl;
 
+import com.svanberg.household.domain.Category;
 import com.svanberg.household.domain.Expense;
 import com.svanberg.household.repository.ExpenseRepository;
 import com.svanberg.household.service.ExpenseService;
@@ -41,5 +42,11 @@ public class ExpenseServiceImpl implements ExpenseService {
     @Override
     public long count() {
         return repository.count();
+    }
+
+    @Override
+    public Expense setCategory(final Expense expense, final Category category) {
+        expense.setCategory(category);
+        return repository.save(expense);
     }
 }
