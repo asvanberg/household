@@ -1,5 +1,9 @@
 package com.svanberg.household.web.expense;
 
+import com.svanberg.household.domain.Category;
+import com.svanberg.household.domain.Expense;
+import com.svanberg.household.service.CategoryService;
+import com.svanberg.household.service.DomainObjectService;
 import com.svanberg.household.service.ExpenseService;
 import com.svanberg.household.web.test.WicketTest;
 
@@ -14,15 +18,15 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 
 import java.text.DateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
+import java.util.*;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Matchers.eq;
+import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 /**
  * @author Andreas Svanberg (andreass) <andreas.svanberg@mensa.se>
@@ -32,6 +36,8 @@ public class AddExpensePanelTest extends WicketTest {
     private static final Locale locale = Locale.UK;
 
     @Mock ExpenseService service;
+    @Mock CategoryService categories;
+    @Mock DomainObjectService domainObjectService;
 
     AddExpensePanel panel;
 
@@ -67,7 +73,7 @@ public class AddExpensePanelTest extends WicketTest {
 
         // when
         FormTester formTester = tester.newFormTester(AddExpensePanel.FORM);
-        formTester.setValue(AddExpensePanel.DATE, DateFormat.getDateInstance(DateFormat.SHORT, locale).format(date));
+        formTester.setValue(AddExpensePanel.DATE, convertDate(date));
         formTester.setValue(AddExpensePanel.COST, String.valueOf(cost));
         formTester.setValue(AddExpensePanel.DESCRIPTION, description);
         formTester.submit();
@@ -79,6 +85,42 @@ public class AddExpensePanelTest extends WicketTest {
         verify(service, times(1)).create(captor.capture(), eq(description), eq(cost));
 
         assertSameDate(date, captor.getValue());
+    }
+
+    @Test
+    public void testSetCategory() throws Exception {
+        // given
+        Date date = new Date();
+        int cost = 345;
+        String description = "Foo";
+        int categoryIndex = 0;
+
+        Category c1 = new Category("Food", "Desc");
+        Category c2 = new Category("Utility", "Desc");
+        Category c3 = new Category("Entertainment", "Desc");
+        List<Category> list = Arrays.asList(c1, c2, c3);
+
+        when(categories.findAll()).thenReturn(list);
+        when(service.create(isA(Date.class), isA(String.class), isA(Integer.class))).thenReturn(new Expense());
+
+        // when
+        setUp();
+        FormTester formTester = tester.newFormTester(AddExpensePanel.FORM);
+        formTester.setValue(AddExpensePanel.DATE, convertDate(date));
+        formTester.setValue(AddExpensePanel.COST, String.valueOf(cost));
+        formTester.setValue(AddExpensePanel.DESCRIPTION, description);
+        formTester.select(AddExpensePanel.CATEGORY, categoryIndex);
+        formTester.submit();
+
+        //then
+        ArgumentCaptor<Category> captor = ArgumentCaptor.forClass(Category.class);
+        verify(service, times(1)).setCategory(isA(Expense.class), captor.capture());
+
+        assertEquals("Sets wrong category", list.get(categoryIndex), captor.getValue());
+    }
+
+    private String convertDate(final Date date) {
+        return DateFormat.getDateInstance(DateFormat.SHORT, locale).format(date);
     }
 
     public static void assertSameDate(Date d1, Date d2) {
