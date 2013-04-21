@@ -1,5 +1,6 @@
 package com.svanberg.household.web.expense;
 
+import com.svanberg.household.service.CategoryService;
 import com.svanberg.household.service.ExpenseService;
 import com.svanberg.household.web.test.WicketTest;
 
@@ -15,6 +16,7 @@ import static org.junit.Assert.assertNotNull;
 public class ExpensePageTest extends WicketTest {
 
     @Mock ExpenseService expenseService;
+    @Mock CategoryService categoryService;
 
     private ExpensePage page;
 
