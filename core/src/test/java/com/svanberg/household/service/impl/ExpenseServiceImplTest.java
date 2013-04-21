@@ -118,4 +118,18 @@ public class ExpenseServiceImplTest {
         // then
         fail("Should get exception");
     }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testFailsIfDescriptionEmpty() throws Exception {
+        // given
+        Date date = new Date();
+        String description = "";
+        int cost = 10;
+
+        // when
+        service.create(date, description, cost);
+
+        // then
+        fail("Should get IllegalArgumentException");
+    }
 }

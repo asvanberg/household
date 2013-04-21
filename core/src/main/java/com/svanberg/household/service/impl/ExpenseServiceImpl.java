@@ -34,6 +34,10 @@ public class ExpenseServiceImpl implements ExpenseService {
         date = Objects.requireNonNull(date, "Date must not be null");
         description = Objects.requireNonNull(description, "Description must not be null");
 
+        if (description.isEmpty()) {
+            throw new IllegalArgumentException("Description must not be empty");
+        }
+
         Expense expense = new Expense(date, description, cost);
         return repository.save(expense);
     }
