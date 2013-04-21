@@ -132,4 +132,18 @@ public class ExpenseServiceImplTest {
         // then
         fail("Should get IllegalArgumentException");
     }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testFailsIfCostLessThanOne() throws Exception {
+        // given
+        Date date = new Date();
+        String description = "Description";
+        int cost = 0;
+
+        // when
+        service.create(date, description, cost);
+
+        // then
+        fail("Should get IllegalArgumentException");
+    }
 }

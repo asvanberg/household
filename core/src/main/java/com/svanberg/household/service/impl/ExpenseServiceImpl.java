@@ -38,6 +38,10 @@ public class ExpenseServiceImpl implements ExpenseService {
             throw new IllegalArgumentException("Description must not be empty");
         }
 
+        if (cost <= 0) {
+            throw new IllegalArgumentException("Cost must be greater than zero");
+        }
+
         Expense expense = new Expense(date, description, cost);
         return repository.save(expense);
     }
