@@ -16,9 +16,6 @@
         <version>0.1.0-SNAPSHOT</version>
     </parent>
 
-    <properties>
-
-    </properties>
     <dependencies>
         <dependency>
             <groupId>com.svanberg</groupId>
@@ -41,7 +38,10 @@
         <dependency>
             <groupId>org.wicketeer</groupId>
             <artifactId>wicket-modelfactory</artifactId>
-            <version>0.6</version>
+        </dependency>
+        <dependency>
+            <groupId>de.agilecoders.wicket</groupId>
+            <artifactId>wicket-bootstrap-extensions</artifactId>
         </dependency>
 
         <!-- Spring -->
