@@ -21,6 +21,10 @@ public class EntityModel<T extends DomainObject> implements IModel<T> {
     private Serializable identifier;
     private transient T entity;
 
+    public EntityModel(Class<T> clazz) {
+        this.clazz = clazz;
+    }
+
     @SuppressWarnings("unchecked")
     public EntityModel(T entity) {
         this.clazz = (Class<T>) entity.getClass();
