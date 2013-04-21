@@ -20,6 +20,7 @@ public class EntityModel<T extends DomainObject> implements IModel<T> {
     private final Class<T> clazz;
     private Serializable identifier;
     private transient T entity;
+    private transient boolean attached = false;
 
     public EntityModel(Class<T> clazz) {
         this.clazz = clazz;
@@ -54,7 +55,13 @@ public class EntityModel<T extends DomainObject> implements IModel<T> {
     }
 
     private void load() {
-        Injector.get().inject(this);
-        entity = domainService.find(clazz, identifier);
+        if (!attached) {
+            attached = true;
+
+            if (identifier != null) {
+                Injector.get().inject(this);
+                entity = domainService.find(clazz, identifier);
+            }
+        }
     }
 }
