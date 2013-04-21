@@ -89,4 +89,18 @@ public class ExpenseServiceImplTest {
         assertEquals("Does not update category", category, savedExpense.getCategory());
         assertEquals("Does not return persisted expense", savedExpense, returnedExpense);
     }
+
+    @Test(expected = NullPointerException.class)
+    public void testFailsIfDateNull() throws Exception {
+        // given
+        Date date = null;
+        String description = "Desc";
+        int cost = 10;
+
+        // when
+        service.create(date, description, cost);
+
+        // then
+        // exception
+    }
 }

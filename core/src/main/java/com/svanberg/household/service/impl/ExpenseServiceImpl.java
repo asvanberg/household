@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * @author Andreas Svanberg (andreass) <andreas.svanberg@mensa.se>
@@ -30,6 +31,8 @@ public class ExpenseServiceImpl implements ExpenseService {
     @Override
     @Transactional(readOnly = false)
     public Expense create(Date date, String description, int cost) {
+        date = Objects.requireNonNull(date, "Date must not be null");
+
         Expense expense = new Expense(date, description, cost);
         return repository.save(expense);
     }
