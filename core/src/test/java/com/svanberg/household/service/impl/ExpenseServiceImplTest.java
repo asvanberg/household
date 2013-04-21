@@ -17,6 +17,7 @@ import org.mockito.stubbing.Answer;
 import java.util.Date;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -101,6 +102,20 @@ public class ExpenseServiceImplTest {
         service.create(date, description, cost);
 
         // then
-        // exception
+        fail("Should get exception");
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void testFailsIfDescriptionNull() throws Exception {
+        // given
+        Date date = new Date();
+        String description = null;
+        int cost = 10;
+
+        // when
+        service.create(date, description, cost);
+
+        // then
+        fail("Should get exception");
     }
 }

@@ -32,6 +32,7 @@ public class ExpenseServiceImpl implements ExpenseService {
     @Transactional(readOnly = false)
     public Expense create(Date date, String description, int cost) {
         date = Objects.requireNonNull(date, "Date must not be null");
+        description = Objects.requireNonNull(description, "Description must not be null");
 
         Expense expense = new Expense(date, description, cost);
         return repository.save(expense);
