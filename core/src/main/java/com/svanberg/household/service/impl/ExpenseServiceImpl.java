@@ -45,6 +45,7 @@ public class ExpenseServiceImpl implements ExpenseService {
     }
 
     @Override
+    @Transactional(readOnly = false)
     public Expense setCategory(final Expense expense, final Category category) {
         expense.setCategory(category);
         return repository.save(expense);
