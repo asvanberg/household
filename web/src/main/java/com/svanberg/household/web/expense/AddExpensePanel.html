@@ -5,14 +5,25 @@
 </head>
 <body>
 <wicket:panel>
-    <form wicket:id="form" method="get">
-        <input wicket:id="date" type="date" />
-        <input wicket:id="cost" type="number" />
-        <textarea wicket:id="description"></textarea>
-        <select wicket:id="category">
+    <form wicket:id="form" method="post">
+        <label>
+            <wicket:message key="date" /><br />
+            <input wicket:id="date" type="date" />
+        </label>
+        <label>
+            <wicket:message key="cost" /><br />
+            <input wicket:id="cost" type="number" />
+        </label>
+        <label>
+            <wicket:message key="category" /><br />
+            <select wicket:id="category"></select>
+        </label>
+        <label>
+            <wicket:message key="description" /><br />
+            <textarea wicket:id="description"></textarea>
+        </label>
 
-        </select>
-        <input type="submit" />
+        <button type="submit" class=""><wicket:message key="create" /></button>
     </form>
 </wicket:panel>
 </body>
