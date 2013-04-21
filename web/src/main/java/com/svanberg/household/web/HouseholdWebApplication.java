@@ -22,12 +22,20 @@ public class HouseholdWebApplication extends WebApplication {
     public void init() {
         super.init();
 
+        mountPages();
+
+        // Hook up Bootstrap
         Bootstrap.install(get(), new BootstrapSettings());
 
+        // Hook up Spring
         getComponentInstantiationListeners().add(getInjector());
     }
 
     protected SpringComponentInjector getInjector() {
         return new SpringComponentInjector(this);
+    }
+
+    private void mountPages() {
+        mountPage("expenses", ExpensePage.class);
     }
 }
