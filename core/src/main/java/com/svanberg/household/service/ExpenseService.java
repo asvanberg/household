@@ -13,7 +13,7 @@ import java.util.Date;
  */
 public interface ExpenseService {
 
-    void addExpense(Date date, String description, int cost);
+    Expense create(Date date, String description, int cost);
     Page<Expense> findAll(Pageable pageable);
     long count();
 

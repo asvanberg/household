@@ -29,9 +29,9 @@ public class ExpenseServiceImpl implements ExpenseService {
 
     @Override
     @Transactional(readOnly = false)
-    public void addExpense(Date date, String description, int cost) {
+    public Expense create(Date date, String description, int cost) {
         Expense expense = new Expense(date, description, cost);
-        repository.save(expense);
+        return repository.save(expense);
     }
 
     @Override

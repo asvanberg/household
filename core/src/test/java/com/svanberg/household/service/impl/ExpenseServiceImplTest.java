@@ -52,7 +52,7 @@ public class ExpenseServiceImplTest {
         int cost = 42;
 
         // when
-        service.addExpense(date, description, cost);
+        service.create(date, description, cost);
 
         // then
         ArgumentCaptor<Expense> captor = ArgumentCaptor.forClass(Expense.class);

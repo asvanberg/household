@@ -30,7 +30,7 @@ public class AddExpensePanel extends Panel {
         Form<Void> form = new Form<Void>(FORM) {
             @Override
             protected void onSubmit() {
-                expenseService.addExpense(
+                expenseService.create(
                         date.getModelObject(),
                         description.getModelObject(),
                         cost.getModelObject());

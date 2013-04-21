@@ -76,7 +76,7 @@ public class AddExpensePanelTest extends WicketTest {
         tester.assertNoErrorMessage();
 
         ArgumentCaptor<Date> captor = ArgumentCaptor.forClass(Date.class);
-        verify(service, times(1)).addExpense(captor.capture(), eq(description), eq(cost));
+        verify(service, times(1)).create(captor.capture(), eq(description), eq(cost));
 
         assertSameDate(date, captor.getValue());
     }
