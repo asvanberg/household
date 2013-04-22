@@ -2,6 +2,7 @@ package com.svanberg.household.web.wicket.pages;
 
 import com.svanberg.household.web.expense.ExpensePage;
 
+import de.agilecoders.wicket.markup.html.bootstrap.behavior.BootstrapResourcesBehavior;
 import de.agilecoders.wicket.markup.html.bootstrap.navbar.ImmutableNavbarComponent;
 import de.agilecoders.wicket.markup.html.bootstrap.navbar.Navbar;
 import de.agilecoders.wicket.markup.html.bootstrap.navbar.NavbarButton;
@@ -21,6 +22,8 @@ public abstract class HouseholdPage extends WebPage {
         super(parameters);
 
         add(new Label("title", new StringResourceModel("page.title", this, getDefaultModel())));
+
+        add(BootstrapResourcesBehavior.instance());
 
         Navbar navbar = new Navbar("navbar");
         navbar.fluid();
