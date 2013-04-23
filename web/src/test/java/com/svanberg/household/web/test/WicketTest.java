@@ -3,6 +3,7 @@ package com.svanberg.household.web.test;
 import com.svanberg.household.web.HouseholdWebApplication;
 
 import org.apache.wicket.Component;
+import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.spring.injection.annot.SpringComponentInjector;
 import org.apache.wicket.spring.test.ApplicationContextMock;
 import org.apache.wicket.util.tester.WicketTester;
@@ -20,18 +21,31 @@ import java.lang.reflect.Field;
 public abstract class WicketTest {
 
     protected WicketTester tester;
-    protected ApplicationContextMock ctx = new ApplicationContextMock();
+    protected ApplicationContextMock ctx;
 
     @Before
-    public void setUpTester() throws Exception {
+    public final void init() throws Exception {
+        ctx = new ApplicationContextMock();
+
         populateContext();
 
-        tester = new WicketTester(new HouseholdWebApplication() {
+        tester = new BetterWicketTester(new HouseholdWebApplication() {
             @Override
             protected SpringComponentInjector getInjector() {
                 return new SpringComponentInjector(this, ctx);
             }
         });
+    }
+
+    private static class BetterWicketTester extends WicketTester {
+        private BetterWicketTester(final WebApplication application) {
+            super(application);
+        }
+
+        protected String createPageMarkup(final String componentId) {
+            return "<html><head></head><body><div wicket:id='" + componentId +
+                    "'></div></body></html>";
+        }
     }
 
     protected String path(Object... parts) {
