@@ -4,8 +4,10 @@
     <title>Add expense - Household</title>
 </head>
 <body>
-<wicket:panel>
+<wicket:extend>
     <form wicket:id="form" method="post">
+        <div wicket:id="feedback"></div>
+
         <label>
             <wicket:message key="date" /><br />
             <input wicket:id="date" type="date" />
@@ -22,9 +24,7 @@
             <wicket:message key="description" /><br />
             <textarea wicket:id="description"></textarea>
         </label>
-
-        <button type="submit" class=""><wicket:message key="create" /></button>
     </form>
-</wicket:panel>
+</wicket:extend>
 </body>
 </html>
