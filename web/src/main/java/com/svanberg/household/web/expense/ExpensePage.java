@@ -19,6 +19,6 @@ public class ExpensePage extends HouseholdPage {
         WebMarkupContainer wmc = new WebMarkupContainer("open");
         dialog.addOpenerAttributesTo(wmc);
         add(wmc);
-        add(new ViewExpensesPanel("list"));
+        add(new ViewExpensesPanel("list").setRenderBodyOnly(true));
     }
 }
