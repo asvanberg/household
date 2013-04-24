@@ -73,4 +73,8 @@ public class Expense extends DomainObject {
     public void setCategory(final Category category) {
         this.category = category;
     }
+
+    public String getCategoryName() {
+        return getCategory() != null ? getCategory().getName() : null;
+    }
 }

@@ -1,6 +1,5 @@
 package com.svanberg.household.web.expense;
 
-import com.svanberg.household.domain.Category;
 import com.svanberg.household.domain.Expense;
 import com.svanberg.household.service.ExpenseService;
 import com.svanberg.household.web.spring.DataProviderPage;
@@ -10,6 +9,7 @@ import de.agilecoders.wicket.markup.html.bootstrap.behavior.CssClassNameAppender
 import de.agilecoders.wicket.markup.html.bootstrap.navigation.BootstrapPagingNavigator;
 import de.agilecoders.wicket.markup.html.bootstrap.navigation.ajax.BootstrapAjaxPagingNavigator;
 import de.agilecoders.wicket.markup.html.bootstrap.table.TableBehavior;
+import org.apache.wicket.extensions.ajax.markup.html.repeater.data.table.AjaxFallbackHeadersToolbar;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.*;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.export.AbstractExportableColumn;
 import org.apache.wicket.extensions.markup.html.repeater.util.SortableDataProvider;
@@ -40,7 +40,7 @@ public class ViewExpensesPanel extends Panel {
         ISortableDataProvider<Expense, String> provider = getProvider();
 
         DataTable<Expense, String> table = new DataTable<>(TABLE, getColumns(), provider, getRowsPerPage());
-        table.addTopToolbar(new HeadersToolbar<>(table, provider));
+        table.addTopToolbar(new AjaxFallbackHeadersToolbar<>(table, provider));
         table.addBottomToolbar(new NoRecordsToolbar(table));
         table.add(new TableBehavior().hover().striped());
         add(table);
@@ -93,10 +93,10 @@ public class ViewExpensesPanel extends Panel {
                 return model(from(rowModel).getDescription());
             }
         });
-        columns.add(new AbstractExportableColumn<Expense, String, Category>(new ResourceModel("category"), "category") {
+        columns.add(new AbstractExportableColumn<Expense, String, String>(new ResourceModel("category"), "category") {
             @Override
-            public IModel<Category> getDataModel(IModel<Expense> rowModel) {
-                return model(from(rowModel).getCategory());
+            public IModel<String> getDataModel(IModel<Expense> rowModel) {
+                return model(from(rowModel).getCategoryName());
             }
         });
         columns.add(new AbstractExportableColumn<Expense, String, Integer>(new ResourceModel("cost"), "cost") {
