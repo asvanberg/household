@@ -87,7 +87,6 @@
                             <value>development</value>
                         </systemProperty>
                     </systemProperties>
-                    <scanIntervalSeconds>10</scanIntervalSeconds>
                     <stopPort>9743</stopPort>
                     <stopKey>diejetty</stopKey>
                 </configuration>
