@@ -4,11 +4,16 @@
     <title>Household</title>
 </head>
 <body>
-<wicket:panel>
+<wicket:border>
     <form wicket:id="form">
-        <input type="text" wicket:id="name" />
-        <textarea wicket:id="description"></textarea>
+        <div wicket:id="name_group">
+            <input type="text" wicket:id="name" />
+        </div>
+        <div wicket:id="desc_group">
+            <textarea wicket:id="description"></textarea>
+        </div>
+        <wicket:body />
     </form>
-</wicket:panel>
+</wicket:border>
 </body>
 </html>

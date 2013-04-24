@@ -42,8 +42,8 @@ public class AddCategoryPanelTest extends WicketTest {
 
     @Test
     public void testContainsInput() throws Exception {
-        tester().assertComponent(path(AddCategoryPanel.FORM, AddCategoryPanel.NAME), TextField.class);
-        tester().assertComponent(path(AddCategoryPanel.FORM, AddCategoryPanel.DESCRIPTION), TextArea.class);
+        tester().assertComponent(path(AddCategoryPanel.FORM, AddCategoryPanel.NAME_GROUP, AddCategoryPanel.NAME_GROUP + "_body", AddCategoryPanel.NAME), TextField.class);
+        tester().assertComponent(path(AddCategoryPanel.FORM, AddCategoryPanel.DESCRIPTION_GROUP, AddCategoryPanel.DESCRIPTION_GROUP + "_body", AddCategoryPanel.DESCRIPTION), TextArea.class);
     }
 
     @Test
@@ -54,8 +54,8 @@ public class AddCategoryPanelTest extends WicketTest {
 
         // when
         FormTester formTester = tester().newFormTester(AddCategoryPanel.FORM);
-        formTester.setValue(AddCategoryPanel.NAME, name);
-        formTester.setValue(AddCategoryPanel.DESCRIPTION, description);
+        formTester.setValue(path(AddCategoryPanel.NAME_GROUP, AddCategoryPanel.NAME_GROUP + "_body", AddCategoryPanel.NAME), name);
+        formTester.setValue(path(AddCategoryPanel.DESCRIPTION_GROUP, AddCategoryPanel.DESCRIPTION_GROUP + "_body", AddCategoryPanel.DESCRIPTION), description);
         formTester.submit();
 
         // then
