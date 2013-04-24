@@ -2,6 +2,7 @@ package com.svanberg.household.web.expense;
 
 import com.svanberg.household.web.wicket.pages.HouseholdPage;
 
+import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 /**
@@ -13,7 +14,11 @@ public class ExpensePage extends HouseholdPage {
     public ExpensePage(PageParameters parameters) {
         super(parameters);
 
-        add(new AddExpensePanel("add"));
+        AddExpensePanel dialog = new AddExpensePanel("dialog");
+        add(dialog);
+        WebMarkupContainer wmc = new WebMarkupContainer("open");
+        dialog.addOpenerAttributesTo(wmc);
+        add(wmc);
         add(new ViewExpensesPanel("list"));
     }
 }
