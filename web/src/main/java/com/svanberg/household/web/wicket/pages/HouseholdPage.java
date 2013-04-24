@@ -1,5 +1,6 @@
 package com.svanberg.household.web.wicket.pages;
 
+import com.svanberg.household.web.category.CategoryPage;
 import com.svanberg.household.web.expense.ExpensePage;
 
 import de.agilecoders.wicket.markup.html.bootstrap.behavior.BootstrapResourcesBehavior;
@@ -17,6 +18,7 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
  */
 public abstract class HouseholdPage extends WebPage {
     private static final long serialVersionUID = -3134919560093463628L;
+    private final Navbar navbar;
 
     protected HouseholdPage(final PageParameters parameters) {
         super(parameters);
@@ -25,12 +27,19 @@ public abstract class HouseholdPage extends WebPage {
 
         add(BootstrapResourcesBehavior.instance());
 
-        Navbar navbar = new Navbar("navbar");
+        navbar = new Navbar("navbar");
         navbar.fluid();
         navbar.brandName(new ResourceModel("application.title"));
-        navbar.addComponents(
-                new ImmutableNavbarComponent(new NavbarButton<>(ExpensePage.class, new ResourceModel("page.expense")))
-        );
+        addNavbarPage(ExpensePage.class);
+        addNavbarPage(CategoryPage.class);
         add(navbar);
+    }
+
+    private void addNavbarPage(Class<? extends HouseholdPage> pageClass) {
+        navbar.addComponents(
+                new ImmutableNavbarComponent(
+                        new NavbarButton<>(pageClass, new ResourceModel(pageClass.getSimpleName()))
+                )
+        );
     }
 }
