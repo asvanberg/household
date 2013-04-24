@@ -43,8 +43,8 @@ public class AddExpensePanelTest extends WicketTest {
 
     @Before
     public void setUp() throws Exception {
-        tester.getSession().setLocale(locale);
-        panel = tester.startComponentInPage(AddExpensePanel.class);
+        tester().getSession().setLocale(locale);
+        panel = tester().startComponentInPage(AddExpensePanel.class);
     }
 
     @Test
@@ -54,14 +54,14 @@ public class AddExpensePanelTest extends WicketTest {
 
     @Test
     public void testContainsForm() throws Exception {
-        tester.assertComponent(AddExpensePanel.FORM, Form.class);
+        tester().assertComponent(AddExpensePanel.FORM, Form.class);
     }
 
     @Test
     public void testFormComponentsExist() throws Exception {
-        tester.assertComponent(path(AddExpensePanel.FORM, AddExpensePanel.DATE), DateTextField.class);
-        tester.assertComponent(path(AddExpensePanel.FORM, AddExpensePanel.COST), TextField.class);
-        tester.assertComponent(path(AddExpensePanel.FORM, AddExpensePanel.DESCRIPTION), TextArea.class);
+        tester().assertComponent(path(AddExpensePanel.FORM, AddExpensePanel.DATE), DateTextField.class);
+        tester().assertComponent(path(AddExpensePanel.FORM, AddExpensePanel.COST), TextField.class);
+        tester().assertComponent(path(AddExpensePanel.FORM, AddExpensePanel.DESCRIPTION), TextArea.class);
     }
 
     @Test
@@ -72,14 +72,14 @@ public class AddExpensePanelTest extends WicketTest {
         String description = "Newspaper";
 
         // when
-        FormTester formTester = tester.newFormTester(AddExpensePanel.FORM);
+        FormTester formTester = tester().newFormTester(AddExpensePanel.FORM);
         formTester.setValue(AddExpensePanel.DATE, convertDate(date));
         formTester.setValue(AddExpensePanel.COST, String.valueOf(cost));
         formTester.setValue(AddExpensePanel.DESCRIPTION, description);
         formTester.submit();
 
         // then
-        tester.assertNoErrorMessage();
+        tester().assertNoErrorMessage();
 
         ArgumentCaptor<Date> captor = ArgumentCaptor.forClass(Date.class);
         verify(service, times(1)).create(captor.capture(), eq(description), eq(cost));
@@ -105,7 +105,7 @@ public class AddExpensePanelTest extends WicketTest {
 
         // when
         setUp();
-        FormTester formTester = tester.newFormTester(AddExpensePanel.FORM);
+        FormTester formTester = tester().newFormTester(AddExpensePanel.FORM);
         formTester.setValue(AddExpensePanel.DATE, convertDate(date));
         formTester.setValue(AddExpensePanel.COST, String.valueOf(cost));
         formTester.setValue(AddExpensePanel.DESCRIPTION, description);

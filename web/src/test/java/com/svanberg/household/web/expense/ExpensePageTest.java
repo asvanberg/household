@@ -22,7 +22,7 @@ public class ExpensePageTest extends WicketTest {
 
     @Before
     public void setUp() throws Exception {
-        page = tester.startPage(ExpensePage.class);
+        page = tester().startPage(ExpensePage.class);
     }
 
     @Test

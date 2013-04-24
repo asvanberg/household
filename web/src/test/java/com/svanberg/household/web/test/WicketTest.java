@@ -20,8 +20,8 @@ import java.lang.reflect.Field;
 @RunWith(MockitoJUnitRunner.class)
 public abstract class WicketTest {
 
-    protected WicketTester tester;
-    protected ApplicationContextMock ctx;
+    private WicketTester tester;
+    private ApplicationContextMock ctx;
 
     @Before
     public final void init() throws Exception {
@@ -35,6 +35,10 @@ public abstract class WicketTest {
                 return new SpringComponentInjector(this, ctx);
             }
         });
+    }
+
+    protected WicketTester tester() {
+        return tester;
     }
 
     private static class BetterWicketTester extends WicketTester {

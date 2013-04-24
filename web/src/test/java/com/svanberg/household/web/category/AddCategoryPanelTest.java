@@ -27,7 +27,7 @@ public class AddCategoryPanelTest extends WicketTest {
 
     @Before
     public void setUp() throws Exception {
-        panel = tester.startComponentInPage(AddCategoryPanel.class);
+        panel = tester().startComponentInPage(AddCategoryPanel.class);
     }
 
     @Test
@@ -37,13 +37,13 @@ public class AddCategoryPanelTest extends WicketTest {
 
     @Test
     public void testContainsForm() throws Exception {
-        tester.assertComponent(AddCategoryPanel.FORM, Form.class);
+        tester().assertComponent(AddCategoryPanel.FORM, Form.class);
     }
 
     @Test
     public void testContainsInput() throws Exception {
-        tester.assertComponent(path(AddCategoryPanel.FORM, AddCategoryPanel.NAME), TextField.class);
-        tester.assertComponent(path(AddCategoryPanel.FORM, AddCategoryPanel.DESCRIPTION), TextArea.class);
+        tester().assertComponent(path(AddCategoryPanel.FORM, AddCategoryPanel.NAME), TextField.class);
+        tester().assertComponent(path(AddCategoryPanel.FORM, AddCategoryPanel.DESCRIPTION), TextArea.class);
     }
 
     @Test
@@ -53,7 +53,7 @@ public class AddCategoryPanelTest extends WicketTest {
         String description = "Description";
 
         // when
-        FormTester formTester = tester.newFormTester(AddCategoryPanel.FORM);
+        FormTester formTester = tester().newFormTester(AddCategoryPanel.FORM);
         formTester.setValue(AddCategoryPanel.NAME, name);
         formTester.setValue(AddCategoryPanel.DESCRIPTION, description);
         formTester.submit();

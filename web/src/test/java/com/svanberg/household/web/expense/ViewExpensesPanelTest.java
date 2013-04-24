@@ -21,7 +21,7 @@ public class ViewExpensesPanelTest extends WicketTest {
 
     @Before
     public void setUp() throws Exception {
-        panel = tester.startComponentInPage(ViewExpensesPanel.class);
+        panel = tester().startComponentInPage(ViewExpensesPanel.class);
     }
 
     @Test
@@ -31,6 +31,6 @@ public class ViewExpensesPanelTest extends WicketTest {
 
     @Test
     public void testHasTable() throws Exception {
-        tester.assertComponent(ViewExpensesPanel.TABLE, DataTable.class);
+        tester().assertComponent(ViewExpensesPanel.TABLE, DataTable.class);
     }
 }
