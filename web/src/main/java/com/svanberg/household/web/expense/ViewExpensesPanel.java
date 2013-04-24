@@ -1,13 +1,16 @@
 package com.svanberg.household.web.expense;
 
+import com.svanberg.household.domain.Category;
 import com.svanberg.household.domain.Expense;
 import com.svanberg.household.service.ExpenseService;
 import com.svanberg.household.web.spring.DataProviderPage;
 import com.svanberg.household.web.wicket.EntityModel;
 
-import org.apache.wicket.extensions.markup.html.repeater.data.table.DefaultDataTable;
-import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
-import org.apache.wicket.extensions.markup.html.repeater.data.table.ISortableDataProvider;
+import de.agilecoders.wicket.markup.html.bootstrap.behavior.CssClassNameAppender;
+import de.agilecoders.wicket.markup.html.bootstrap.navigation.BootstrapPagingNavigator;
+import de.agilecoders.wicket.markup.html.bootstrap.navigation.ajax.BootstrapAjaxPagingNavigator;
+import de.agilecoders.wicket.markup.html.bootstrap.table.TableBehavior;
+import org.apache.wicket.extensions.markup.html.repeater.data.table.*;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.export.AbstractExportableColumn;
 import org.apache.wicket.extensions.markup.html.repeater.util.SortableDataProvider;
 import org.apache.wicket.markup.html.panel.Panel;
@@ -29,12 +32,28 @@ import static org.wicketeer.modelfactory.ModelFactory.model;
 public class ViewExpensesPanel extends Panel {
     private static final long serialVersionUID = -2947931645707959506L;
 
-    @SpringBean ExpenseService expenseService;
+    @SpringBean private ExpenseService expenseService;
 
     public ViewExpensesPanel(final String id) {
         super(id);
 
-        add(new DefaultDataTable<>(TABLE, getColumns(), getProvider(), getRowsPerPage()));
+        ISortableDataProvider<Expense, String> provider = getProvider();
+
+        DataTable<Expense, String> table = new DataTable<>(TABLE, getColumns(), provider, getRowsPerPage());
+        table.addTopToolbar(new HeadersToolbar<>(table, provider));
+        table.addBottomToolbar(new NoRecordsToolbar(table));
+        table.add(new TableBehavior().hover().striped());
+        add(table);
+
+        BootstrapAjaxPagingNavigator paging = new BootstrapAjaxPagingNavigator(PAGING, table) {
+            @Override
+            protected void onConfigure() {
+                setVisibilityAllowed(getPageable().getPageCount() > 1);
+            }
+        };
+        paging.setPosition(BootstrapPagingNavigator.Position.Right);
+        paging.add(new CssClassNameAppender("pagination-mini"));
+        add(paging);
     }
 
     private int getRowsPerPage() {
@@ -62,14 +81,33 @@ public class ViewExpensesPanel extends Panel {
 
     private List<? extends IColumn<Expense, String>> getColumns() {
         List<IColumn<Expense, String>> columns = new ArrayList<>();
-        columns.add(new AbstractExportableColumn<Expense, String, Date>(new ResourceModel("date", "Date"), "date") {
+        columns.add(new AbstractExportableColumn<Expense, String, Date>(new ResourceModel("date"), "date") {
             @Override
             public IModel<Date> getDataModel(final IModel<Expense> rowModel) {
                 return model(from(rowModel).getDate());
+            }
+        });
+        columns.add(new AbstractExportableColumn<Expense, String, String>(new ResourceModel("description"), "description") {
+            @Override
+            public IModel<String> getDataModel(IModel<Expense> rowModel) {
+                return model(from(rowModel).getDescription());
+            }
+        });
+        columns.add(new AbstractExportableColumn<Expense, String, Category>(new ResourceModel("category"), "category") {
+            @Override
+            public IModel<Category> getDataModel(IModel<Expense> rowModel) {
+                return model(from(rowModel).getCategory());
+            }
+        });
+        columns.add(new AbstractExportableColumn<Expense, String, Integer>(new ResourceModel("cost"), "cost") {
+            @Override
+            public IModel<Integer> getDataModel(IModel<Expense> rowModel) {
+                return model(from(rowModel).getCost());
             }
         });
         return columns;
     }
 
     static final String TABLE = "table";
+    static final String PAGING = "paging";
 }
