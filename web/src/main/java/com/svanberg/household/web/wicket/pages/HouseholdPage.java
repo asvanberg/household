@@ -28,7 +28,6 @@ public abstract class HouseholdPage extends WebPage {
         Navbar navbar = new Navbar("navbar");
         navbar.fluid();
         navbar.brandName(new ResourceModel("application.title"));
-        navbar.setPosition(Navbar.Position.TOP);
         navbar.addComponents(
                 new ImmutableNavbarComponent(new NavbarButton<>(ExpensePage.class, new ResourceModel("page.expense")))
         );
