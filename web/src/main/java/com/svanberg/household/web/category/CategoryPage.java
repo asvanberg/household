@@ -12,6 +12,8 @@ public class CategoryPage extends HouseholdPage {
     public CategoryPage(PageParameters parameters) {
         super(parameters);
 
-
+        add(new AddCategoryPanel(ADD_CATEGORY));
     }
+
+    static final String ADD_CATEGORY = "add_panel";
 }
