@@ -1,4 +1,4 @@
-package com.svanberg.household.web.wicket.components;
+package com.svanberg.household.web.components;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;

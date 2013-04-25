@@ -1,4 +1,4 @@
-package com.svanberg.household.web.wicket.pages;
+package com.svanberg.household.web.pages;
 
 import com.svanberg.household.web.category.CategoryPage;
 import com.svanberg.household.web.expense.ExpensePage;

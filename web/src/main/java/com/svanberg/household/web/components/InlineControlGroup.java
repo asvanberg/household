@@ -1,4 +1,4 @@
-package com.svanberg.household.web.wicket.components;
+package com.svanberg.household.web.components;
 
 import de.agilecoders.wicket.markup.html.bootstrap.form.ControlGroup;
 import org.apache.wicket.model.IModel;

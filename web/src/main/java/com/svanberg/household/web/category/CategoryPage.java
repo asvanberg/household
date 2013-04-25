@@ -1,6 +1,6 @@
 package com.svanberg.household.web.category;
 
-import com.svanberg.household.web.wicket.pages.HouseholdPage;
+import com.svanberg.household.web.pages.HouseholdPage;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 /**

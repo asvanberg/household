@@ -1,6 +1,6 @@
 package com.svanberg.household.web.expense;
 
-import com.svanberg.household.web.wicket.pages.HouseholdPage;
+import com.svanberg.household.web.pages.HouseholdPage;
 
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.request.mapper.parameter.PageParameters;

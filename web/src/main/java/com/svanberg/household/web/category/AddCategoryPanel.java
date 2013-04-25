@@ -1,7 +1,7 @@
 package com.svanberg.household.web.category;
 
 import com.svanberg.household.service.CategoryService;
-import com.svanberg.household.web.wicket.components.InlineControlGroup;
+import com.svanberg.household.web.components.InlineControlGroup;
 
 import de.agilecoders.wicket.markup.html.bootstrap.form.BootstrapForm;
 import de.agilecoders.wicket.markup.html.bootstrap.form.FormType;

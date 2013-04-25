@@ -4,7 +4,7 @@ import com.svanberg.household.domain.Category;
 import com.svanberg.household.domain.Expense;
 import com.svanberg.household.service.CategoryService;
 import com.svanberg.household.service.ExpenseService;
-import com.svanberg.household.web.wicket.EntityModel;
+import com.svanberg.household.web.components.EntityModel;
 
 import de.agilecoders.wicket.markup.html.bootstrap.button.ButtonBehavior;
 import de.agilecoders.wicket.markup.html.bootstrap.button.Buttons;

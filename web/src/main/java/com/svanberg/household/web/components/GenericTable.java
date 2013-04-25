@@ -1,8 +1,7 @@
-package com.svanberg.household.web.wicket.components;
+package com.svanberg.household.web.components;
 
 import com.svanberg.household.domain.DomainObject;
 import com.svanberg.household.web.spring.DataProviderPage;
-import com.svanberg.household.web.wicket.EntityModel;
 import de.agilecoders.wicket.markup.html.bootstrap.navigation.BootstrapPagingNavigator;
 import de.agilecoders.wicket.markup.html.bootstrap.navigation.ajax.BootstrapAjaxPagingNavigator;
 import de.agilecoders.wicket.markup.html.bootstrap.table.TableBehavior;

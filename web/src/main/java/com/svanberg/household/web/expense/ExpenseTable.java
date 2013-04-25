@@ -2,7 +2,7 @@ package com.svanberg.household.web.expense;
 
 import com.svanberg.household.domain.Expense;
 import com.svanberg.household.service.ExpenseService;
-import com.svanberg.household.web.wicket.components.GenericTable;
+import com.svanberg.household.web.components.GenericTable;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.export.AbstractExportableColumn;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.ResourceModel;

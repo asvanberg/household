@@ -1,4 +1,4 @@
-package com.svanberg.household.web.wicket;
+package com.svanberg.household.web.components;
 
 import com.svanberg.household.domain.DomainObject;
 import com.svanberg.household.service.DomainObjectService;
