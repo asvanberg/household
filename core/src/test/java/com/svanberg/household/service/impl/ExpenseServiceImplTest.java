@@ -14,7 +14,9 @@ import org.mockito.invocation.InvocationOnMock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.mockito.stubbing.Answer;
 
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
@@ -145,5 +147,19 @@ public class ExpenseServiceImplTest {
 
         // then
         fail("Should get IllegalArgumentException");
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
+    public void testDelete() throws Exception {
+        // given
+        Expense expense = new Expense();
+        List<Expense> expenses = Arrays.asList(expense);
+
+        // when
+        service.delete(expenses);
+
+        // then
+        verify(repository, times(1)).delete(isA(Iterable.class));
     }
 }

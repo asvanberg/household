@@ -62,4 +62,10 @@ public class ExpenseServiceImpl implements ExpenseService {
         expense.setCategory(category);
         return repository.save(expense);
     }
+
+    @Override
+    @Transactional
+    public void delete(final Iterable<Expense> expenses) {
+        repository.delete(expenses);
+    }
 }
