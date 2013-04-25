@@ -17,14 +17,18 @@ import java.util.HashSet;
 /**
  * @author Andreas Svanberg (andreass) <andreas.svanberg@mensa.se>
  */
-public class SelectColumn<T, S> extends AbstractColumn<T, S> {
+public class SelectionColumn<T, S> extends AbstractColumn<T, S> {
     private static final long serialVersionUID = -3395307495003514249L;
 
     private Collection<IModel<T>> selection = new HashSet<>();
     private Collection<RowCheckbox> checkBoxes = new ArrayList<>();
 
-    public SelectColumn() {
+    public SelectionColumn() {
         super(null);
+    }
+
+    public Collection<IModel<T>> getSelection() {
+        return selection;
     }
 
     @Override
