@@ -27,8 +27,12 @@ public class SelectionColumn<T, S> extends AbstractColumn<T, S> {
         super(null);
     }
 
-    public Collection<IModel<T>> getSelection() {
-        return selection;
+    public Collection<T> getSelection() {
+        Collection<T> c = new ArrayList<>(selection.size());
+        for (IModel<T> model : selection) {
+            c.add(model.getObject());
+        }
+        return c;
     }
 
     @Override

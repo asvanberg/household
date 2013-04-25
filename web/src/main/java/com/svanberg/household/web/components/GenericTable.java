@@ -28,8 +28,6 @@ public abstract class GenericTable<T extends DomainObject> extends Panel {
 
     public GenericTable(final String id) {
         super(id);
-
-        setRenderBodyOnly(true);
     }
 
     /**
@@ -81,7 +79,7 @@ public abstract class GenericTable<T extends DomainObject> extends Panel {
      * @return the currently selected entities
      */
     @SuppressWarnings("unchecked")
-    public final Collection<IModel<T>> getSelection() {
+    public final Collection<T> getSelection() {
         return selectColumn != null ? selectColumn.getSelection() : Collections.EMPTY_SET;
     }
 
