@@ -15,11 +15,11 @@ import java.io.Serializable;
 public class EntityModel<T extends DomainObject> implements IModel<T> {
     private static final long serialVersionUID = -6617614098524238401L;
 
-    transient @SpringBean DomainObjectService domainService;
+    private transient @SpringBean DomainObjectService domainService;
 
     private final Class<T> clazz;
     private Serializable identifier;
-    private transient T entity;
+    private T entity;
     private transient boolean attached = false;
 
     public EntityModel(Class<T> clazz) {
@@ -35,7 +35,7 @@ public class EntityModel<T extends DomainObject> implements IModel<T> {
 
     @Override
     public T getObject() {
-        if (entity == null) {
+        if (!attached) {
             load();
         }
 
@@ -51,7 +51,9 @@ public class EntityModel<T extends DomainObject> implements IModel<T> {
     @Override
     public void detach() {
         domainService = null;
-        entity = null;
+        if (identifier != null) {
+            entity = null;
+        }
     }
 
     private void load() {
