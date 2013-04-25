@@ -5,7 +5,6 @@ import com.svanberg.household.service.ExpenseService;
 import com.svanberg.household.web.spring.DataProviderPage;
 import com.svanberg.household.web.wicket.EntityModel;
 
-import de.agilecoders.wicket.markup.html.bootstrap.behavior.CssClassNameAppender;
 import de.agilecoders.wicket.markup.html.bootstrap.navigation.BootstrapPagingNavigator;
 import de.agilecoders.wicket.markup.html.bootstrap.navigation.ajax.BootstrapAjaxPagingNavigator;
 import de.agilecoders.wicket.markup.html.bootstrap.table.TableBehavior;
@@ -52,7 +51,6 @@ public class ViewExpensesPanel extends Panel {
             }
         };
         paging.setPosition(BootstrapPagingNavigator.Position.Right);
-        paging.add(new CssClassNameAppender("pagination-mini"));
         add(paging);
     }
 
