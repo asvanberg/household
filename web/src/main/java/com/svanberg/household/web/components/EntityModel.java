@@ -51,6 +51,7 @@ public class EntityModel<T extends DomainObject> implements IModel<T> {
     @Override
     public void detach() {
         domainService = null;
+        attached = false;
         if (identifier != null) {
             entity = null;
         }
