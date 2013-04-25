@@ -159,7 +159,7 @@ public abstract class GenericTable<T extends DomainObject> extends Panel {
         }
     }
 
-    static final String TABLE = "table";
-    static final String PAGING = "paging";
-    static final String RESULTS = "results";
+    public static final String TABLE = "table";
+    public static final String PAGING = "paging";
+    public static final String RESULTS = "results";
 }

@@ -13,15 +13,15 @@ import static org.junit.Assert.assertNotNull;
 /**
  * @author Andreas Svanberg (andreass) <andreas.svanberg@mensa.se>
  */
-public class ViewExpensesPanelTest extends WicketTest {
+public class ExpenseTableTest extends WicketTest {
 
     @Mock ExpenseService expenseService;
 
-    private ViewExpensesPanel panel;
+    private ExpenseTable panel;
 
     @Before
     public void setUp() throws Exception {
-        panel = tester().startComponentInPage(ViewExpensesPanel.class);
+        panel = tester().startComponentInPage(ExpenseTable.class);
     }
 
     @Test
@@ -31,6 +31,6 @@ public class ViewExpensesPanelTest extends WicketTest {
 
     @Test
     public void testHasTable() throws Exception {
-        tester().assertComponent(ViewExpensesPanel.TABLE, DataTable.class);
+        tester().assertComponent(ExpenseTable.TABLE, DataTable.class);
     }
 }
