@@ -128,13 +128,19 @@ public abstract class GenericTable<T extends DomainObject> extends Panel {
             @Override
             protected void onConfigure() {
                 super.onConfigure();
-                setVisibilityAllowed(getPageable().getPageCount() > 1L);
+                setVisibilityAllowed(count() > getRowsPerPage());
             }
         };
         paging.setPosition(BootstrapPagingNavigator.Position.Right);
         add(paging);
 
-        add(new NavigatorLabel(RESULTS, table));
+        add(new NavigatorLabel(RESULTS, table) {
+            @Override
+            protected void onConfigure() {
+                super.onConfigure();
+                setVisibilityAllowed(count() > 0);
+            }
+        });
     }
 
     private class TableProvider extends SortableDataProvider<T, String> {
