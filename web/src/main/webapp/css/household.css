@@ -4,3 +4,6 @@ body {
 td[colspan] {
     text-align: center;
 }
+table caption {
+    display: none;
+}
