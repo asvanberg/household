@@ -180,4 +180,29 @@ public class ExpenseServiceImplTest {
         // then
         assertEquals("Wrong total expense", cost1 + cost2, totalCost);
     }
+
+    @Test
+    public void testAverageWeekly() throws Exception {
+        // given
+        int cost1 = 232;
+        int cost2 = 151;
+
+        int days = 4;
+
+        Date date1 = new Date();
+        Date date2 = new Date(date1.getTime() - days * 86400 * 1000);
+
+        Expense expense1 = new Expense(date1, "Desc", cost1);
+        Expense expense2 = new Expense(date2, "Desc", cost2);
+
+        int expected = (int) ((cost1 + cost2) / 4.0 * 7);
+
+        when(repository.findAll()).thenReturn(Arrays.asList(expense1, expense2));
+
+        // when
+        int weekly = service.averageWeeklyExpenses();
+
+        // then
+        assertEquals("Wrong weekly average", expected, weekly);
+    }
 }

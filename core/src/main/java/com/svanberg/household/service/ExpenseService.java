@@ -40,4 +40,11 @@ public interface ExpenseService {
      * @return the total cost of all expenses
      */
     int totalExpenses();
+
+    /**
+     * Returns the average spent per week.
+     *
+     * @return the average spent per week
+     */
+    int averageWeeklyExpenses();
 }

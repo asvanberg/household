@@ -77,4 +77,31 @@ public class ExpenseServiceImpl implements ExpenseService {
         }
         return total;
     }
+
+    @Override
+    public int averageWeeklyExpenses() {
+        long first = Long.MAX_VALUE;
+        long last = Long.MIN_VALUE;
+
+        int total = 0;
+
+        for (Expense expense : repository.findAll()) {
+            long time = expense.getDate().getTime();
+            if (time < first) {
+                first = time;
+            }
+            if (time > last) {
+                last = time;
+            }
+            total += expense.getCost();
+        }
+
+        double delta = ((last - first) / 1000.0 / 86400);
+        if (delta == 0) {
+            return total;
+        }
+        else {
+            return (int) (total / delta * 7);
+        }
+    }
 }
