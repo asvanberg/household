@@ -25,7 +25,8 @@ public class ExpenseTable extends GenericTable<Expense> {
     public ExpenseTable(final String id) {
         super(id);
 
-        setSelectionColumn(true);
+        selectionColumn(true);
+        caption(new ResourceModel("caption"));
     }
 
     @Override

@@ -25,6 +25,7 @@ public abstract class GenericTable<T extends DomainObject> extends Panel {
     private final List<IColumn<T, String>> columns = new ArrayList<>();
     private boolean selectionColumn = false;
     private SelectionColumn<T, String> selectColumn;
+    private IModel<String> caption = null;
 
     public GenericTable(final String id) {
         super(id);
@@ -53,24 +54,27 @@ public abstract class GenericTable<T extends DomainObject> extends Panel {
     protected abstract long count();
 
     /**
+     * Sets the caption of the table.
+     *
+     * @param caption the caption
+     * @return this
+     * @see org.apache.wicket.extensions.markup.html.repeater.data.table.DataTable#getCaptionModel()
+     */
+    public GenericTable<T> caption(final IModel<String> caption) {
+        this.caption = caption;
+        return this;
+    }
+
+    /**
      * Set if a selection column should be included in the table. It will be
      * the first column.
      *
      * @param selectionColumn {@code true} to include the column
      * @return this
      */
-    public final GenericTable<T> setSelectionColumn(final boolean selectionColumn) {
+    public final GenericTable<T> selectionColumn(final boolean selectionColumn) {
         this.selectionColumn = selectionColumn;
         return this;
-    }
-
-    /**
-     * Returns whether to add a selection column or not.
-     *
-     * @return {@code true} if a selection column will be added
-     */
-    public final boolean hasSelectionColumn() {
-        return selectionColumn;
     }
 
     /**
@@ -118,7 +122,12 @@ public abstract class GenericTable<T extends DomainObject> extends Panel {
 
         ISortableDataProvider<T, String> provider = getProvider();
 
-        DataTable<T, String> table = new DataTable<>(TABLE, columns, provider, getRowsPerPage());
+        DataTable<T, String> table = new DataTable<T, String>(TABLE, columns, provider, getRowsPerPage()) {
+            @Override
+            protected IModel<String> getCaptionModel() {
+                return caption;
+            }
+        };
         table.addTopToolbar(new AjaxFallbackHeadersToolbar<>(table, provider));
         table.addBottomToolbar(new NoRecordsToolbar(table));
         table.add(new TableBehavior().hover().striped());
