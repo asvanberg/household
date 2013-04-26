@@ -50,5 +50,6 @@ public class ExpensePage extends HouseholdPage {
         add(new Label("total", total));
         add(new Label("count", count));
         add(new Label("average", count == 0 ? 0 : total / (double) count));
+        add(new Label("weekly", expenseService.averageWeeklyExpenses()));
     }
 }
