@@ -162,4 +162,22 @@ public class ExpenseServiceImplTest {
         // then
         verify(repository, times(1)).delete(isA(Iterable.class));
     }
+
+    @Test
+    public void testTotalExpenses() throws Exception {
+        // given
+        int cost1 = 7;
+        int cost2 = 9;
+
+        Expense expense1 = new Expense(new Date(), "Desc", cost1);
+        Expense expense2 = new Expense(new Date(), "Desc", cost2);
+
+        when(repository.findAll()).thenReturn(Arrays.asList(expense1, expense2));
+
+        // when
+        int totalCost = service.totalExpenses();
+
+        // then
+        assertEquals("Wrong total expense", cost1 + cost2, totalCost);
+    }
 }

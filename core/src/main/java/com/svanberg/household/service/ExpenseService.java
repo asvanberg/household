@@ -33,4 +33,11 @@ public interface ExpenseService {
      * @param expenses to delete
      */
     void delete(Iterable<Expense> expenses);
+
+    /**
+     * Returns the total cost of all expenses.
+     *
+     * @return the total cost of all expenses
+     */
+    int totalExpenses();
 }

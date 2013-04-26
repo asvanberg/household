@@ -68,4 +68,13 @@ public class ExpenseServiceImpl implements ExpenseService {
     public void delete(final Iterable<Expense> expenses) {
         repository.delete(expenses);
     }
+
+    @Override
+    public int totalExpenses() {
+        int total = 0;
+        for (Expense expense : repository.findAll()) {
+            total += expense.getCost();
+        }
+        return total;
+    }
 }
