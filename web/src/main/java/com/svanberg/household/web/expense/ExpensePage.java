@@ -7,6 +7,7 @@ import com.svanberg.household.web.pages.HouseholdPage;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxFallbackLink;
 import org.apache.wicket.markup.html.WebMarkupContainer;
+import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
@@ -43,5 +44,11 @@ public class ExpensePage extends HouseholdPage {
             }
         };
         add(delete);
+
+        int total = expenseService.totalExpenses();
+        long count = expenseService.count();
+        add(new Label("total", total));
+        add(new Label("count", count));
+        add(new Label("average", count == 0 ? 0 : total / (double) count));
     }
 }
