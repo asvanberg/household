@@ -28,8 +28,8 @@ public abstract class HouseholdPage extends WebPage {
         add(BootstrapResourcesBehavior.instance());
 
         navbar = new Navbar("navbar");
-        navbar.fluid();
         navbar.brandName(new ResourceModel("application.title"));
+        navbar.setPosition(Navbar.Position.TOP);
         addNavbarPage(ExpensePage.class);
         addNavbarPage(CategoryPage.class);
         add(navbar);
