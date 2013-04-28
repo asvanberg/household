@@ -26,7 +26,12 @@ public class ExpensePage extends HouseholdPage {
     public ExpensePage(PageParameters parameters) {
         super(parameters);
 
-        AddExpensePanel dialog = new AddExpensePanel("dialog");
+        AddExpensePanel dialog = new AddExpensePanel("dialog") {
+            @Override
+            protected void onCreated(final AjaxRequestTarget target) {
+                target.add(table);
+            }
+        };
         add(dialog);
         WebMarkupContainer wmc = new WebMarkupContainer("open");
         dialog.addOpenerAttributesTo(wmc);

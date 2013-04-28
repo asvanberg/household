@@ -60,6 +60,13 @@ public class AddExpensePanel extends Modal {
         addCloseButton(new ResourceModel("cancel"));
     }
 
+    /**
+     * Override this method to provide special handling after an expense was
+     * created.
+     */
+    protected void onCreated(AjaxRequestTarget target) {
+    }
+
     private void addFeedback() {
         NotificationPanel feedback = new NotificationPanel(FEEDBACK);
         feedback.hideAfter(Duration.seconds(10));
@@ -73,6 +80,7 @@ public class AddExpensePanel extends Modal {
             @Override
             protected void onAfterSubmit(final AjaxRequestTarget target) {
                 appendCloseDialogJavaScript(target);
+                onCreated(target);
             }
 
             @Override
