@@ -4,6 +4,7 @@ import com.svanberg.household.web.expense.ExpensePage;
 
 import de.agilecoders.wicket.Bootstrap;
 import de.agilecoders.wicket.settings.BootstrapSettings;
+import org.apache.wicket.devutils.stateless.StatelessChecker;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.spring.injection.annot.SpringComponentInjector;
@@ -29,6 +30,7 @@ public class HouseholdWebApplication extends WebApplication {
 
         // Hook up Spring
         getComponentInstantiationListeners().add(getInjector());
+        getComponentPostOnBeforeRenderListeners().add(new StatelessChecker());
     }
 
     protected SpringComponentInjector getInjector() {
