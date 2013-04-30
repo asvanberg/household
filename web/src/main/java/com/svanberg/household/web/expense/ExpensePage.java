@@ -18,7 +18,7 @@ public class ExpensePage extends HouseholdPage {
 
     private @SpringBean ExpenseService expenseService;
 
-    //private final ExpenseTable table;
+    private final ExpenseTable table;
 
     public ExpensePage(PageParameters parameters) {
         super(parameters);
@@ -29,11 +29,11 @@ public class ExpensePage extends HouseholdPage {
         WebMarkupContainer wmc = new WebMarkupContainer("open");
         dialog.addOpenerAttributesTo(wmc);
         add(wmc);
-        /*table = new ExpenseTable("list");
+        table = new ExpenseTable("list");
         table.setOutputMarkupId(true);
         add(table);
 
-        AjaxFallbackLink<Void> delete = new AjaxFallbackLink<Void>("delete") {
+        /*AjaxFallbackLink<Void> delete = new AjaxFallbackLink<Void>("delete") {
             @Override
             public void onClick(final AjaxRequestTarget target) {
                 Collection<Expense> selection = table.getSelection();
