@@ -2,10 +2,7 @@ package com.svanberg.household.web.components;
 
 import com.svanberg.household.domain.DomainObject;
 import com.svanberg.household.web.spring.DataProviderPage;
-import de.agilecoders.wicket.markup.html.bootstrap.navigation.BootstrapPagingNavigator;
-import de.agilecoders.wicket.markup.html.bootstrap.navigation.ajax.BootstrapAjaxPagingNavigator;
 import de.agilecoders.wicket.markup.html.bootstrap.table.TableBehavior;
-import org.apache.wicket.extensions.ajax.markup.html.repeater.data.table.AjaxFallbackHeadersToolbar;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.*;
 import org.apache.wicket.extensions.markup.html.repeater.util.SortableDataProvider;
 import org.apache.wicket.markup.html.panel.Panel;
@@ -128,19 +125,20 @@ public abstract class GenericTable<T extends DomainObject> extends Panel {
                 return caption;
             }
         };
-        table.addTopToolbar(new AjaxFallbackHeadersToolbar<>(table, provider));
+        //table.addTopToolbar(new HeadersToolbar<>(table, provider));
         table.addBottomToolbar(new NoRecordsToolbar(table));
         table.add(new TableBehavior().hover().striped());
         add(table);
 
-        BootstrapAjaxPagingNavigator paging = new BootstrapAjaxPagingNavigator(PAGING, table) {
+        StatelessPagingNavigator paging = new StatelessPagingNavigator(PAGING, table)
+        {
             @Override
-            protected void onConfigure() {
+            protected void onConfigure()
+            {
                 super.onConfigure();
                 setVisibilityAllowed(count() > getRowsPerPage());
             }
         };
-        paging.setPosition(BootstrapPagingNavigator.Position.Right);
         add(paging);
 
         add(new NavigatorLabel(RESULTS, table) {
