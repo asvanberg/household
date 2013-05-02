@@ -1,5 +1,6 @@
 package com.svanberg.household.web;
 
+import com.svanberg.household.web.components.stateless.PageParameterSorter;
 import com.svanberg.household.web.expense.ExpensePage;
 
 import de.agilecoders.wicket.Bootstrap;
@@ -30,6 +31,8 @@ public class HouseholdWebApplication extends WebApplication {
 
         // Hook up Spring
         getComponentInstantiationListeners().add(getInjector());
+        // Add automatic page parameter sorting
+        getComponentInitializationListeners().add(new PageParameterSorter());
         getComponentPostOnBeforeRenderListeners().add(new StatelessChecker());
     }
 

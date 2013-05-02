@@ -42,4 +42,14 @@ public interface IPageParameterSorting<S>
      * @see #getSortValue(S, SortOrder)
      */
     SortOrder decodeSortOrder(String sortValue);
+
+    /**
+     * Sorting should be done in this method.
+     *
+     * Called by {@link PageParameterSorter} if it is registered as a
+     * {@link org.apache.wicket.application.IComponentInitializationListener}
+     * in the application, if it is not the component has to call the method
+     * itself in {@link org.apache.wicket.Component#onInitialize()}.
+     */
+    void sort();
 }

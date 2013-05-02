@@ -74,13 +74,11 @@ public class SortableHeadersToolbar<S> extends AbstractToolbar implements IPageP
     }
 
     /**
-     * Method responsible for doing the sorting.
+     * {@inheritDoc}
      */
     @Override
-    protected void onInitialize()
+    public void sort()
     {
-        super.onInitialize();
-
         String sortingValue = getPage().getPageParameters().get(getSortParameter()).toOptionalString();
         if (sortingValue != null)
         {
