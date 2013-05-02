@@ -1,7 +1,7 @@
 package com.svanberg.household.web.category;
 
 import com.svanberg.household.service.CategoryService;
-import com.svanberg.household.web.test.WicketTest;
+import com.svanberg.household.web.test.SpringWicketTest;
 
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextArea;
@@ -19,7 +19,8 @@ import static org.mockito.Mockito.verify;
 /**
  * @author Andreas Svanberg (andreass) <andreas.svanberg@mensa.se>
  */
-public class AddCategoryPanelTest extends WicketTest {
+public class AddCategoryPanelTest extends SpringWicketTest
+{
 
     @Mock CategoryService service;
 

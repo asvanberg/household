@@ -2,7 +2,7 @@ package com.svanberg.household.web.expense;
 
 import com.svanberg.household.service.CategoryService;
 import com.svanberg.household.service.ExpenseService;
-import com.svanberg.household.web.test.WicketTest;
+import com.svanberg.household.web.test.SpringWicketTest;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -13,7 +13,8 @@ import static org.junit.Assert.assertNotNull;
 /**
  * @author Andreas Svanberg (andreass) <andreas.svanberg@mensa.se>
  */
-public class ExpensePageTest extends WicketTest {
+public class ExpensePageTest extends SpringWicketTest
+{
 
     @Mock ExpenseService expenseService;
     @Mock CategoryService categoryService;

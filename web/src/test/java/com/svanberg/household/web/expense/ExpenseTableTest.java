@@ -1,7 +1,7 @@
 package com.svanberg.household.web.expense;
 
 import com.svanberg.household.service.ExpenseService;
-import com.svanberg.household.web.test.WicketTest;
+import com.svanberg.household.web.test.SpringWicketTest;
 
 import org.apache.wicket.extensions.markup.html.repeater.data.table.DataTable;
 import org.junit.Before;
@@ -13,7 +13,8 @@ import static org.junit.Assert.assertNotNull;
 /**
  * @author Andreas Svanberg (andreass) <andreas.svanberg@mensa.se>
  */
-public class ExpenseTableTest extends WicketTest {
+public class ExpenseTableTest extends SpringWicketTest
+{
 
     @Mock ExpenseService expenseService;
 

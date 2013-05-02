@@ -4,7 +4,7 @@ import com.svanberg.household.domain.Category;
 import com.svanberg.household.domain.Expense;
 import com.svanberg.household.service.CategoryService;
 import com.svanberg.household.service.ExpenseService;
-import com.svanberg.household.web.test.WicketTest;
+import com.svanberg.household.web.test.SpringWicketTest;
 import org.apache.wicket.feedback.FeedbackMessage;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.FormComponent;
@@ -32,7 +32,7 @@ import static org.mockito.Mockito.when;
 /**
  * @author Andreas Svanberg (andreass) <andreas.svanberg@mensa.se>
  */
-public class StatelessAddExpensePanelTest extends WicketTest
+public class StatelessAddExpensePanelTest extends SpringWicketTest
 {
     private static final Locale LOCALE = Locale.UK;
 

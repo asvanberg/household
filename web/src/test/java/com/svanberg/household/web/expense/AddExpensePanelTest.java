@@ -5,7 +5,7 @@ import com.svanberg.household.domain.Expense;
 import com.svanberg.household.service.CategoryService;
 import com.svanberg.household.service.DomainObjectService;
 import com.svanberg.household.service.ExpenseService;
-import com.svanberg.household.web.test.WicketTest;
+import com.svanberg.household.web.test.SpringWicketTest;
 
 import org.apache.wicket.extensions.markup.html.form.DateTextField;
 import org.apache.wicket.markup.html.form.Form;
@@ -31,7 +31,8 @@ import static org.mockito.Mockito.when;
 /**
  * @author Andreas Svanberg (andreass) <andreas.svanberg@mensa.se>
  */
-public class AddExpensePanelTest extends WicketTest {
+public class AddExpensePanelTest extends SpringWicketTest
+{
 
     private static final Locale locale = Locale.UK;
 
