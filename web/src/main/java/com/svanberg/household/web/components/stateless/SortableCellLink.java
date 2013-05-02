@@ -18,49 +18,24 @@ public class SortableCellLink<S> extends StatelessLink<Void>
 {
     private static final long serialVersionUID = 1274981167864507968L;
 
-    /**
-     * Interface for providing this link with the proper sorting page parameter
-     * values.
-     *
-     * @param <S> the type of sorting property
-     */
-    public static interface ISortingParametersProvider<S>
-    {
-        /**
-         * The key in the pageparameter to store the sorting value in.
-         *
-         * @return the key for the sorting parameter
-         */
-        String getSortingParameter();
-
-        /**
-         * The value to use as the sorting parameter.
-         *
-         * @param sortProperty the property to sort by
-         * @param order        the order to sort in
-         * @return             the sorting parameter value
-         */
-        Object getSortingValue(S sortProperty, SortOrder order);
-    }
-
     private final S sortProperty;
     private final SortOrder order;
-    private final ISortingParametersProvider<S> sortingParametersProvider;
+    private final IPageParameterSorting<S> pageParameterSorting;
 
     /**
      * Construct.
      *
      * @param id {@inheritDoc}
-     * @param sortProperty              the property this link should sort by
-     * @param order                     the order to sort by
-     * @param sortingParametersProvider the provider for sorting page params
+     * @param sortProperty         property this link should sort by
+     * @param order                order to sort by
+     * @param pageParameterSorting provider for sorting page parameters
      */
-    public SortableCellLink(final String id, S sortProperty, SortOrder order, ISortingParametersProvider<S> sortingParametersProvider)
+    public SortableCellLink(final String id, S sortProperty, SortOrder order, IPageParameterSorting<S> pageParameterSorting)
     {
         super(id);
         this.sortProperty = sortProperty;
         this.order = order;
-        this.sortingParametersProvider = sortingParametersProvider;
+        this.pageParameterSorting = pageParameterSorting;
     }
 
     /**
@@ -101,7 +76,7 @@ public class SortableCellLink<S> extends StatelessLink<Void>
     protected PageParameters createPageParameters()
     {
         PageParameters pp = new PageParameters(getPage().getPageParameters());
-        pp.set(sortingParametersProvider.getSortingParameter(), sortingParametersProvider.getSortingValue(sortProperty, order));
+        pp.set(pageParameterSorting.getSortParameter(), pageParameterSorting.getSortValue(sortProperty, order));
         return pp;
     }
 }

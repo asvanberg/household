@@ -1,6 +1,7 @@
 package com.svanberg.household.web.components.stateless;
 
 import com.svanberg.household.web.test.WicketTest;
+import org.apache.wicket.extensions.markup.html.repeater.data.sort.ISortState;
 import org.apache.wicket.extensions.markup.html.repeater.data.sort.SortOrder;
 import org.junit.Before;
 import org.junit.Test;
@@ -15,16 +16,17 @@ import static org.mockito.Mockito.when;
  */
 public class SortableCellBorderTest extends WicketTest
 {
-    @Mock SortableCellLink.ISortingParametersProvider<String> sortingParametersProvider;
+    @Mock IPageParameterSorting<String> sortingParametersProvider;
+    @Mock ISortState<String> sortState;
 
     private SortableCellBorder border;
 
     @Before
     public void setUp() throws Exception
     {
-        when(sortingParametersProvider.getSortingParameter()).thenReturn("sort");
+        when(sortingParametersProvider.getSortParameter()).thenReturn("sort");
 
-        border = tester().startComponentInPage(new SortableCellBorder("id", "date", SortOrder.ASCENDING, sortingParametersProvider));
+        border = tester().startComponentInPage(new SortableCellBorder<>("id", "date", sortState, sortingParametersProvider));
     }
 
     @Test

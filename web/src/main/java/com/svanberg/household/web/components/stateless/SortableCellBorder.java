@@ -18,29 +18,29 @@ public class SortableCellBorder<S> extends Border
     /**
      * Construct.
      *
-     * @param id                        {@inheritDoc}
-     * @param sortProperty              property to sort by
-     * @param sortState                 current sort state
-     * @param sortingParametersProvider provider for sorting page parameters
+     * @param id                   {@inheritDoc}
+     * @param sortProperty         property to sort by
+     * @param sortState            current sort state
+     * @param pageParameterSorting provider for sorting page parameters
      */
-    public SortableCellBorder(final String id, S sortProperty, ISortState<S> sortState, SortableCellLink.ISortingParametersProvider<S> sortingParametersProvider)
+    public SortableCellBorder(final String id, S sortProperty, ISortState<S> sortState, IPageParameterSorting<S> pageParameterSorting)
     {
         super(id);
 
-        addToBorder(newSortableLink(sortProperty, sortState, sortingParametersProvider));
+        addToBorder(newSortableLink(sortProperty, sortState, pageParameterSorting));
     }
 
     /**
      * Factory method for the sorting link.
      *
-     * @param sortProperty              property the link should sort by
-     * @param sortState                 current sort state
-     * @param sortingParametersProvider provider for sorting page parameters
+     * @param sortProperty         property the link should sort by
+     * @param sortState            current sort state
+     * @param pageParameterSorting provider for sorting page parameters
      * @return
      */
-    protected StatelessLink<?> newSortableLink(final S sortProperty, final ISortState<S> sortState, final SortableCellLink.ISortingParametersProvider<S> sortingParametersProvider)
+    protected StatelessLink<?> newSortableLink(final S sortProperty, final ISortState<S> sortState, final IPageParameterSorting<S> pageParameterSorting)
     {
-        return new SortableCellLink<>(LINK, sortProperty, nextOrder(sortProperty, sortState), sortingParametersProvider);
+        return new SortableCellLink<>(LINK, sortProperty, nextOrder(sortProperty, sortState), pageParameterSorting);
     }
 
     /**

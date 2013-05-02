@@ -21,14 +21,14 @@ import org.apache.wicket.model.Model;
  *
  * @author Andreas Svanberg (andreass) <andreas.svanberg@mensa.se>
  */
-public class SortableHeadersToolbar<S> extends AbstractToolbar implements SortableCellLink.ISortingParametersProvider<S>
+public class SortableHeadersToolbar<S> extends AbstractToolbar implements IPageParameterSorting<S>
 {
     private static final long serialVersionUID = 5439576634619819790L;
 
     /**
      * Default page parameter key for the sorting value.
      *
-     * @see #getSortingParameter()
+     * @see #getSortParameter()
      */
     public static final String SORTING_PAGE_PARAMETER = "sort";
 
@@ -81,59 +81,48 @@ public class SortableHeadersToolbar<S> extends AbstractToolbar implements Sortab
     {
         super.onInitialize();
 
-        String sortingValue = getPage().getPageParameters().get(getSortingParameter()).toOptionalString();
+        String sortingValue = getPage().getPageParameters().get(getSortParameter()).toOptionalString();
         if (sortingValue != null)
         {
-            S sortProperty = getSortingProperty(sortingValue);
-            SortOrder sortOrder = getSortingOrder(sortingValue);
+            S sortProperty = decodeSortProperty(sortingValue);
+            SortOrder sortOrder = decodeSortOrder(sortingValue);
             sortStateLocator.getSortState().setPropertySortOrder(sortProperty, sortOrder);
         }
     }
 
     /**
-     * Returns the page parameter key for the sorting parameter.
-     *
-     * @return the page parameter key for the sorting parameter
-     * @see #SORTING_PAGE_PARAMETER
+     * {@inheritDoc}
      */
     @Override
-    public String getSortingParameter()
+    public String getSortParameter()
     {
         return SORTING_PAGE_PARAMETER;
     }
 
     /**
-     * Returns the sort value for the given property and order.
-     *
-     * @param sortProperty the property to sort by
-     * @param order        the order to sort in
-     * @return the sort value for the given property and order
+     * {@inheritDoc}
      */
     @Override
-    public Object getSortingValue(final S sortProperty, final SortOrder order)
+    public String getSortValue(final S sortProperty, final SortOrder order)
     {
         return (order == SortOrder.DESCENDING ? "!" : "") + sortProperty;
     }
 
     /**
-     * Decodes a sorting value and returns the property to sort by.
-     *
-     * @param sortingValue sorting value from the page parameters
-     * @return the sorting property
+     * {@inheritDoc}
      */
     @SuppressWarnings("unchecked")
-    protected S getSortingProperty(final String sortingValue)
+    @Override
+    public S decodeSortProperty(final String sortingValue)
     {
         return (S) (sortingValue.startsWith("!") ? sortingValue.substring(1) : sortingValue);
     }
 
     /**
-     * Decodes a sorting value and returns the order to sort by.
-     *
-     * @param sortingValue sorting value from the page parameters
-     * @return the sorting order
+     * {@inheritDoc}
      */
-    protected SortOrder getSortingOrder(final String sortingValue)
+    @Override
+    public SortOrder decodeSortOrder(final String sortingValue)
     {
         return sortingValue.startsWith("!") ? SortOrder.DESCENDING : SortOrder.ASCENDING;
     }
@@ -148,7 +137,7 @@ public class SortableHeadersToolbar<S> extends AbstractToolbar implements Sortab
      */
     protected Border newSortableCell(final S sortProperty, final ISortState<S> sortState)
     {
-        return new SortableCellBorder<>(CELL, sortProperty, sortState, SortableHeadersToolbar.this);
+        return new SortableCellBorder<>(CELL, sortProperty, sortState, this);
     }
 
     public static final String ROW = "row";

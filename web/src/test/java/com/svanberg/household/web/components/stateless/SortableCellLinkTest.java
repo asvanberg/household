@@ -18,7 +18,7 @@ import static org.mockito.Mockito.when;
  */
 public class SortableCellLinkTest extends WicketTest
 {
-    @Mock SortableCellLink.ISortingParametersProvider<String> sortingParametersProvider;
+    @Mock IPageParameterSorting<String> pageParameterSorting;
 
     private SortableCellLink<String> link;
 
@@ -28,9 +28,9 @@ public class SortableCellLinkTest extends WicketTest
     @Before
     public void setUp()
     {
-        when(sortingParametersProvider.getSortingParameter()).thenReturn("sort");
+        when(pageParameterSorting.getSortParameter()).thenReturn("sort");
 
-        link = tester().startComponentInPage(new SortableCellLink<>("id", sortProperty, order, sortingParametersProvider));
+        link = tester().startComponentInPage(new SortableCellLink<>("id", sortProperty, order, pageParameterSorting));
     }
 
     @Test
@@ -52,8 +52,8 @@ public class SortableCellLinkTest extends WicketTest
         String key = "sort";
         String value = "value";
 
-        when(sortingParametersProvider.getSortingParameter()).thenReturn(key);
-        when(sortingParametersProvider.getSortingValue(eq(sortProperty), eq(order))).thenReturn(value);
+        when(pageParameterSorting.getSortParameter()).thenReturn(key);
+        when(pageParameterSorting.getSortValue(eq(sortProperty), eq(order))).thenReturn(value);
 
         // when
 
