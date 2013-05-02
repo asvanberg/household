@@ -5,7 +5,6 @@ import com.svanberg.household.web.HouseholdWebApplication;
 import org.apache.wicket.spring.injection.annot.SpringComponentInjector;
 import org.apache.wicket.spring.test.ApplicationContextMock;
 import org.apache.wicket.util.tester.WicketTester;
-import org.junit.Before;
 import org.mockito.Mock;
 
 import java.lang.reflect.Field;
@@ -17,18 +16,12 @@ public abstract class SpringWicketTest extends WicketTest
 {
     private ApplicationContextMock ctx;
 
-    @Before
-    public final void setUpSpring() throws Exception
-    {
-        ctx = new ApplicationContextMock();
-
-        populateContext();
-
-    }
 
     @Override
-    protected final WicketTester initWicketTester()
+    protected final WicketTester initWicketTester() throws Exception
     {
+        setUpSpring();
+
         return new BetterWicketTester(new HouseholdWebApplication()
         {
             @Override
@@ -37,6 +30,13 @@ public abstract class SpringWicketTest extends WicketTest
                 return new SpringComponentInjector(this, ctx);
             }
         });
+    }
+
+    private void setUpSpring() throws Exception
+    {
+        ctx = new ApplicationContextMock();
+
+        populateContext();
     }
 
     private void populateContext() throws Exception

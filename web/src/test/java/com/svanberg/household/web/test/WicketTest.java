@@ -11,17 +11,17 @@ import org.mockito.runners.MockitoJUnitRunner;
  * @author Andreas Svanberg (andreass) <andreas.svanberg@mensa.se>
  */
 @RunWith(MockitoJUnitRunner.class)
-public class WicketTest
+public abstract class WicketTest
 {
     private WicketTester tester;
 
     @Before
-    public void setUpTester()
+    public void setUpTester() throws Exception
     {
         tester = initWicketTester();
     }
 
-    protected WicketTester initWicketTester()
+    protected WicketTester initWicketTester() throws Exception
     {
         return new WicketTester();
     }
