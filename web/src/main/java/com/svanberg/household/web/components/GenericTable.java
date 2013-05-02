@@ -1,6 +1,7 @@
 package com.svanberg.household.web.components;
 
 import com.svanberg.household.domain.DomainObject;
+import com.svanberg.household.web.components.stateless.SortableHeadersToolbar;
 import com.svanberg.household.web.spring.DataProviderPage;
 import de.agilecoders.wicket.markup.html.bootstrap.table.TableBehavior;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.*;
@@ -125,7 +126,7 @@ public abstract class GenericTable<T extends DomainObject> extends Panel {
                 return caption;
             }
         };
-        //table.addTopToolbar(new HeadersToolbar<>(table, provider));
+        table.addTopToolbar(new SortableHeadersToolbar<>(table, provider));
         table.addBottomToolbar(new NoRecordsToolbar(table));
         table.add(new TableBehavior().hover().striped());
         add(table);
