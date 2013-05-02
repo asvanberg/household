@@ -1,7 +1,9 @@
 package com.svanberg.household.web.components.stateless;
 
+import org.apache.wicket.extensions.markup.html.repeater.data.sort.ISortState;
 import org.apache.wicket.extensions.markup.html.repeater.data.sort.SortOrder;
 import org.apache.wicket.markup.html.border.Border;
+import org.apache.wicket.markup.html.link.StatelessLink;
 
 /**
  * A border to be used in table headers to decorate the header with a sorting
@@ -9,7 +11,7 @@ import org.apache.wicket.markup.html.border.Border;
  *
  * @author Andreas Svanberg (andreass) <andreas.svanberg@mensa.se>
  */
-public class SortableCellBorder extends Border
+public class SortableCellBorder<S> extends Border
 {
     private static final long serialVersionUID = -3903421327963551000L;
 
@@ -18,15 +20,48 @@ public class SortableCellBorder extends Border
      *
      * @param id                        {@inheritDoc}
      * @param sortProperty              property to sort by
-     * @param sortOrder                 order to sort by
+     * @param sortState                 current sort state
      * @param sortingParametersProvider provider for sorting page parameters
-     * @param <S>                       type of the sorting parameter
      */
-    public <S> SortableCellBorder(final String id, S sortProperty, SortOrder sortOrder, SortableCellLink.ISortingParametersProvider<S> sortingParametersProvider)
+    public SortableCellBorder(final String id, S sortProperty, ISortState<S> sortState, SortableCellLink.ISortingParametersProvider<S> sortingParametersProvider)
     {
         super(id);
 
-        addToBorder(new SortableCellLink<>(LINK, sortProperty, sortOrder, sortingParametersProvider));
+        addToBorder(newSortableLink(sortProperty, sortState, sortingParametersProvider));
+    }
+
+    /**
+     * Factory method for the sorting link.
+     *
+     * @param sortProperty              property the link should sort by
+     * @param sortState                 current sort state
+     * @param sortingParametersProvider provider for sorting page parameters
+     * @return
+     */
+    protected StatelessLink<?> newSortableLink(final S sortProperty, final ISortState<S> sortState, final SortableCellLink.ISortingParametersProvider<S> sortingParametersProvider)
+    {
+        return new SortableCellLink<>(LINK, sortProperty, nextOrder(sortProperty, sortState), sortingParametersProvider);
+    }
+
+    /**
+     * Calculates the next order to enable toggling.
+     *
+     * @param sortProperty    property to sort by
+     * @param sortState       current sort state
+     * @return the next sort order
+     */
+    protected SortOrder nextOrder(final S sortProperty, final ISortState<S> sortState)
+    {
+        SortOrder order = sortState.getPropertySortOrder(sortProperty);
+
+        if (order == SortOrder.NONE)
+        {
+            return SortOrder.ASCENDING;
+        }
+        else
+        {
+            return order == SortOrder.ASCENDING ? SortOrder.DESCENDING : SortOrder.ASCENDING;
+        }
     }
 
     public static final String LINK = "link";

@@ -148,21 +148,7 @@ public class SortableHeadersToolbar<S> extends AbstractToolbar implements Sortab
      */
     protected Border newSortableCell(final S sortProperty, final ISortState<S> sortState)
     {
-        return new SortableCellBorder(CELL, sortProperty, nextOrder(sortProperty, sortState), SortableHeadersToolbar.this);
-    }
-
-    protected SortOrder nextOrder(final S sortProperty, final ISortState<S> sortState)
-    {
-        SortOrder order = sortState.getPropertySortOrder(sortProperty);
-
-        if (order == SortOrder.NONE)
-        {
-            return SortOrder.ASCENDING;
-        }
-        else
-        {
-            return order == SortOrder.ASCENDING ? SortOrder.DESCENDING : SortOrder.ASCENDING;
-        }
+        return new SortableCellBorder<>(CELL, sortProperty, sortState, SortableHeadersToolbar.this);
     }
 
     public static final String ROW = "row";
