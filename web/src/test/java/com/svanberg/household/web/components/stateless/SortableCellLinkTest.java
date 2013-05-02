@@ -5,6 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 /**
  * @author Andreas Svanberg (andreass) <andreas.svanberg@mensa.se>
@@ -23,5 +24,11 @@ public class SortableCellLinkTest extends WicketTest
     public void testRenders() throws Exception
     {
         assertNotNull("Does not render", link);
+    }
+
+    @Test
+    public void testStateless() throws Exception
+    {
+        assertTrue("Is not stateless", link.isStateless());
     }
 }
