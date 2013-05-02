@@ -1,6 +1,6 @@
 package com.svanberg.household.web.components;
 
-import com.svanberg.household.web.test.WicketTest;
+import com.svanberg.household.web.test.SpringWicketTest;
 import org.apache.wicket.markup.html.navigation.paging.IPageable;
 import org.junit.Before;
 import org.junit.Test;
@@ -11,7 +11,7 @@ import static org.junit.Assert.assertTrue;
 /**
  * @author Andreas Svanberg (andreass) <andreas.svanberg@mensa.se>
  */
-public class StatelessPagingNavigatorTest extends WicketTest
+public class StatelessPagingNavigatorTest extends SpringWicketTest
 {
     private StatelessPagingNavigator statelessPagingNavigator;
 
