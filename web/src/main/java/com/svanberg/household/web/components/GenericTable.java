@@ -1,11 +1,13 @@
 package com.svanberg.household.web.components;
 
 import com.svanberg.household.domain.DomainObject;
+import com.svanberg.household.web.components.stateless.SelectColumn;
 import com.svanberg.household.web.components.stateless.SortableHeadersToolbar;
 import com.svanberg.household.web.spring.DataProviderPage;
 import de.agilecoders.wicket.markup.html.bootstrap.table.TableBehavior;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.*;
 import org.apache.wicket.extensions.markup.html.repeater.util.SortableDataProvider;
+import org.apache.wicket.markup.html.form.StatelessForm;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
 import org.springframework.data.domain.Pageable;
@@ -22,11 +24,14 @@ public abstract class GenericTable<T extends DomainObject> extends Panel {
 
     private final List<IColumn<T, String>> columns = new ArrayList<>();
     private boolean selectionColumn = false;
-    private SelectionColumn<T, String> selectColumn;
+    private SelectColumn<T, String> selectColumn;
     private IModel<String> caption = null;
+    private StatelessForm<Void> form;
 
     public GenericTable(final String id) {
         super(id);
+
+        form = new StatelessForm<>("form");
     }
 
     /**
@@ -67,6 +72,10 @@ public abstract class GenericTable<T extends DomainObject> extends Panel {
      * Set if a selection column should be included in the table. It will be
      * the first column.
      *
+     * If you use the selection column; submit {@link #getForm()} to update the
+     * selection and perform actions on {@link #getSelection()} in the callback
+     * {@link org.apache.wicket.markup.html.form.IFormSubmitter#onSubmit()}.
+     *
      * @param selectionColumn {@code true} to include the column
      * @return this
      */
@@ -76,12 +85,22 @@ public abstract class GenericTable<T extends DomainObject> extends Panel {
     }
 
     /**
-     * Returns the currently selected entities.
+     * Returns the form that needs to be submitted to update the selection.
+     *
+     * @return form to submit for selection to be updated
+     */
+    public StatelessForm<?> getForm()
+    {
+        return form;
+    }
+
+    /**
+     * Returns the currently selected entities. Will never return {@code null}.
      *
      * @return the currently selected entities
      */
     @SuppressWarnings("unchecked")
-    public final Collection<T> getSelection() {
+    public final Collection<IModel<T>> getSelection() {
         return selectColumn != null ? selectColumn.getSelection() : Collections.EMPTY_SET;
     }
 
@@ -113,7 +132,7 @@ public abstract class GenericTable<T extends DomainObject> extends Panel {
         super.onInitialize();
 
         if (selectionColumn) {
-            addColumn(selectColumn = new SelectionColumn<>());
+            addColumn(selectColumn = new SelectColumn<>());
         }
 
         addColumns();
@@ -129,7 +148,7 @@ public abstract class GenericTable<T extends DomainObject> extends Panel {
         table.addTopToolbar(new SortableHeadersToolbar<>(table, provider));
         table.addBottomToolbar(new NoRecordsToolbar(table));
         table.add(new TableBehavior().hover().striped());
-        add(table);
+        form.add(table); // Table resides in a form to enable selection column
 
         StatelessPagingNavigator paging = new StatelessPagingNavigator(PAGING, table)
         {
@@ -142,13 +161,17 @@ public abstract class GenericTable<T extends DomainObject> extends Panel {
         };
         add(paging);
 
-        add(new NavigatorLabel(RESULTS, table) {
+        add(new NavigatorLabel(RESULTS, table)
+        {
             @Override
-            protected void onConfigure() {
+            protected void onConfigure()
+            {
                 super.onConfigure();
                 setVisibilityAllowed(count() > 0);
             }
         });
+
+        add(form);
     }
 
     private class TableProvider extends SortableDataProvider<T, String> {
