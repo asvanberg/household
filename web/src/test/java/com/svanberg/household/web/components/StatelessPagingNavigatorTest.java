@@ -1,5 +1,6 @@
 package com.svanberg.household.web.components;
 
+import com.svanberg.household.web.components.stateless.StatelessPagingNavigator;
 import com.svanberg.household.web.test.SpringWicketTest;
 import org.apache.wicket.markup.html.navigation.paging.IPageable;
 import org.junit.Before;

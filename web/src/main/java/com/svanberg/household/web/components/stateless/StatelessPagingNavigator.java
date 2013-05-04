@@ -1,4 +1,4 @@
-package com.svanberg.household.web.components;
+package com.svanberg.household.web.components.stateless;
 
 import org.apache.wicket.Page;
 import org.apache.wicket.markup.html.link.AbstractLink;

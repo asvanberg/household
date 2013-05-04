@@ -3,6 +3,7 @@ package com.svanberg.household.web.components;
 import com.svanberg.household.domain.DomainObject;
 import com.svanberg.household.web.components.stateless.SelectColumn;
 import com.svanberg.household.web.components.stateless.SortableHeadersToolbar;
+import com.svanberg.household.web.components.stateless.StatelessPagingNavigator;
 import com.svanberg.household.web.spring.DataProviderPage;
 import de.agilecoders.wicket.markup.html.bootstrap.table.TableBehavior;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.*;
