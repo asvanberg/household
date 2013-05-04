@@ -16,10 +16,10 @@ import org.mockito.stubbing.Answer;
 
 import java.util.Arrays;
 import java.util.Date;
-import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -150,17 +150,15 @@ public class ExpenseServiceImplTest {
     }
 
     @Test
-    @SuppressWarnings("unchecked")
     public void testDelete() throws Exception {
         // given
         Expense expense = new Expense();
-        List<Expense> expenses = Arrays.asList(expense);
 
         // when
-        service.delete(expenses);
+        service.delete(expense);
 
         // then
-        verify(repository, times(1)).delete(isA(Iterable.class));
+        verify(repository, times(1)).delete(eq(expense));
     }
 
     @Test

@@ -65,7 +65,7 @@ public class ExpenseServiceImpl implements ExpenseService {
 
     @Override
     @Transactional
-    public void delete(final Iterable<Expense> expenses) {
+    public void delete(final Expense expenses) {
         repository.delete(expenses);
     }
 

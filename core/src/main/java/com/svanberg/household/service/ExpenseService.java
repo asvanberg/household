@@ -28,11 +28,11 @@ public interface ExpenseService {
     Expense setCategory(Expense expense, Category category);
 
     /**
-     * Deletes all the expenses.
+     * Deletes the given expense.
      *
-     * @param expenses to delete
+     * @param expense to delete
      */
-    void delete(Iterable<Expense> expenses);
+    void delete(Expense expense);
 
     /**
      * Returns the total cost of all expenses.
