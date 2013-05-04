@@ -1,11 +1,14 @@
 package com.svanberg.household.web.expense;
 
+import com.svanberg.household.domain.Expense;
 import com.svanberg.household.service.ExpenseService;
 import com.svanberg.household.web.pages.HouseholdPage;
 
 import org.apache.wicket.devutils.stateless.StatelessComponent;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.form.SubmitLink;
+import org.apache.wicket.model.IModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
@@ -23,8 +26,7 @@ public class ExpensePage extends HouseholdPage {
     public ExpensePage(PageParameters parameters) {
         super(parameters);
 
-        StatelessAddExpensePanel dialog = new StatelessAddExpensePanel("dialog") {
-        };
+        StatelessAddExpensePanel dialog = new StatelessAddExpensePanel("dialog");
         add(dialog);
         WebMarkupContainer wmc = new WebMarkupContainer("open");
         dialog.addOpenerAttributesTo(wmc);
@@ -33,15 +35,18 @@ public class ExpensePage extends HouseholdPage {
         table.setOutputMarkupId(true);
         add(table);
 
-        /*AjaxFallbackLink<Void> delete = new AjaxFallbackLink<Void>("delete") {
+        add(new SubmitLink("delete", table.getForm()) {
             @Override
-            public void onClick(final AjaxRequestTarget target) {
-                Collection<Expense> selection = table.getSelection();
-                expenseService.delete(selection);
-                target.add(table);
+            public void onSubmit()
+            {
+                for (IModel<Expense> model : table.getSelection())
+                {
+                    expenseService.delete(model.getObject());
+                }
+
+                setResponsePage(getPageClass(), getPageParameters());
             }
-        };
-        add(delete);*/
+        });
 
         int total = expenseService.totalExpenses();
         long count = expenseService.count();
