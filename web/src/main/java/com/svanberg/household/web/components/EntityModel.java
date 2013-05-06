@@ -44,7 +44,7 @@ public class EntityModel<T extends DomainObject> implements IModel<T> {
 
     @Override
     public void setObject(final T object) {
-        identifier = object.getIdentifier();
+        identifier = object != null ? object.getIdentifier() : null;
         entity = object;
     }
 
