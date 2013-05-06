@@ -26,7 +26,7 @@ public class ExpensePage extends HouseholdPage {
     public ExpensePage(PageParameters parameters) {
         super(parameters);
 
-        StatelessAddExpensePanel dialog = new StatelessAddExpensePanel("dialog");
+        AddExpenseDialog dialog = new AddExpenseDialog("dialog");
         add(dialog);
         WebMarkupContainer wmc = new WebMarkupContainer("open");
         dialog.addOpenerAttributesTo(wmc);

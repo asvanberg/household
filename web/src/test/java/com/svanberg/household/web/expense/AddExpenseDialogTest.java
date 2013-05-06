@@ -32,20 +32,20 @@ import static org.mockito.Mockito.when;
 /**
  * @author Andreas Svanberg (andreass) <andreas.svanberg@mensa.se>
  */
-public class StatelessAddExpensePanelTest extends SpringWicketTest
+public class AddExpenseDialogTest extends SpringWicketTest
 {
     private static final Locale LOCALE = Locale.UK;
 
     @Mock CategoryService categoryService;
     @Mock ExpenseService expenseService;
 
-    private StatelessAddExpensePanel panel;
+    private AddExpenseDialog panel;
 
     @Before
     public void setUp()
     {
         tester().getSession().setLocale(LOCALE);
-        panel = tester().startComponentInPage(StatelessAddExpensePanel.class);
+        panel = tester().startComponentInPage(AddExpenseDialog.class);
     }
 
     @Test
@@ -63,22 +63,22 @@ public class StatelessAddExpensePanelTest extends SpringWicketTest
     @Test
     public void testHasForm()
     {
-        tester().assertComponent(path(StatelessAddExpensePanel.FORM), Form.class);
+        tester().assertComponent(path(AddExpenseDialog.FORM), Form.class);
     }
 
     @Test
     public void testContainsFormComponents()
     {
-        assertFormComponent(StatelessAddExpensePanel.DATE);
-        assertFormComponent(StatelessAddExpensePanel.COST);
-        assertFormComponent(StatelessAddExpensePanel.DESCRIPTION);
-        assertFormComponent(StatelessAddExpensePanel.CATEGORY);
+        assertFormComponent(AddExpenseDialog.DATE);
+        assertFormComponent(AddExpenseDialog.COST);
+        assertFormComponent(AddExpenseDialog.DESCRIPTION);
+        assertFormComponent(AddExpenseDialog.CATEGORY);
     }
 
     @Test
     public void testShowsErrorOnEmptySubmit()
     {
-        FormTester formTester = tester().newFormTester(StatelessAddExpensePanel.FORM);
+        FormTester formTester = tester().newFormTester(AddExpenseDialog.FORM);
         formTester.submit();
 
         assertFalse("Expected error feedback messages", tester().getMessages(FeedbackMessage.ERROR).isEmpty());
@@ -93,10 +93,10 @@ public class StatelessAddExpensePanelTest extends SpringWicketTest
         String description = "Description";
 
         // when
-        FormTester formTester = tester().newFormTester(StatelessAddExpensePanel.FORM);
-        formTester.setValue(formComponentPath(StatelessAddExpensePanel.DATE), convertDate(date));
-        formTester.setValue(formComponentPath(StatelessAddExpensePanel.COST), String.valueOf(cost));
-        formTester.setValue(formComponentPath(StatelessAddExpensePanel.DESCRIPTION), description);
+        FormTester formTester = tester().newFormTester(AddExpenseDialog.FORM);
+        formTester.setValue(formComponentPath(AddExpenseDialog.DATE), convertDate(date));
+        formTester.setValue(formComponentPath(AddExpenseDialog.COST), String.valueOf(cost));
+        formTester.setValue(formComponentPath(AddExpenseDialog.DESCRIPTION), description);
         formTester.submit();
 
         // then
@@ -121,11 +121,11 @@ public class StatelessAddExpensePanelTest extends SpringWicketTest
 
         // when
         setUp();
-        FormTester formTester = tester().newFormTester(StatelessAddExpensePanel.FORM);
-        formTester.setValue(formComponentPath(StatelessAddExpensePanel.DATE), convertDate(new Date()));
-        formTester.setValue(formComponentPath(StatelessAddExpensePanel.COST), "23");
-        formTester.setValue(formComponentPath(StatelessAddExpensePanel.DESCRIPTION), "Desc");
-        formTester.select(formComponentPath(StatelessAddExpensePanel.CATEGORY), index);
+        FormTester formTester = tester().newFormTester(AddExpenseDialog.FORM);
+        formTester.setValue(formComponentPath(AddExpenseDialog.DATE), convertDate(new Date()));
+        formTester.setValue(formComponentPath(AddExpenseDialog.COST), "23");
+        formTester.setValue(formComponentPath(AddExpenseDialog.DESCRIPTION), "Desc");
+        formTester.select(formComponentPath(AddExpenseDialog.CATEGORY), index);
         formTester.submit();
 
         // then
@@ -139,12 +139,12 @@ public class StatelessAddExpensePanelTest extends SpringWicketTest
 
     private void assertFormComponent(final String id)
     {
-        tester().assertComponent(path(StatelessAddExpensePanel.FORM, formComponentPath(id)), FormComponent.class);
+        tester().assertComponent(path(AddExpenseDialog.FORM, formComponentPath(id)), FormComponent.class);
     }
 
     private String formComponentPath(final String id)
     {
-        return path(borderPath(id), StatelessAddExpensePanel.INPUT);
+        return path(borderPath(id), AddExpenseDialog.INPUT);
     }
 
     private String borderPath(String borderId)

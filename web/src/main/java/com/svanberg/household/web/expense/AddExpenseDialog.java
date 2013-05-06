@@ -29,7 +29,7 @@ import java.util.List;
 /**
  * @author Andreas Svanberg (andreass) <andreas.svanberg@mensa.se>
  */
-public class StatelessAddExpensePanel extends Modal
+public class AddExpenseDialog extends Modal
 {
     private static final long serialVersionUID = -3888489317063097931L;
 
@@ -41,7 +41,7 @@ public class StatelessAddExpensePanel extends Modal
     private final IModel<String> description = new Model<>();
     private final IModel<Category> category = new EntityModel<>(Category.class);
 
-    public StatelessAddExpensePanel(final String id)
+    public AddExpenseDialog(final String id)
     {
         super(id);
 
