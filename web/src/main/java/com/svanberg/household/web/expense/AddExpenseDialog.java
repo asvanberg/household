@@ -130,7 +130,8 @@ public class AddExpenseDialog extends Modal
         {
             Expense expense = expenseService.create(date.getObject(), description.getObject(), cost.getObject());
             expenseService.setCategory(expense, category.getObject());
-            setResponsePage(getPage().getPageClass(), getPage().getPageParameters());
+            clearInput();
+            date.setObject(null);
         }
 
         @Override
