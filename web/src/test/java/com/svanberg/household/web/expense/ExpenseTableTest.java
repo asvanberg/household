@@ -3,7 +3,6 @@ package com.svanberg.household.web.expense;
 import com.svanberg.household.service.ExpenseService;
 import com.svanberg.household.web.test.SpringWicketTest;
 
-import org.apache.wicket.extensions.markup.html.repeater.data.table.DataTable;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -28,10 +27,5 @@ public class ExpenseTableTest extends SpringWicketTest
     @Test
     public void testRenders() throws Exception {
         assertNotNull("Does not render", panel);
-    }
-
-    @Test
-    public void testHasTable() throws Exception {
-        tester().assertComponent(ExpenseTable.TABLE, DataTable.class);
     }
 }
