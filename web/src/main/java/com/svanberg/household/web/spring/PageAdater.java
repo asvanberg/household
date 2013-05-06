@@ -5,15 +5,18 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
 /**
+ * Adapter class between Wicket {@link org.apache.wicket.markup.repeater.data.IDataProvider}
+ * and Spring {@link org.springframework.data.domain.Pageable}.
+ *
  * @author Andreas Svanberg (andreass) <andreas.svanberg@mensa.se>
  */
-public class DataProviderPage implements Pageable {
+public class PageAdater implements Pageable {
 
     private final long offset;
     private final long count;
-    private final SortParam sort;
+    private final SortParam<String> sort;
 
-    public DataProviderPage(final long offset, final long count, final SortParam sort) {
+    public PageAdater(final long offset, final long count, final SortParam<String> sort) {
         this.offset = offset;
         this.count = count;
         this.sort = sort;
@@ -41,6 +44,6 @@ public class DataProviderPage implements Pageable {
 
         return new Sort(
                 sort.isAscending() ? Sort.Direction.ASC : Sort.Direction.DESC,
-                sort.getProperty().toString());
+                sort.getProperty());
     }
 }

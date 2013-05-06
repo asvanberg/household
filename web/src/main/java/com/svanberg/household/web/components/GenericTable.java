@@ -4,14 +4,13 @@ import com.svanberg.household.domain.DomainObject;
 import com.svanberg.household.web.components.stateless.SelectColumn;
 import com.svanberg.household.web.components.stateless.SortableHeadersToolbar;
 import com.svanberg.household.web.components.stateless.StatelessPagingNavigator;
-import com.svanberg.household.web.spring.DataProviderPage;
 import de.agilecoders.wicket.markup.html.bootstrap.table.TableBehavior;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.*;
+import org.apache.wicket.extensions.markup.html.repeater.util.SortParam;
 import org.apache.wicket.extensions.markup.html.repeater.util.SortableDataProvider;
 import org.apache.wicket.markup.html.form.StatelessForm;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
-import org.springframework.data.domain.Pageable;
 
 import java.util.*;
 
@@ -38,10 +37,13 @@ public abstract class GenericTable<T extends DomainObject> extends Panel {
     /**
      * Returns the entities that should be on the given page.
      *
-     * @param pageable the page
-     * @return the entities that should be on the page
+     *
+     * @param first offset for the first result
+     * @param count how many results to return
+     * @param sort  sorting specification
+     * @return entities that should be on the page
      */
-    protected abstract Iterable<T> getEntities(final Pageable pageable);
+    protected abstract Iterable<T> getEntities(final long first, final long count, final SortParam<String> sort);
 
     /**
      * Add your columns here.
@@ -180,7 +182,7 @@ public abstract class GenericTable<T extends DomainObject> extends Panel {
 
         @Override
         public Iterator<? extends T> iterator(final long first, final long count) {
-            return getEntities(new DataProviderPage(first, count, getSort())).iterator();
+            return getEntities(first, count, getSort()).iterator();
         }
 
         @Override

@@ -3,7 +3,9 @@ package com.svanberg.household.web.expense;
 import com.svanberg.household.domain.Expense;
 import com.svanberg.household.service.ExpenseService;
 import com.svanberg.household.web.components.GenericTable;
+import com.svanberg.household.web.spring.PageAdater;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.export.AbstractExportableColumn;
+import org.apache.wicket.extensions.markup.html.repeater.util.SortParam;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.ResourceModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
@@ -30,8 +32,10 @@ public class ExpenseTable extends GenericTable<Expense> {
     }
 
     @Override
-    protected Iterable<Expense> getEntities(Pageable pageable) {
-        return expenseService.findAll(pageable);
+    protected Iterable<Expense> getEntities(final long first, final long count, final SortParam<String> sort)
+    {
+        Pageable page = new PageAdater(first, count, sort);
+        return expenseService.findAll(page);
     }
 
     @Override
