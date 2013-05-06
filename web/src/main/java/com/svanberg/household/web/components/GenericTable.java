@@ -126,7 +126,15 @@ public abstract class GenericTable<T extends DomainObject> extends Panel {
         return 20;
     }
 
-    private ISortableDataProvider<T, String> getProvider() {
+    /**
+     * Returns the provider used to populate the table.
+     *
+     * Overriding this method will render {@link #count()} and
+     * {@link #getEntities(long, long, SortParam)} unused.
+     *
+     * @return the provider used to populate the table
+     */
+    protected ISortableDataProvider<T, String> getProvider() {
         return new TableProvider();
     }
 
@@ -177,7 +185,7 @@ public abstract class GenericTable<T extends DomainObject> extends Panel {
         add(form);
     }
 
-    private class TableProvider extends SortableDataProvider<T, String> {
+    protected class TableProvider extends SortableDataProvider<T, String> {
         private static final long serialVersionUID = 603419089968507278L;
 
         @Override

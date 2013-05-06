@@ -4,6 +4,8 @@ import com.svanberg.household.domain.Expense;
 import com.svanberg.household.service.ExpenseService;
 import com.svanberg.household.web.components.GenericTable;
 import com.svanberg.household.web.spring.PageAdater;
+import org.apache.wicket.extensions.markup.html.repeater.data.sort.SortOrder;
+import org.apache.wicket.extensions.markup.html.repeater.data.table.ISortableDataProvider;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.export.AbstractExportableColumn;
 import org.apache.wicket.extensions.markup.html.repeater.util.SortParam;
 import org.apache.wicket.model.IModel;
@@ -29,6 +31,16 @@ public class ExpenseTable extends GenericTable<Expense> {
 
         selectionColumn(true);
         caption(new ResourceModel("caption"));
+    }
+
+    @Override
+    protected ISortableDataProvider<Expense, String> getProvider()
+    {
+        return new TableProvider() {
+            {
+                setSort("date", SortOrder.DESCENDING);
+            }
+        };
     }
 
     @Override
