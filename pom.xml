@@ -38,7 +38,7 @@
         <hsqldb.version>2.2.9</hsqldb.version>
         <mockito.version>1.9.5</mockito.version>
         <jetty.version>9.0.0.M5</jetty.version>
-        <wicket.version>6.6.0</wicket.version>
+        <wicket.version>6.7.0</wicket.version>
         <wicket-bootstrap.version>0.8.1</wicket-bootstrap.version>
         <wicket-model.version>0.6</wicket-model.version>
     </properties>
