@@ -25,6 +25,7 @@ public class SortableHeadersToolbar<S> extends HeadersToolbar<S> implements IPag
     public static final String SORTING_PAGE_PARAMETER = "sort";
 
     private final ISortStateLocator<S> sortStateLocator;
+    private final Class<S> sortType;
 
     /**
      * Construct.
@@ -34,9 +35,15 @@ public class SortableHeadersToolbar<S> extends HeadersToolbar<S> implements IPag
      */
     public SortableHeadersToolbar(final DataTable<?, S> table, final ISortStateLocator<S> sortStateLocator)
     {
+        this(table, sortStateLocator, null);
+    }
+
+    public SortableHeadersToolbar(final DataTable<?, S> table, final ISortStateLocator<S> sortStateLocator, final Class<S> sortType)
+    {
         super(table, sortStateLocator);
 
         this.sortStateLocator = sortStateLocator;
+        this.sortType = sortType;
     }
 
     /**
@@ -69,17 +76,17 @@ public class SortableHeadersToolbar<S> extends HeadersToolbar<S> implements IPag
     @Override
     public String getSortValue(final S sortProperty, final SortOrder order)
     {
-        return (order == SortOrder.DESCENDING ? "!" : "") + sortProperty;
+        return (order == SortOrder.DESCENDING ? "!" : "") + getConverter(sortType).convertToString(sortProperty, getLocale());
     }
 
     /**
      * {@inheritDoc}
      */
-    @SuppressWarnings("unchecked")
     @Override
     public S decodeSortProperty(final String sortingValue)
     {
-        return (S) (sortingValue.startsWith("!") ? sortingValue.substring(1) : sortingValue);
+        String sort = sortingValue.startsWith("!") ? sortingValue.substring(1) : sortingValue;
+        return getConverter(sortType).convertToObject(sort, getLocale());
     }
 
     /**
