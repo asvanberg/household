@@ -156,7 +156,7 @@ public abstract class GenericTable<T extends DomainObject> extends Panel {
                 return caption;
             }
         };
-        table.addTopToolbar(new SortableHeadersToolbar<>(table, provider));
+        table.addTopToolbar(new SortableHeadersToolbar<>(table, provider, getPage().getPageParameters()));
         table.addBottomToolbar(new NoRecordsToolbar(table));
         table.add(new TableBehavior().hover().striped());
         form.add(table); // Table resides in a form to enable selection column

@@ -5,6 +5,7 @@ import org.apache.wicket.extensions.markup.html.repeater.data.sort.SortOrder;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.DataTable;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.HeadersToolbar;
 import org.apache.wicket.markup.html.WebMarkupContainer;
+import org.apache.wicket.request.mapper.parameter.INamedParameters;
 
 /**
  * A stateless table header toolbar with sorting support via page parameters.
@@ -26,24 +27,24 @@ public class SortableHeadersToolbar<S> extends HeadersToolbar<S> implements IPag
 
     private final ISortStateLocator<S> sortStateLocator;
     private final Class<S> sortType;
+    private final INamedParameters parameters;
 
-    /**
-     * Construct.
-     *
-     * @param table {@inheritDoc}
-     * @param sortStateLocator the locator whose state will be sorted
-     */
-    public SortableHeadersToolbar(final DataTable<?, S> table, final ISortStateLocator<S> sortStateLocator)
+    public SortableHeadersToolbar(DataTable<?, S> table, ISortStateLocator<S> sortStateLocator, INamedParameters parameters)
     {
-        this(table, sortStateLocator, null);
+        this(table, sortStateLocator, parameters, null);
     }
 
-    public SortableHeadersToolbar(final DataTable<?, S> table, final ISortStateLocator<S> sortStateLocator, final Class<S> sortType)
+    public SortableHeadersToolbar(
+            DataTable<?, S> table,
+            ISortStateLocator<S> sortStateLocator,
+            INamedParameters parameters,
+            Class<S> sortType)
     {
         super(table, sortStateLocator);
 
         this.sortStateLocator = sortStateLocator;
         this.sortType = sortType;
+        this.parameters = parameters;
     }
 
     /**
@@ -52,7 +53,7 @@ public class SortableHeadersToolbar<S> extends HeadersToolbar<S> implements IPag
     @Override
     public void sort()
     {
-        String sortingValue = getPage().getPageParameters().get(getSortParameter()).toOptionalString();
+        String sortingValue = parameters.get(getSortParameter()).toOptionalString();
         if (sortingValue != null)
         {
             S sortProperty = decodeSortProperty(sortingValue);

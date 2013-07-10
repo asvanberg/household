@@ -42,7 +42,7 @@ public class SortableHeadersToolbarTest extends WicketTest
     private void startToolbar(final List<IColumn<String, String>> columns)
     {
         table = new DataTable<>("id", columns, provider, 10L);
-        toolbar = tester().startComponentInPage(new SortableHeadersToolbar<>(table, sortStateLocator));
+        toolbar = tester().startComponentInPage(new SortableHeadersToolbar<>(table, sortStateLocator, null));
     }
 
     @Test
