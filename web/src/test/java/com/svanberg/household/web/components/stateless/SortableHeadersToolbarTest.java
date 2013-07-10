@@ -5,7 +5,6 @@ import org.apache.wicket.extensions.markup.html.repeater.data.sort.ISortStateLoc
 import org.apache.wicket.extensions.markup.html.repeater.data.table.DataTable;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
 import org.apache.wicket.markup.html.WebMarkupContainer;
-import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.repeater.data.IDataProvider;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,7 +15,6 @@ import org.mockito.stubbing.Answer;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.isA;
@@ -59,33 +57,9 @@ public class SortableHeadersToolbarTest extends WicketTest
         assertTrue("Is not stateless", toolbar.isStateless());
     }
 
-    @Test
-    public void testContainsRepeaterForHeaders() throws Exception
-    {
-        tester().assertComponent(path(toolbar, SortableHeadersToolbar.ROW), ListView.class);
-    }
-
-    @Test
-    @SuppressWarnings("unchecked")
-    public void testContainsHeaderForEveryColumn() throws Exception
-    {
-        // given
-        IColumn<String, String> column = mockColumn();
-        List<IColumn<String, String>> columns = Arrays.asList(column, column, column);
-
-        // when
-        startToolbar(columns);
-
-        // then
-        tester().assertComponent(path(toolbar, SortableHeadersToolbar.ROW), ListView.class);
-        ListView<?> component = (ListView<?>) tester().getComponentFromLastRenderedPage(path(toolbar, SortableHeadersToolbar.ROW));
-
-        assertEquals("Wrong number of columns", columns.size(), component.getViewSize());
-    }
-
-    @SuppressWarnings("unchecked")
     private IColumn<String, String> mockColumn()
     {
+        @SuppressWarnings("unchecked")
         IColumn<String, String> column = mock(IColumn.class);
         when(column.getHeader(isA(String.class))).then(new Answer<Object>()
         {
