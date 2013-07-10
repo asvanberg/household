@@ -24,6 +24,7 @@ public class SortableHeadersToolbar<S> extends HeadersToolbar<S> implements IPag
      * @see #getSortParameter()
      */
     public static final String SORTING_PAGE_PARAMETER = "sort";
+    public static final String DESCENDING_PREFIX = "!";
 
     private final ISortStateLocator<S> sortStateLocator;
     private final Class<S> sortType;
@@ -45,6 +46,8 @@ public class SortableHeadersToolbar<S> extends HeadersToolbar<S> implements IPag
         this.sortStateLocator = sortStateLocator;
         this.sortType = sortType;
         this.parameters = parameters;
+
+        sort();
     }
 
     /**
@@ -77,7 +80,8 @@ public class SortableHeadersToolbar<S> extends HeadersToolbar<S> implements IPag
     @Override
     public String getSortValue(final S sortProperty, final SortOrder order)
     {
-        return (order == SortOrder.DESCENDING ? "!" : "") + getConverter(sortType).convertToString(sortProperty, getLocale());
+        return (order == SortOrder.DESCENDING ? DESCENDING_PREFIX : "") +
+                getConverter(sortType).convertToString(sortProperty, getLocale());
     }
 
     /**
@@ -86,7 +90,7 @@ public class SortableHeadersToolbar<S> extends HeadersToolbar<S> implements IPag
     @Override
     public S decodeSortProperty(final String sortingValue)
     {
-        String sort = sortingValue.startsWith("!") ? sortingValue.substring(1) : sortingValue;
+        String sort = sortingValue.startsWith(DESCENDING_PREFIX) ? sortingValue.substring(1) : sortingValue;
         return getConverter(sortType).convertToObject(sort, getLocale());
     }
 
@@ -96,7 +100,7 @@ public class SortableHeadersToolbar<S> extends HeadersToolbar<S> implements IPag
     @Override
     public SortOrder decodeSortOrder(final String sortingValue)
     {
-        return sortingValue.startsWith("!") ? SortOrder.DESCENDING : SortOrder.ASCENDING;
+        return sortingValue.startsWith(DESCENDING_PREFIX) ? SortOrder.DESCENDING : SortOrder.ASCENDING;
     }
 
     @Override

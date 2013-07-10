@@ -1,11 +1,15 @@
 package com.svanberg.household.web.components.stateless;
 
 import com.svanberg.household.web.test.WicketTest;
+import org.apache.wicket.extensions.markup.html.repeater.data.sort.ISortState;
 import org.apache.wicket.extensions.markup.html.repeater.data.sort.ISortStateLocator;
+import org.apache.wicket.extensions.markup.html.repeater.data.sort.SortOrder;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.DataTable;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.repeater.data.IDataProvider;
+import org.apache.wicket.request.mapper.parameter.INamedParameters;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -18,8 +22,7 @@ import java.util.List;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.isA;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 /**
  * @author Andreas Svanberg (andreass) <andreas.svanberg@mensa.se>
@@ -27,7 +30,7 @@ import static org.mockito.Mockito.when;
 public class SortableHeadersToolbarTest extends WicketTest
 {
     @Mock IDataProvider<String> provider;
-    @Mock ISortStateLocator<String> sortStateLocator;
+    @Mock ISortState<String> sort;
     @Mock DataTable<String, String> table; // cant actually use the mock since getColumns() is final
 
     private SortableHeadersToolbar toolbar;
@@ -36,13 +39,21 @@ public class SortableHeadersToolbarTest extends WicketTest
     public void setUp() throws Exception
     {
         IColumn<String, String> column = mockColumn();
-        startToolbar(Arrays.asList(column));
+        startToolbar(Arrays.asList(column), new PageParameters());
     }
 
-    private void startToolbar(final List<IColumn<String, String>> columns)
+    private void startToolbar(final List<IColumn<String, String>> columns, INamedParameters parameters)
     {
+        ISortStateLocator<String> sortStateLocator = new ISortStateLocator<String>()
+        {
+            @Override
+            public ISortState<String> getSortState()
+            {
+                return sort;
+            }
+        };
         table = new DataTable<>("id", columns, provider, 10L);
-        toolbar = tester().startComponentInPage(new SortableHeadersToolbar<>(table, sortStateLocator, null));
+        toolbar = tester().startComponentInPage(new SortableHeadersToolbar<>(table, sortStateLocator, parameters));
     }
 
     @Test
@@ -55,6 +66,42 @@ public class SortableHeadersToolbarTest extends WicketTest
     public void testStateless() throws Exception
     {
         assertTrue("Is not stateless", toolbar.isStateless());
+    }
+
+    @Test
+    public void testAscendingSort() throws Exception
+    {
+        String property = "date";
+
+        startToolbarWithSort(property);
+
+        verify(sort).setPropertySortOrder(property, SortOrder.ASCENDING);
+    }
+
+    @Test
+    public void testDescendingSort() throws Exception
+    {
+        String property = "date";
+
+        startToolbarWithSort(SortableHeadersToolbar.DESCENDING_PREFIX + property);
+
+        verify(sort).setPropertySortOrder(property, SortOrder.DESCENDING);
+    }
+
+    @Test
+    public void testNoSort() throws Exception
+    {
+        startToolbarWithSort(null);
+
+        verify(sort, never()).setPropertySortOrder(anyString(), any(SortOrder.class));
+    }
+
+    private void startToolbarWithSort(String property)
+    {
+        PageParameters parameters = new PageParameters();
+        parameters.set(SortableHeadersToolbar.SORTING_PAGE_PARAMETER, property);
+
+        startToolbar(Arrays.asList(mockColumn()), parameters);
     }
 
     private IColumn<String, String> mockColumn()
