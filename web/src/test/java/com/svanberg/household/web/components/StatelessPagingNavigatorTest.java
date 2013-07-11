@@ -15,6 +15,7 @@ import static com.svanberg.household.web.components.stateless.StatelessPagingNav
 import static com.svanberg.household.web.test.Assert.assertStateless;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 /**
@@ -53,6 +54,17 @@ public class StatelessPagingNavigatorTest extends WicketTest
     {
         start();
         assertStateless(statelessPagingNavigator);
+    }
+
+    @Test
+    public void testPagingParameter() throws Exception
+    {
+        long page = 1L;
+        when(parameters.get(eq(PAGING_PAGE_PARAMETER))).thenReturn(StringValue.valueOf(page));
+
+        start();
+
+        verify(pageable).setCurrentPage(page);
     }
 
     private void start()
