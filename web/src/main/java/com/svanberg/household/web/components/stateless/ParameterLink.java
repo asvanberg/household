@@ -12,7 +12,12 @@ public class ParameterLink extends StatelessLink<Void>
     private final String parameter;
     private final String value;
 
-    public ParameterLink(String id, Class<? extends Page> page, String parameter, String value)
+    public ParameterLink(String id, String parameter, String value)
+    {
+        this(id, parameter, value, null);
+    }
+
+    public ParameterLink(String id, String parameter, String value, Class<? extends Page> page)
     {
         super(id);
 
@@ -24,16 +29,21 @@ public class ParameterLink extends StatelessLink<Void>
     @Override
     public void onClick()
     {
-        setResponsePage(page, getSortParameters());
+        setResponsePage(getPageClass(), getParameters());
     }
 
     @Override
     protected CharSequence getURL()
     {
-        return urlFor(page, getSortParameters());
+        return urlFor(getPageClass(), getParameters());
     }
 
-    private PageParameters getSortParameters()
+    private Class<? extends Page> getPageClass()
+    {
+        return page != null ? page : getPage().getPageClass();
+    }
+
+    private PageParameters getParameters()
     {
         PageParameters sortParameters = new PageParameters();
         sortParameters.mergeWith(getPage().getPageParameters());

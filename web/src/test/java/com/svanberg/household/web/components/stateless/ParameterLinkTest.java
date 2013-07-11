@@ -14,7 +14,7 @@ public class ParameterLinkTest extends WicketTest
     @Test
     public void testAddsNewParameter() throws Exception
     {
-        ParameterLink link = new ParameterLink("id", DummyPage.class, "key", "value");
+        ParameterLink link = new ParameterLink("id", "key", "value", DummyPage.class);
         tester().startComponentInPage(link);
 
         PageParameters parameters = tester().getLastRenderedPage().getPageParameters();

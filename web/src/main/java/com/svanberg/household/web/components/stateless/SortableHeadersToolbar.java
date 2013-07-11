@@ -68,7 +68,7 @@ public class SortableHeadersToolbar<S> extends HeadersToolbar<S>
 
     protected ParameterLink newSortLink(String id, Class<? extends Page> page, String parameter, String value)
     {
-        return new ParameterLink(id, page, parameter, value);
+        return new ParameterLink(id, parameter, value, page);
     }
     @Override
     protected WebMarkupContainer newSortableHeader(final String headerId, final S property, final ISortStateLocator<S> locator)

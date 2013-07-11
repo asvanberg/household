@@ -84,6 +84,14 @@ public class StatelessPagingNavigator extends PagingNavigator
         }
     }
 
+//    private static class PageLink extends ParameterLink
+//    {
+//        public PageLink(String id, long pageIndex)
+//        {
+//            super(id, PAGING_PAGE_PARAMETER, "" + pageIndex);
+//        }
+//    }
+
     private class StatelessPageLink extends StatelessLink<Void>
     {
         private static final long serialVersionUID = -7655478552068484458L;
