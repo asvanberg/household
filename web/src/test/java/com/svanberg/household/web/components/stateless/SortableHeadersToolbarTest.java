@@ -1,7 +1,6 @@
 package com.svanberg.household.web.components.stateless;
 
 import com.svanberg.household.web.test.WicketTest;
-import org.apache.wicket.Component;
 import org.apache.wicket.extensions.markup.html.repeater.data.sort.ISortState;
 import org.apache.wicket.extensions.markup.html.repeater.data.sort.ISortStateLocator;
 import org.apache.wicket.extensions.markup.html.repeater.data.sort.SortOrder;
@@ -10,8 +9,6 @@ import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.repeater.data.IDataProvider;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
-import org.apache.wicket.util.visit.IVisit;
-import org.apache.wicket.util.visit.IVisitor;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -21,8 +18,8 @@ import org.mockito.stubbing.Answer;
 import java.util.Arrays;
 import java.util.List;
 
+import static com.svanberg.household.web.test.Assert.assertStateless;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.*;
 
@@ -53,21 +50,7 @@ public class SortableHeadersToolbarTest extends WicketTest
     @Test
     public void testStateless() throws Exception
     {
-        Component statefulComponent = tester().getLastRenderedPage().visitChildren(Component.class,
-                new IVisitor<Component, Component>()
-                {
-                    @Override
-                    public void component(final Component component, final IVisit<Component> visit)
-                    {
-                        if (!component.isStateless())
-                        {
-                            visit.stop(component);
-                        }
-                    }
-                });
-        boolean stateless = statefulComponent == null;
-
-        assertTrue("Is not stateless", stateless);
+        assertStateless(toolbar);
     }
 
     @Test

@@ -1,18 +1,18 @@
 package com.svanberg.household.web.components;
 
 import com.svanberg.household.web.components.stateless.StatelessPagingNavigator;
-import com.svanberg.household.web.test.SpringWicketTest;
+import com.svanberg.household.web.test.WicketTest;
 import org.apache.wicket.markup.html.navigation.paging.IPageable;
 import org.junit.Before;
 import org.junit.Test;
 
+import static com.svanberg.household.web.test.Assert.assertStateless;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 
 /**
  * @author Andreas Svanberg (andreass) <andreas.svanberg@mensa.se>
  */
-public class StatelessPagingNavigatorTest extends SpringWicketTest
+public class StatelessPagingNavigatorTest extends WicketTest
 {
     private StatelessPagingNavigator statelessPagingNavigator;
 
@@ -31,7 +31,7 @@ public class StatelessPagingNavigatorTest extends SpringWicketTest
     @Test
     public void testStateless()
     {
-        assertTrue("Is not stateless", statelessPagingNavigator.isStateless());
+        assertStateless(statelessPagingNavigator);
     }
 
     private static class MockPageable implements IPageable
