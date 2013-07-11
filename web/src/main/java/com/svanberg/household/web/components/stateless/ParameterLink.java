@@ -10,14 +10,14 @@ public class ParameterLink extends StatelessLink<Void>
 
     private final Class<? extends Page> page;
     private final String parameter;
-    private final String value;
+    private final Object value;
 
-    public ParameterLink(String id, String parameter, String value)
+    public ParameterLink(String id, String parameter, Object value)
     {
         this(id, parameter, value, null);
     }
 
-    public ParameterLink(String id, String parameter, String value, Class<? extends Page> page)
+    public ParameterLink(String id, String parameter, Object value, Class<? extends Page> page)
     {
         super(id);
 
