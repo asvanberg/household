@@ -1,6 +1,7 @@
 package com.svanberg.household.web.components.stateless;
 
 import com.svanberg.household.web.test.WicketTest;
+import org.apache.wicket.Component;
 import org.apache.wicket.extensions.markup.html.repeater.data.sort.ISortState;
 import org.apache.wicket.extensions.markup.html.repeater.data.sort.ISortStateLocator;
 import org.apache.wicket.extensions.markup.html.repeater.data.sort.SortOrder;
@@ -8,8 +9,9 @@ import org.apache.wicket.extensions.markup.html.repeater.data.table.DataTable;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.repeater.data.IDataProvider;
-import org.apache.wicket.request.mapper.parameter.INamedParameters;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.apache.wicket.util.visit.IVisit;
+import org.apache.wicket.util.visit.IVisitor;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -42,20 +44,6 @@ public class SortableHeadersToolbarTest extends WicketTest
         startToolbar(Arrays.asList(column), new PageParameters());
     }
 
-    private void startToolbar(final List<IColumn<String, String>> columns, INamedParameters parameters)
-    {
-        ISortStateLocator<String> sortStateLocator = new ISortStateLocator<String>()
-        {
-            @Override
-            public ISortState<String> getSortState()
-            {
-                return sort;
-            }
-        };
-        table = new DataTable<>("id", columns, provider, 10L);
-        toolbar = tester().startComponentInPage(new SortableHeadersToolbar<>(table, sortStateLocator, parameters));
-    }
-
     @Test
     public void testRenders() throws Exception
     {
@@ -65,7 +53,21 @@ public class SortableHeadersToolbarTest extends WicketTest
     @Test
     public void testStateless() throws Exception
     {
-        assertTrue("Is not stateless", toolbar.isStateless());
+        Component statefulComponent = tester().getLastRenderedPage().visitChildren(Component.class,
+                new IVisitor<Component, Component>()
+                {
+                    @Override
+                    public void component(final Component component, final IVisit<Component> visit)
+                    {
+                        if (!component.isStateless())
+                        {
+                            visit.stop(component);
+                        }
+                    }
+                });
+        boolean stateless = statefulComponent == null;
+
+        assertTrue("Is not stateless", stateless);
     }
 
     @Test
@@ -96,6 +98,21 @@ public class SortableHeadersToolbarTest extends WicketTest
         verify(sort, never()).setPropertySortOrder(anyString(), any(SortOrder.class));
     }
 
+
+    private void startToolbar(List<IColumn<String, String>> columns, PageParameters parameters)
+    {
+        ISortStateLocator<String> sortStateLocator = new ISortStateLocator<String>()
+        {
+            @Override
+            public ISortState<String> getSortState()
+            {
+                return sort;
+            }
+        };
+        table = new DataTable<>("id", columns, provider, 10L);
+        toolbar = tester().startComponentInPage(new SortableHeadersToolbar<>(table, sortStateLocator, parameters));
+    }
+
     private void startToolbarWithSort(String property)
     {
         PageParameters parameters = new PageParameters();
@@ -116,6 +133,7 @@ public class SortableHeadersToolbarTest extends WicketTest
                 return new WebMarkupContainer((String) invocation.getArguments()[0]);
             }
         });
+        when(column.isSortable()).thenReturn(true);
         return column;
     }
 }
