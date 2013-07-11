@@ -2,8 +2,8 @@ package com.svanberg.household.web;
 
 import com.svanberg.household.web.expense.ExpensePage;
 
-import de.agilecoders.wicket.Bootstrap;
-import de.agilecoders.wicket.settings.BootstrapSettings;
+import de.agilecoders.wicket.core.Bootstrap;
+import de.agilecoders.wicket.core.settings.BootstrapSettings;
 import org.apache.wicket.devutils.stateless.StatelessChecker;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.protocol.http.WebApplication;

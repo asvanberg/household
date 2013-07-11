@@ -3,8 +3,8 @@ package com.svanberg.household.web.category;
 import com.svanberg.household.service.CategoryService;
 import com.svanberg.household.web.components.InlineControlGroup;
 
-import de.agilecoders.wicket.markup.html.bootstrap.form.BootstrapForm;
-import de.agilecoders.wicket.markup.html.bootstrap.form.FormType;
+import de.agilecoders.wicket.core.markup.html.bootstrap.form.BootstrapForm;
+import de.agilecoders.wicket.core.markup.html.bootstrap.form.FormType;
 import org.apache.wicket.markup.html.border.Border;
 import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.markup.html.form.TextField;
@@ -32,7 +32,8 @@ public class AddCategoryPanel extends Border {
         addToBorder(new AddCategoryForm());
     }
 
-    private class AddCategoryForm extends BootstrapForm<Void> {
+    private class AddCategoryForm extends BootstrapForm<Void>
+    {
         private static final long serialVersionUID = 8804875825503550624L;
 
         public AddCategoryForm() {

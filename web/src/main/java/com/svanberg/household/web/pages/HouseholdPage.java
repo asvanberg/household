@@ -3,10 +3,10 @@ package com.svanberg.household.web.pages;
 import com.svanberg.household.web.category.CategoryPage;
 import com.svanberg.household.web.expense.ExpensePage;
 
-import de.agilecoders.wicket.markup.html.bootstrap.behavior.BootstrapResourcesBehavior;
-import de.agilecoders.wicket.markup.html.bootstrap.navbar.ImmutableNavbarComponent;
-import de.agilecoders.wicket.markup.html.bootstrap.navbar.Navbar;
-import de.agilecoders.wicket.markup.html.bootstrap.navbar.NavbarButton;
+import de.agilecoders.wicket.core.markup.html.bootstrap.behavior.BootstrapResourcesBehavior;
+import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.ImmutableNavbarComponent;
+import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.Navbar;
+import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.NavbarButton;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.model.ResourceModel;
