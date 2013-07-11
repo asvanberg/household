@@ -161,7 +161,7 @@ public abstract class GenericTable<T extends DomainObject> extends Panel {
         table.add(new TableBehavior().hover().striped());
         form.add(table); // Table resides in a form to enable selection column
 
-        StatelessPagingNavigator paging = new StatelessPagingNavigator(PAGING, table)
+        StatelessPagingNavigator paging = new StatelessPagingNavigator(PAGING, getPage().getPageParameters(), table)
         {
             @Override
             protected void onConfigure()

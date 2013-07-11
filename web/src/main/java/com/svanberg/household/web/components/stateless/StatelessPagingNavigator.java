@@ -7,13 +7,9 @@ import org.apache.wicket.markup.html.navigation.paging.IPageable;
 import org.apache.wicket.markup.html.navigation.paging.IPagingLabelProvider;
 import org.apache.wicket.markup.html.navigation.paging.PagingNavigation;
 import org.apache.wicket.markup.html.navigation.paging.PagingNavigator;
+import org.apache.wicket.request.mapper.parameter.INamedParameters;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 
-/**
- * A stateless paging navigator.
- *
- * @author Andreas Svanberg (andreass) <andreas.svanberg@mensa.se>
- */
 public class StatelessPagingNavigator extends PagingNavigator
 {
     private static final long serialVersionUID = 8219151328688000388L;
@@ -22,32 +18,18 @@ public class StatelessPagingNavigator extends PagingNavigator
 
     private final IPageable pageable;
 
-    /**
-     * {@inheritDoc}
-     */
-    public StatelessPagingNavigator(final String id, final IPageable pageable)
+    public StatelessPagingNavigator(String id, INamedParameters parameters, IPageable pageable)
     {
-        this(id, pageable, null);
+        this(id, parameters, pageable, null);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public StatelessPagingNavigator(final String id, final IPageable pageable, final IPagingLabelProvider labelProvider)
+    public StatelessPagingNavigator(String id, INamedParameters parameters, IPageable pageable, IPagingLabelProvider labelProvider)
     {
         super(id, pageable, labelProvider);
 
         this.pageable = pageable;
-    }
 
-    /**
-     * Responsible for updating the pageable components active page.
-     */
-    @Override
-    protected void onInitialize()
-    {
-        super.onInitialize();
-        pageable.setCurrentPage(getPage().getPageParameters().get(PAGING_PAGE_PARAMETER).toLong(0));
+        pageable.setCurrentPage(parameters.get(PAGING_PAGE_PARAMETER).toLong(0));
     }
 
     /**
