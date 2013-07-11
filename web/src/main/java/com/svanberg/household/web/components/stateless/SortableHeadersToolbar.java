@@ -1,34 +1,22 @@
 package com.svanberg.household.web.components.stateless;
 
+import org.apache.wicket.Page;
 import org.apache.wicket.extensions.markup.html.repeater.data.sort.ISortStateLocator;
 import org.apache.wicket.extensions.markup.html.repeater.data.sort.SortOrder;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.DataTable;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.HeadersToolbar;
 import org.apache.wicket.markup.html.WebMarkupContainer;
+import org.apache.wicket.markup.html.border.Border;
 import org.apache.wicket.request.mapper.parameter.INamedParameters;
 
-/**
- * A stateless table header toolbar with sorting support via page parameters.
- *
- * @param <S> type of sorting parameters
- *
- * @author Andreas Svanberg (andreass) <andreas.svanberg@mensa.se>
- */
-public class SortableHeadersToolbar<S> extends HeadersToolbar<S> implements IPageParameterSorting<S>
+public class SortableHeadersToolbar<S> extends HeadersToolbar<S>
 {
     private static final long serialVersionUID = 5439576634619819790L;
 
-    /**
-     * Default page parameter key for the sorting value.
-     *
-     * @see #getSortParameter()
-     */
     public static final String SORTING_PAGE_PARAMETER = "sort";
     public static final String DESCENDING_PREFIX = "!";
 
-    private final ISortStateLocator<S> sortStateLocator;
     private final Class<S> sortType;
-    private final INamedParameters parameters;
 
     public SortableHeadersToolbar(DataTable<?, S> table, ISortStateLocator<S> sortStateLocator, INamedParameters parameters)
     {
@@ -43,69 +31,65 @@ public class SortableHeadersToolbar<S> extends HeadersToolbar<S> implements IPag
     {
         super(table, sortStateLocator);
 
-        this.sortStateLocator = sortStateLocator;
         this.sortType = sortType;
-        this.parameters = parameters;
 
-        sort();
+        sort(parameters, sortStateLocator);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void sort()
+    private void sort(INamedParameters parameters, ISortStateLocator<S> locator)
     {
-        String sortingValue = parameters.get(getSortParameter()).toOptionalString();
-        if (sortingValue != null)
+        String sortParameter = parameters.get(SORTING_PAGE_PARAMETER).toOptionalString();
+        if (sortParameter != null)
         {
-            S sortProperty = decodeSortProperty(sortingValue);
-            SortOrder sortOrder = decodeSortOrder(sortingValue);
-            sortStateLocator.getSortState().setPropertySortOrder(sortProperty, sortOrder);
+            S sortProperty = extractSortProperty(sortParameter);
+            SortOrder sortOrder = extractSortOrder(sortParameter);
+            locator.getSortState().setPropertySortOrder(sortProperty, sortOrder);
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String getSortParameter()
+    private S extractSortProperty(String sortParameter)
     {
-        return SORTING_PAGE_PARAMETER;
+        String sortProperty = sortParameter.startsWith(DESCENDING_PREFIX) ? sortParameter.substring(1) : sortParameter;
+        return getConverter(sortType).convertToObject(sortProperty, getLocale());
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String getSortValue(final S sortProperty, final SortOrder order)
+    private SortOrder extractSortOrder(String sortParameter)
     {
-        return (order == SortOrder.DESCENDING ? DESCENDING_PREFIX : "") +
-                getConverter(sortType).convertToString(sortProperty, getLocale());
+        return sortParameter.startsWith(DESCENDING_PREFIX) ? SortOrder.DESCENDING : SortOrder.ASCENDING;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public S decodeSortProperty(final String sortingValue)
+    private String getSortParameter(S property, ISortStateLocator<S> locator)
     {
-        String sort = sortingValue.startsWith(DESCENDING_PREFIX) ? sortingValue.substring(1) : sortingValue;
-        return getConverter(sortType).convertToObject(sort, getLocale());
+        String parameter = getConverter(sortType).convertToString(property, getLocale());
+        SortOrder order = locator.getSortState().getPropertySortOrder(property);
+
+        return (order == SortOrder.ASCENDING ? DESCENDING_PREFIX : "") + parameter;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public SortOrder decodeSortOrder(final String sortingValue)
+    protected ParameterLink newSortLink(String id, Class<? extends Page> page, String parameter, String value)
     {
-        return sortingValue.startsWith(DESCENDING_PREFIX) ? SortOrder.DESCENDING : SortOrder.ASCENDING;
+        return new ParameterLink(id, page, parameter, value);
     }
-
     @Override
     protected WebMarkupContainer newSortableHeader(final String headerId, final S property, final ISortStateLocator<S> locator)
     {
-        return new SortableCellBorder<>(headerId, property, locator.getSortState(), this);
+        return new Header(headerId, property, locator);
+    }
+
+    protected Class<? extends Page> getPageClass()
+    {
+        return getPage().getPageClass();
+    }
+
+    private class Header extends Border
+    {
+        private static final long serialVersionUID = -3536225677977779161L;
+
+        public Header(String id, S property, ISortStateLocator<S> locator)
+        {
+            super(id);
+
+            addToBorder(newSortLink("link", getPageClass(), SORTING_PAGE_PARAMETER, getSortParameter(property, locator)));
+        }
     }
 }
