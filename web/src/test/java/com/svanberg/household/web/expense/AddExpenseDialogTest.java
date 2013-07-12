@@ -20,9 +20,9 @@ import java.util.Date;
 import java.util.Locale;
 
 import static com.svanberg.household.web.test.Assert.assertSameDay;
+import static com.svanberg.household.web.test.Assert.assertStateless;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.times;
@@ -57,7 +57,7 @@ public class AddExpenseDialogTest extends SpringWicketTest
     @Test
     public void testStateless()
     {
-        assertTrue("Panel is not stateless", panel.isStateless());
+        assertStateless(panel);
     }
 
     @Test

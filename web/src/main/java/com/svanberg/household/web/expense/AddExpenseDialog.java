@@ -13,8 +13,6 @@ import de.agilecoders.wicket.core.markup.html.bootstrap.form.FormBehavior;
 import de.agilecoders.wicket.core.markup.html.bootstrap.form.FormType;
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.extensions.markup.html.form.DateTextField;
-import org.apache.wicket.markup.ComponentTag;
-import org.apache.wicket.markup.MarkupStream;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.*;
 import org.apache.wicket.model.IModel;
@@ -26,9 +24,6 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
 import java.util.Date;
 import java.util.List;
 
-/**
- * @author Andreas Svanberg (andreass) <andreas.svanberg@mensa.se>
- */
 public class AddExpenseDialog extends Modal
 {
     private static final long serialVersionUID = -3888489317063097931L;
@@ -50,10 +45,12 @@ public class AddExpenseDialog extends Modal
         ExpenseForm form = new ExpenseForm(FORM);
         add(form);
 
-        SubmitLabel create = new SubmitLabel(BUTTON_MARKUP_ID, new ResourceModel("create"), form);
+        SubmitLink create = new SubmitLink(BUTTON_MARKUP_ID, form);
+        create.setBody(new ResourceModel("create"));
         create.add(new ButtonBehavior(Buttons.Type.Primary));
         addButton(create);
 
+        // addClosebutton() is not stateless and cant be used
         Label close = new Label(BUTTON_MARKUP_ID, new ResourceModel("cancel"));
         close.add(new ButtonBehavior(Buttons.Type.Default));
         close.add(new AttributeModifier("data-dismiss", "modal"));
@@ -90,39 +87,26 @@ public class AddExpenseDialog extends Modal
                 }
             };
             dateInput.setRequired(true);
-            add(new InlineControlGroup(DATE, new ResourceModel("date")).add(dateInput));
+            addGroup(DATE, dateInput);
 
-            TextField<Integer> costInput = new TextField<Integer>(INPUT, cost, Integer.class) {
-                @Override
-                protected String getInputType()
-                {
-                    return "number";
-                }
-            };
+            TextField<Integer> costInput = new NumberTextField<>(INPUT, cost, Integer.class);
             costInput.setRequired(true);
-            add(new InlineControlGroup(COST, new ResourceModel("cost")).add(costInput));
+            addGroup(COST, costInput);
 
             TextArea<String> descriptionInput = new TextArea<>(INPUT, description);
             descriptionInput.setRequired(true);
-            add(new InlineControlGroup(DESCRIPTION, new ResourceModel("description")).add(descriptionInput));
+            addGroup(DESCRIPTION, descriptionInput);
 
             DropDownChoice<Category> categoryChoice = new DropDownChoice<>(INPUT, category, getCategories(),
-                    new IChoiceRenderer<Category>()
-            {
-                @Override
-                public Object getDisplayValue(final Category object)
-                {
-                    return object.getName();
-                }
-
-                @Override
-                public String getIdValue(final Category object, final int index)
-                {
-                    return String.valueOf(index);
-                }
-            });
+                    new ChoiceRenderer<>("name"));
             categoryChoice.setNullValid(true);
-            add(new InlineControlGroup(CATEGORY, new ResourceModel("category")).add(categoryChoice));
+            addGroup(CATEGORY, categoryChoice);
+        }
+
+        private void addGroup(String id, FormComponent<?> dateInput)
+        {
+            add(new InlineControlGroup(id, new ResourceModel(id))
+                    .add(dateInput));
         }
 
         @Override
@@ -141,22 +125,6 @@ public class AddExpenseDialog extends Modal
         {
             show(true);
             setFadeIn(false);
-        }
-    }
-
-    private class SubmitLabel extends SubmitLink
-    {
-        private static final long serialVersionUID = -573817324922619136L;
-
-        private SubmitLabel(final String id, final IModel<?> model, final Form<?> form)
-        {
-            super(id, model, form);
-        }
-
-        @Override
-        public void onComponentTagBody(final MarkupStream markupStream, final ComponentTag openTag)
-        {
-            replaceComponentTagBody(markupStream, openTag, getDefaultModelObjectAsString());
         }
     }
 
