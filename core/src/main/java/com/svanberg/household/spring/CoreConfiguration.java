@@ -56,7 +56,7 @@ public class CoreConfiguration {
     public EntityManagerFactory entityManagerFactory() throws Exception {
         HibernateJpaVendorAdapter adapter = new HibernateJpaVendorAdapter();
         adapter.setGenerateDdl(true);
-        adapter.setShowSql(true);
+        adapter.setShowSql(false);
 
         LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
         factory.setJpaVendorAdapter(adapter);
