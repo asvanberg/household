@@ -8,6 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 
+import static com.svanberg.household.web.test.Assert.assertStateless;
 import static org.junit.Assert.assertNotNull;
 
 /**
@@ -29,5 +30,11 @@ public class ExpensePageTest extends SpringWicketTest
     @Test
     public void testRenders() throws Exception {
         assertNotNull("Page does not render", page);
+    }
+
+    @Test
+    public void testStateless() throws Exception
+    {
+        assertStateless(page);
     }
 }
