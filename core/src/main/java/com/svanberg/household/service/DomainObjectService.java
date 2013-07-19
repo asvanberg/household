@@ -7,6 +7,6 @@ import com.svanberg.household.domain.DomainObject;
  */
 public interface DomainObjectService {
 
-    <T extends DomainObject> T find(Class<T> clazz, Object identifier);
+    <T extends DomainObject<Long>> T find(Class<T> clazz, Object identifier);
 
 }

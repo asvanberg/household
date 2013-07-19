@@ -1,14 +1,14 @@
 package com.svanberg.household.domain;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.Collection;
 
 /**
  * @author Andreas Svanberg (andreass) <andreas.svanberg@mensa.se>
  */
 @Entity
-public class Category extends DomainObject {
+public class Category extends DomainObject<Long>
+{
 
     @Id
     @GeneratedValue
@@ -32,7 +32,7 @@ public class Category extends DomainObject {
     }
 
     @Override
-    public Serializable getIdentifier() {
+    public Long getIdentifier() {
         return id;
     }
 

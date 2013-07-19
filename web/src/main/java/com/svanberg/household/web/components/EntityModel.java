@@ -12,7 +12,7 @@ import java.io.Serializable;
 /**
  * @author Andreas Svanberg (andreass) <andreas.svanberg@mensa.se>
  */
-public class EntityModel<T extends DomainObject> implements IModel<T> {
+public class EntityModel<T extends DomainObject<Long>> implements IModel<T> {
     private static final long serialVersionUID = -6617614098524238401L;
 
     private transient @SpringBean DomainObjectService domainService;

@@ -1,7 +1,6 @@
 package com.svanberg.household.domain;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -9,7 +8,8 @@ import java.util.Date;
  * @since 0.1.0
  */
 @Entity
-public class Expense extends DomainObject {
+public class Expense extends DomainObject<Long>
+{
 
     @Id
     @GeneratedValue
@@ -38,7 +38,7 @@ public class Expense extends DomainObject {
     }
 
     @Override
-    public Serializable getIdentifier() {
+    public Long getIdentifier() {
         return id;
     }
 

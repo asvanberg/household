@@ -7,6 +7,7 @@ import java.io.Serializable;
  * @author Andreas Svanberg (andreass) <andreas.svanberg@mensa.se>
  */
 @MappedSuperclass
-public abstract class DomainObject {
-    public abstract Serializable getIdentifier();
+public abstract class DomainObject<ID extends Serializable>
+{
+    public abstract ID getIdentifier();
 }

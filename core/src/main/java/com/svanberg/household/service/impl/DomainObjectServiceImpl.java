@@ -18,7 +18,7 @@ public class DomainObjectServiceImpl implements DomainObjectService {
     EntityManager em;
 
     @Override
-    public <T extends DomainObject> T find(final Class<T> clazz, final Object identifier) {
+    public <T extends DomainObject<Long>> T find(final Class<T> clazz, final Object identifier) {
         return em.find(clazz, identifier);
     }
 }

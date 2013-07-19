@@ -19,7 +19,7 @@ import java.util.*;
  *
  * @author Andreas Svanberg (andreass) <andreas.svanberg@mensa.se>
  */
-public abstract class GenericTable<T extends DomainObject> extends Panel {
+public abstract class GenericTable<T extends DomainObject<Long>> extends Panel {
     private static final long serialVersionUID = 2853256830432178448L;
 
     private final List<IColumn<T, String>> columns = new ArrayList<>();
