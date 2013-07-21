@@ -47,7 +47,13 @@ public class ExpenseServiceImpl implements ExpenseService {
     }
 
     @Override
-    public Page<Expense> findAll(final Pageable pageable) {
+    public Expense locate(Long identifier)
+    {
+        return repository.findOne(identifier);
+    }
+
+    @Override
+    public Page<Expense> list(final Pageable pageable) {
         return repository.findAll(pageable);
     }
 

@@ -47,7 +47,7 @@ public class ExpenseTable extends GenericTable<Expense> {
     protected Iterable<Expense> getEntities(final long first, final long count, final SortParam<String> sort)
     {
         Pageable page = new PageAdater(first, count, sort);
-        return expenseService.findAll(page);
+        return expenseService.list(page);
     }
 
     @Override

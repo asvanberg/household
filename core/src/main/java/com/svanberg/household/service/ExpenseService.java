@@ -3,19 +3,14 @@ package com.svanberg.household.service;
 import com.svanberg.household.domain.Category;
 import com.svanberg.household.domain.Expense;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-
 import java.util.Date;
 
 /**
  * @author Andreas Svanberg (andreass) <andreas.svanberg@mensa.se>
  */
-public interface ExpenseService {
-
+public interface ExpenseService extends FinderService<Expense, Long>
+{
     Expense create(Date date, String description, int cost);
-    Page<Expense> findAll(Pageable pageable);
-    long count();
 
     /**
      * Updates the category the given expense belongs to.
