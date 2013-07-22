@@ -5,7 +5,6 @@ import com.svanberg.household.domain.Expense;
 import com.svanberg.household.repository.ExpenseRepository;
 import com.svanberg.household.service.ExpenseService;
 
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -53,7 +52,7 @@ public class ExpenseServiceImpl implements ExpenseService {
     }
 
     @Override
-    public Page<Expense> list(final Pageable pageable) {
+    public Iterable<Expense> list(final Pageable pageable) {
         return repository.findAll(pageable);
     }
 
