@@ -14,29 +14,18 @@ import java.lang.reflect.Field;
  */
 public abstract class SpringWicketTest extends WicketTest
 {
-    private ApplicationContextMock ctx;
-
+    private ApplicationContextMock ctx = new ApplicationContextMock();
 
     @Override
     protected final WicketTester initWicketTester() throws Exception
     {
-        setUpSpring();
-
-        return new BetterWicketTester(new HouseholdWebApplication()
-        {
-            @Override
-            protected SpringComponentInjector getInjector()
-            {
-                return new SpringComponentInjector(this, ctx);
-            }
-        });
-    }
-
-    private void setUpSpring() throws Exception
-    {
-        ctx = new ApplicationContextMock();
-
         populateContext();
+
+        HouseholdWebApplication application = new HouseholdWebApplication();
+
+        SpringComponentInjector.setDefaultContext(application, ctx);
+
+        return new BetterWicketTester(application);
     }
 
     private void populateContext() throws Exception
