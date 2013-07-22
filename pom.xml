@@ -40,6 +40,7 @@
         <wicket.version>6.9.1</wicket.version>
         <wicket-bootstrap.version>0.8.4</wicket-bootstrap.version>
         <wicket-model.version>0.6</wicket-model.version>
+        <lombok.version>0.11.8</lombok.version>
     </properties>
 
     <dependencyManagement>
@@ -175,6 +176,11 @@
                 <groupId>javax.inject</groupId>
                 <artifactId>javax.inject</artifactId>
                 <version>1</version>
+            </dependency>
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

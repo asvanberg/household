@@ -1,5 +1,7 @@
 package com.svanberg.household.domain;
 
+import lombok.Data;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -8,9 +10,9 @@ import java.util.Date;
  * @since 0.1.0
  */
 @Entity
+@Data
 public class Expense extends DomainObject<Long>
 {
-
     @Id
     @GeneratedValue
     private long id;
@@ -40,41 +42,5 @@ public class Expense extends DomainObject<Long>
     @Override
     public Long getIdentifier() {
         return id;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public int getCost() {
-        return cost;
-    }
-
-    public void setCost(int cost) {
-        this.cost = cost;
-    }
-
-    public Category getCategory() {
-        return category;
-    }
-
-    public void setCategory(final Category category) {
-        this.category = category;
-    }
-
-    public String getCategoryName() {
-        return getCategory() != null ? getCategory().getName() : null;
     }
 }

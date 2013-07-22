@@ -13,17 +13,18 @@ import org.mockito.Mock;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.mockito.stubbing.Answer;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 
 import java.util.Arrays;
 import java.util.Date;
+import java.util.Iterator;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Matchers.isA;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 /**
  * @author Andreas Svanberg (andreass) <andreas.svanberg@mensa.se>
@@ -202,5 +203,67 @@ public class ExpenseServiceImplTest {
 
         // then
         assertEquals("Wrong weekly average", expected, weekly);
+    }
+
+    @Test
+    public void average_weekly_no_delta() throws Exception {
+        // given
+        int cost1 = 232;
+        int cost2 = 151;
+
+        Date date1 = new Date();
+
+        Expense expense1 = new Expense(date1, "Desc", cost1);
+        Expense expense2 = new Expense(date1, "Desc", cost2);
+
+        int expected = cost1 + cost2;
+
+        when(repository.findAll()).thenReturn(Arrays.asList(expense1, expense2));
+
+        // when
+        int weekly = service.averageWeeklyExpenses();
+
+        // then
+        assertEquals("Wrong weekly average", expected, weekly);
+    }
+
+    @Test
+    public void locate() throws Exception
+    {
+        Expense expense = new Expense(new Date(), "desc", 78);
+        long id = 42L;
+
+        when(repository.findOne(id)).thenReturn(expense);
+
+        assertEquals(expense, service.locate(id));
+    }
+
+    @Test
+    public void count() throws Exception
+    {
+        long count = 89L;
+
+        when(repository.count()).thenReturn(count);
+
+        assertEquals(count, service.count());
+    }
+
+    @Test
+    public void list() throws Exception
+    {
+        int pageNumber = 20;
+        int size = 13;
+
+        Expense expense = new Expense(new Date(), "desc", 78);
+        Page<Expense> page = new PageImpl<>(Arrays.asList(expense));
+        PageRequest pageRequest = new PageRequest(pageNumber, size);
+
+        when(service.list(pageRequest)).thenReturn(page);
+
+        Iterator<? extends Expense> iterator = service.list(pageRequest).iterator();
+
+        assertTrue(iterator.hasNext());
+        assertEquals(expense, iterator.next());
+        assertFalse(iterator.hasNext());
     }
 }

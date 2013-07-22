@@ -10,9 +10,13 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import java.util.Arrays;
+import java.util.List;
+
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 /**
  * @author Andreas Svanberg (andreass) <andreas.svanberg@mensa.se>
@@ -44,5 +48,21 @@ public class CategoryServiceImplTest {
 
         assertEquals("Saves wrong name", name, captor.getValue().getName());
         assertEquals("Saves wrong description", description, captor.getValue().getDescription());
+    }
+
+    @Test
+    public void find_all() throws Exception
+    {
+        List<Category> categories = Arrays.asList(new Category());
+
+        when(repository.findAll()).thenReturn(categories);
+
+        List<Category> list = service.findAll();
+
+        assertEquals(categories.size(), list.size());
+        for (int i = 0; i < categories.size(); i++)
+        {
+            assertEquals(categories.get(i), list.get(i));
+        }
     }
 }

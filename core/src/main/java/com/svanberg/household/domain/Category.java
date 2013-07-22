@@ -1,5 +1,7 @@
 package com.svanberg.household.domain;
 
+import lombok.Data;
+
 import javax.persistence.*;
 import java.util.Collection;
 
@@ -7,9 +9,9 @@ import java.util.Collection;
  * @author Andreas Svanberg (andreass) <andreas.svanberg@mensa.se>
  */
 @Entity
+@Data
 public class Category extends DomainObject<Long>
 {
-
     @Id
     @GeneratedValue
     private Long id;
@@ -34,29 +36,5 @@ public class Category extends DomainObject<Long>
     @Override
     public Long getIdentifier() {
         return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(final String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(final String description) {
-        this.description = description;
-    }
-
-    public Collection<Expense> getExpenses() {
-        return expenses;
-    }
-
-    public void setExpenses(final Collection<Expense> expenses) {
-        this.expenses = expenses;
     }
 }
