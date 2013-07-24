@@ -4,7 +4,7 @@ import com.svanberg.household.domain.Category;
 import com.svanberg.household.domain.Expense;
 import com.svanberg.household.service.CategoryService;
 import com.svanberg.household.service.ExpenseService;
-import com.svanberg.household.web.components.EntityModel;
+import com.svanberg.household.web.components.DomainModel;
 import com.svanberg.household.web.components.InlineControlGroup;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.ButtonBehavior;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons;
@@ -34,11 +34,13 @@ public class AddExpenseDialog extends Modal
     private final IModel<Date> date = new Model<>(new Date());
     private final IModel<Integer> cost = new Model<>();
     private final IModel<String> description = new Model<>();
-    private final IModel<Category> category = new EntityModel<>(Category.class);
+    private final IModel<Category> category;
 
     public AddExpenseDialog(final String id)
     {
         super(id);
+
+        category = new DomainModel<>(categoryService);
 
         header(new ResourceModel("title"));
 
