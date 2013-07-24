@@ -11,10 +11,11 @@ import org.mockito.Mock;
 import org.springframework.data.domain.Pageable;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import static com.svanberg.household.web.expense.ExpensePage.*;
 import static com.svanberg.household.web.test.Assert.assertStateless;
-import static org.junit.Assert.assertNotNull;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.when;
 
@@ -23,7 +24,6 @@ import static org.mockito.Mockito.when;
  */
 public class ExpensePageTest extends SpringWicketTest
 {
-
     @Mock ExpenseService expenseService;
     @Mock CategoryService categoryService;
 
@@ -31,17 +31,28 @@ public class ExpensePageTest extends SpringWicketTest
 
     @Before
     public void setUp() throws Exception {
+        List<Expense> expenses = Arrays.asList(new Expense());
+
+        when(expenseService.count()).thenReturn(1L);
+        when(expenseService.list(any(Pageable.class))).thenReturn(expenses);
+    }
+
+    private void startPage() {
         page = tester().startPage(ExpensePage.class);
     }
 
     @Test
     public void renders() throws Exception {
-        assertNotNull("Page does not render", page);
+        startPage();
+
+        tester().assertRenderedPage(ExpensePage.class);
     }
 
     @Test
     public void stateless() throws Exception
     {
+        startPage();
+
         assertStateless(page);
     }
 
@@ -50,7 +61,7 @@ public class ExpensePageTest extends SpringWicketTest
     {
         when(expenseService.count()).thenReturn(0L);
 
-        setUp();
+        startPage();
 
         tester().assertInvisible(PAGINATION);
     }
@@ -61,7 +72,7 @@ public class ExpensePageTest extends SpringWicketTest
         when(expenseService.count()).thenReturn(ROWS_PER_PAGE);
         when(expenseService.list(any(Pageable.class))).thenReturn(new ArrayList<Expense>());
 
-        setUp();
+        startPage();
 
         tester().assertInvisible(PAGINATION);
     }
@@ -72,7 +83,7 @@ public class ExpensePageTest extends SpringWicketTest
         when(expenseService.count()).thenReturn(ROWS_PER_PAGE + 1);
         when(expenseService.list(any(Pageable.class))).thenReturn(new ArrayList<Expense>());
 
-        setUp();
+        startPage();
 
         tester().assertVisible(PAGINATION);
     }
