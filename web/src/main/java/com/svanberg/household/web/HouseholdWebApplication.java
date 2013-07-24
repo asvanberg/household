@@ -1,6 +1,6 @@
 package com.svanberg.household.web;
 
-import com.svanberg.household.web.expense.ExpensePage;
+import com.svanberg.household.web.pages.ExpensePage;
 
 import de.agilecoders.wicket.core.Bootstrap;
 import de.agilecoders.wicket.core.settings.BootstrapSettings;

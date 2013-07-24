@@ -1,12 +1,12 @@
-package com.svanberg.household.web.expense;
+package com.svanberg.household.web.pages;
 
 import com.svanberg.household.domain.Expense;
 import com.svanberg.household.service.ExpenseService;
 import com.svanberg.household.web.components.DomainProvider;
+import com.svanberg.household.web.components.specific.AddExpenseDialog;
 import com.svanberg.household.web.components.stateless.SelectColumn;
 import com.svanberg.household.web.components.stateless.SortableHeadersToolbar;
 import com.svanberg.household.web.components.stateless.StatelessPagingNavigator;
-import com.svanberg.household.web.pages.HouseholdPage;
 
 import org.apache.wicket.devutils.stateless.StatelessComponent;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.DataTable;

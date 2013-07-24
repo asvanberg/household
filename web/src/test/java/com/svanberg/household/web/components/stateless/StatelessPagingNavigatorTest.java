@@ -1,6 +1,5 @@
-package com.svanberg.household.web.components;
+package com.svanberg.household.web.components.stateless;
 
-import com.svanberg.household.web.components.stateless.StatelessPagingNavigator;
 import com.svanberg.household.web.test.WicketTest;
 import org.apache.wicket.markup.html.navigation.paging.IPageable;
 import org.apache.wicket.request.mapper.parameter.INamedParameters;

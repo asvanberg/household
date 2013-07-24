@@ -1,8 +1,5 @@
 package com.svanberg.household.web.pages;
 
-import com.svanberg.household.web.category.CategoryPage;
-import com.svanberg.household.web.expense.ExpensePage;
-
 import de.agilecoders.wicket.core.markup.html.bootstrap.behavior.BootstrapResourcesBehavior;
 import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.ImmutableNavbarComponent;
 import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.Navbar;

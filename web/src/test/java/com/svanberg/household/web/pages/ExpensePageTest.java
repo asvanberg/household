@@ -1,4 +1,4 @@
-package com.svanberg.household.web.expense;
+package com.svanberg.household.web.pages;
 
 import com.svanberg.household.domain.Expense;
 import com.svanberg.household.service.CategoryService;
@@ -17,7 +17,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-import static com.svanberg.household.web.expense.ExpensePage.*;
+import static com.svanberg.household.web.pages.ExpensePage.*;
 import static com.svanberg.household.web.test.Assert.assertStateless;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;

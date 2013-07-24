@@ -1,4 +1,4 @@
-package com.svanberg.household.web.category;
+package com.svanberg.household.web.components.specific;
 
 import com.svanberg.household.service.CategoryService;
 import com.svanberg.household.web.test.SpringWicketTest;

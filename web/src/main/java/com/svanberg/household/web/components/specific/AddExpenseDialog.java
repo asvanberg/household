@@ -1,4 +1,4 @@
-package com.svanberg.household.web.expense;
+package com.svanberg.household.web.components.specific;
 
 import com.svanberg.household.domain.Category;
 import com.svanberg.household.domain.Expense;
