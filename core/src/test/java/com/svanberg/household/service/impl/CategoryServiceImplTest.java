@@ -65,4 +65,15 @@ public class CategoryServiceImplTest {
             assertEquals(categories.get(i), list.get(i));
         }
     }
+
+    @Test
+    public void locate() throws Exception
+    {
+        long id = 7L;
+        Category category = new Category("name", "desc");
+
+        when(repository.findOne(id)).thenReturn(category);
+
+        assertEquals(category, service.locate(id));
+    }
 }

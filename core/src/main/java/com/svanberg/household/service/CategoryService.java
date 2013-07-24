@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * @author Andreas Svanberg (andreass) <andreas.svanberg@mensa.se>
  */
-public interface CategoryService {
+public interface CategoryService extends LocatorService<Category, Long> {
 
     /**
      * Returns all categories.

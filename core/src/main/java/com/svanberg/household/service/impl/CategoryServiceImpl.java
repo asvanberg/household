@@ -32,4 +32,10 @@ public class CategoryServiceImpl implements CategoryService {
         Category category = new Category(name, description);
         repository.save(category);
     }
+
+    @Override
+    public Category locate(Long identifier)
+    {
+        return repository.findOne(identifier);
+    }
 }
