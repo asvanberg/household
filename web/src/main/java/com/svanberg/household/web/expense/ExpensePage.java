@@ -33,6 +33,9 @@ import java.util.List;
 public class ExpensePage extends HouseholdPage {
     private static final long serialVersionUID = -7046290354423141576L;
 
+    static final String FORM = "selection";
+    static final String DELETE = "delete";
+    static final String TABLE = "table";
     static final String PAGINATION = "pagination";
     static final long ROWS_PER_PAGE = 20L;
 
@@ -52,7 +55,7 @@ public class ExpensePage extends HouseholdPage {
 
         DataTable<Expense, String> table = createTable(getPageParameters());
 
-        form = new StatelessForm<>("selection");
+        form = new StatelessForm<>(FORM);
         form.add(table);
 
         add(new StatelessPagingNavigator(PAGINATION, getPageParameters(), table)
@@ -64,7 +67,7 @@ public class ExpensePage extends HouseholdPage {
             }
         });
 
-        add(new SubmitLink("delete", form)
+        add(new SubmitLink(DELETE, form)
         {
             @Override
             public void onSubmit()
@@ -104,7 +107,7 @@ public class ExpensePage extends HouseholdPage {
                 new PropertyColumn<Expense, String>(new ResourceModel("cost"), "cost", "cost")
         );
         DomainProvider<Expense, Long> provider = new DomainProvider<>(expenseService);
-        DataTable<Expense, String> table = new DataTable<>("table", columns, provider, ROWS_PER_PAGE);
+        DataTable<Expense, String> table = new DataTable<>(TABLE, columns, provider, ROWS_PER_PAGE);
 
         table.addTopToolbar(new SortableHeadersToolbar<>(table, provider, parameters));
         table.addBottomToolbar(new NoRecordsToolbar(table));

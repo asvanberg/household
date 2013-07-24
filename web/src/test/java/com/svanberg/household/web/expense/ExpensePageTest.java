@@ -5,25 +5,32 @@ import com.svanberg.household.service.CategoryService;
 import com.svanberg.household.service.ExpenseService;
 import com.svanberg.household.web.test.SpringWicketTest;
 
+import org.apache.wicket.util.tester.FormTester;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.springframework.data.domain.Pageable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import static com.svanberg.household.web.expense.ExpensePage.*;
 import static com.svanberg.household.web.test.Assert.assertStateless;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 /**
  * @author Andreas Svanberg (andreass) <andreas.svanberg@mensa.se>
  */
 public class ExpensePageTest extends SpringWicketTest
 {
+    public static final Expense SOME_EXPENSE = new Expense(new Date(), "Some expense", 7);
+    public static final Expense OTHER_EXPENSE = new Expense(new Date(), "Other expense", 32);
+
     @Mock ExpenseService expenseService;
     @Mock CategoryService categoryService;
 
@@ -31,9 +38,9 @@ public class ExpensePageTest extends SpringWicketTest
 
     @Before
     public void setUp() throws Exception {
-        List<Expense> expenses = Arrays.asList(new Expense());
+        List<Expense> expenses = Arrays.asList(SOME_EXPENSE, OTHER_EXPENSE);
 
-        when(expenseService.count()).thenReturn(1L);
+        when(expenseService.count()).thenReturn( (long) expenses.size());
         when(expenseService.list(any(Pageable.class))).thenReturn(expenses);
     }
 
@@ -86,5 +93,26 @@ public class ExpensePageTest extends SpringWicketTest
         startPage();
 
         tester().assertVisible(PAGINATION);
+    }
+
+    @Test
+    public void delete() throws Exception
+    {
+        startPage();
+
+        FormTester formTester = tester().newFormTester(FORM);
+        markRow(formTester, 1, true);
+        markRow(formTester, 2, false);
+        formTester.submit(page.get(DELETE));
+
+        ArgumentCaptor<Expense> captor = ArgumentCaptor.forClass(Expense.class);
+        verify(expenseService, times(1)).delete(captor.capture());
+
+        assertEquals(SOME_EXPENSE, captor.getValue());
+    }
+
+    private void markRow(FormTester formTester, int row, boolean selected)
+    {
+        formTester.setValue(path(TABLE, "body", "rows", row, "cells", 1, "cell", "checkbox"), selected);
     }
 }
