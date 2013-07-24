@@ -6,6 +6,8 @@ import org.apache.wicket.model.LoadableDetachableModel;
 
 import java.io.Serializable;
 
+import static java.util.Objects.requireNonNull;
+
 public class DomainModel<T extends DomainObject<ID>, ID extends Serializable> extends LoadableDetachableModel<T>
 {
     private final LocatorService<T, ID> service;
@@ -13,13 +15,13 @@ public class DomainModel<T extends DomainObject<ID>, ID extends Serializable> ex
 
     public DomainModel(LocatorService<T, ID> service)
     {
-        this.service = service;
+        this.service = requireNonNull(service, "Service may not be null");
     }
 
     @Override
     protected T load()
     {
-        return service.locate(identifier);
+        return identifier != null ? service.locate(identifier) : null;
     }
 
     @Override
@@ -27,6 +29,6 @@ public class DomainModel<T extends DomainObject<ID>, ID extends Serializable> ex
     {
         super.setObject(object);
 
-        identifier = object.getIdentifier();
+        identifier = object != null ? object.getIdentifier() : null;
     }
 }

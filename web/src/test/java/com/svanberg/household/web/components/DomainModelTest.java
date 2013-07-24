@@ -2,16 +2,14 @@ package com.svanberg.household.web.components;
 
 import com.svanberg.household.domain.DomainObject;
 import com.svanberg.household.service.FinderService;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.invocation.InvocationOnMock;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.mockito.stubbing.Answer;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
-import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -23,20 +21,21 @@ public class DomainModelTest
     @Mock
     private DomainObject<Long> object;
 
-    @Test
-    public void testLifecycle() throws Exception
+    @Before
+    public void setUp() throws Exception
     {
-        when(object.getIdentifier()).thenReturn(42L);
-        when(service.locate(any(Long.class))).then(new Answer<Object>()
-        {
-            @Override
-            public Object answer(InvocationOnMock invocation) throws Throwable
-            {
-                return invocation.getArguments()[0] != null ? object : null;
-            }
-        });
+        when(service.locate(null)).thenThrow(new NullPointerException());
+    }
 
-        DomainModel<DomainObject<Long>, Long> model = new DomainModel<>(service);
+    @Test
+    public void lifecycle() throws Exception
+    {
+        long identifier = 42L;
+
+        when(object.getIdentifier()).thenReturn(identifier);
+        when(service.locate(identifier)).thenReturn(object);
+
+        DomainModel <DomainObject<Long>, Long> model = new DomainModel<>(service);
 
         assertNull(model.getObject());
 
@@ -47,5 +46,23 @@ public class DomainModelTest
         model.detach();
 
         assertEquals(object, model.getObject());
+
+        model.setObject(null);
+
+        assertNull(model.getObject());
+
+        model.detach();
+
+        assertNull(model.getObject());
+
+        model.setObject(object);
+
+        assertEquals(object, model.getObject());
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void null_service() throws Exception
+    {
+        new DomainModel<DomainObject<Long>, Long>(null);
     }
 }
