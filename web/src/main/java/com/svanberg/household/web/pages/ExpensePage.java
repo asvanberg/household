@@ -8,7 +8,6 @@ import com.svanberg.household.web.components.stateless.SelectColumn;
 import com.svanberg.household.web.components.stateless.SortableHeadersToolbar;
 import com.svanberg.household.web.components.stateless.StatelessPagingNavigator;
 
-import org.apache.wicket.devutils.stateless.StatelessComponent;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.DataTable;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.NoRecordsToolbar;
@@ -29,7 +28,6 @@ import java.util.List;
 /**
  * @author Andreas Svanberg (andreass) <andreas.svanberg@mensa.se>
  */
-@StatelessComponent
 public class ExpensePage extends HouseholdPage {
     private static final long serialVersionUID = -7046290354423141576L;
 

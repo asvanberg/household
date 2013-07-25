@@ -42,7 +42,7 @@
 
     <context-param>
         <param-name>contextConfigLocation</param-name>
-        <param-value>com.svanberg.household.web.spring.WebConfiguration</param-value>
+        <param-value>com.svanberg.household.spring.CoreConfiguration</param-value>
     </context-param>
 
     <listener>
