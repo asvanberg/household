@@ -4,11 +4,15 @@ import de.agilecoders.wicket.core.markup.html.bootstrap.behavior.BootstrapResour
 import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.ImmutableNavbarComponent;
 import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.Navbar;
 import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.NavbarButton;
+import org.apache.wicket.markup.head.CssHeaderItem;
+import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.model.ResourceModel;
 import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.apache.wicket.request.resource.CssResourceReference;
+import org.apache.wicket.request.resource.ResourceReference;
 
 /**
  * @author Andreas Svanberg (andreass) <andreas.svanberg@mensa.se>
@@ -30,6 +34,13 @@ public abstract class HouseholdPage extends WebPage {
         addNavbarPage(ExpensePage.class);
         addNavbarPage(CategoryPage.class);
         add(navbar);
+    }
+
+    @Override
+    public void renderHead(IHeaderResponse response)
+    {
+        ResourceReference css = new CssResourceReference(HouseholdPage.class, "HouseholdPage.css");
+        response.render(CssHeaderItem.forReference(css));
     }
 
     private void addNavbarPage(Class<? extends HouseholdPage> pageClass) {
