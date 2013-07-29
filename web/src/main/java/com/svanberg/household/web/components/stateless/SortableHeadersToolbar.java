@@ -7,7 +7,9 @@ import org.apache.wicket.extensions.markup.html.repeater.data.table.DataTable;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.HeadersToolbar;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.border.Border;
-import org.apache.wicket.request.mapper.parameter.INamedParameters;
+import org.apache.wicket.markup.html.link.AbstractLink;
+import org.apache.wicket.markup.html.link.BookmarkablePageLink;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 public class SortableHeadersToolbar<S> extends HeadersToolbar<S>
 {
@@ -16,9 +18,10 @@ public class SortableHeadersToolbar<S> extends HeadersToolbar<S>
     public static final String SORTING_PAGE_PARAMETER = "sort";
     public static final String DESCENDING_PREFIX = "!";
 
+    private final PageParameters parameters;
     private final Class<S> sortType;
 
-    public SortableHeadersToolbar(DataTable<?, S> table, ISortStateLocator<S> sortStateLocator, INamedParameters parameters)
+    public SortableHeadersToolbar(DataTable<?, S> table, ISortStateLocator<S> sortStateLocator, PageParameters parameters)
     {
         this(table, sortStateLocator, parameters, null);
     }
@@ -26,17 +29,18 @@ public class SortableHeadersToolbar<S> extends HeadersToolbar<S>
     public SortableHeadersToolbar(
             DataTable<?, S> table,
             ISortStateLocator<S> sortStateLocator,
-            INamedParameters parameters,
+            PageParameters parameters,
             Class<S> sortType)
     {
         super(table, sortStateLocator);
 
+        this.parameters = parameters;
         this.sortType = sortType;
 
         sort(parameters, sortStateLocator);
     }
 
-    private void sort(INamedParameters parameters, ISortStateLocator<S> locator)
+    private void sort(PageParameters parameters, ISortStateLocator<S> locator)
     {
         String sortParameter = parameters.get(SORTING_PAGE_PARAMETER).toOptionalString();
         if (sortParameter != null)
@@ -66,9 +70,12 @@ public class SortableHeadersToolbar<S> extends HeadersToolbar<S>
         return (order == SortOrder.ASCENDING ? DESCENDING_PREFIX : "") + parameter;
     }
 
-    protected ParameterLink newSortLink(String id, Class<? extends Page> page, String parameter, String value)
+    protected AbstractLink newSortLink(String id, Class<? extends Page> page, String parameter, String value)
     {
-        return new ParameterLink(id, parameter, value, page);
+        PageParameters withSort = new PageParameters(parameters);
+        withSort.set(parameter, value);
+
+        return new BookmarkablePageLink<>(id, page, withSort);
     }
     @Override
     protected WebMarkupContainer newSortableHeader(final String headerId, final S property, final ISortStateLocator<S> locator)

@@ -18,7 +18,6 @@ import org.apache.wicket.markup.html.form.StatelessForm;
 import org.apache.wicket.markup.html.form.SubmitLink;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.ResourceModel;
-import org.apache.wicket.request.mapper.parameter.INamedParameters;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
@@ -95,7 +94,7 @@ public class ExpensePage extends HouseholdPage {
         add(form);
     }
 
-    private DataTable<Expense, String> createTable(INamedParameters parameters)
+    private DataTable<Expense, String> createTable(PageParameters parameters)
     {
         List<IColumn<Expense, String>> columns = Arrays.<IColumn<Expense, String>>asList(
                 selectColumn,
