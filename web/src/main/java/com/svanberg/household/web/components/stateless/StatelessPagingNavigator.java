@@ -1,11 +1,12 @@
 package com.svanberg.household.web.components.stateless;
 
 import org.apache.wicket.markup.html.link.AbstractLink;
+import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.markup.html.navigation.paging.IPageable;
 import org.apache.wicket.markup.html.navigation.paging.IPagingLabelProvider;
 import org.apache.wicket.markup.html.navigation.paging.PagingNavigation;
 import org.apache.wicket.markup.html.navigation.paging.PagingNavigator;
-import org.apache.wicket.request.mapper.parameter.INamedParameters;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 public class StatelessPagingNavigator extends PagingNavigator
 {
@@ -13,9 +14,13 @@ public class StatelessPagingNavigator extends PagingNavigator
 
     public static final String PAGING_PAGE_PARAMETER = "page";
 
-    public StatelessPagingNavigator(String id, INamedParameters parameters, IPageable pageable)
+    private final PageParameters parameters;
+
+    public StatelessPagingNavigator(String id, PageParameters parameters, IPageable pageable)
     {
         super(id, pageable);
+
+        this.parameters = new PageParameters(parameters);
 
         pageable.setCurrentPage(parameters.get(PAGING_PAGE_PARAMETER).toLong(0));
     }
@@ -59,8 +64,9 @@ public class StatelessPagingNavigator extends PagingNavigator
 
     private AbstractLink newPageLink(String id, long pageNumber)
     {
-        ParameterLink link = new ParameterLink(id, PAGING_PAGE_PARAMETER, pageNumber);
-        link.setAutoEnable(false);
-        return link;
+        PageParameters withPaging = new PageParameters(parameters);
+        withPaging.set(PAGING_PAGE_PARAMETER, pageNumber);
+
+        return new BookmarkablePageLink<>(id, getPage().getPageClass(), withPaging);
     }
 }

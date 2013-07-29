@@ -2,7 +2,7 @@ package com.svanberg.household.web.components.stateless;
 
 import com.svanberg.household.web.test.WicketTest;
 import org.apache.wicket.markup.html.navigation.paging.IPageable;
-import org.apache.wicket.request.mapper.parameter.INamedParameters;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.util.string.StringValue;
 import org.junit.Before;
 import org.junit.Test;
@@ -26,7 +26,7 @@ public class StatelessPagingNavigatorTest extends WicketTest
     private static final StringValue EMPTY_STRING = StringValue.valueOf((String) null);
 
     @Mock
-    private INamedParameters parameters;
+    private PageParameters parameters;
     @Mock
     private IPageable pageable;
 
@@ -71,7 +71,7 @@ public class StatelessPagingNavigatorTest extends WicketTest
         start(parameters, pageable);
     }
 
-    private void start(INamedParameters parameters, IPageable pageable)
+    private void start(PageParameters parameters, IPageable pageable)
     {
         statelessPagingNavigator = tester().startComponentInPage(new StatelessPagingNavigator("id", parameters, pageable));
     }
