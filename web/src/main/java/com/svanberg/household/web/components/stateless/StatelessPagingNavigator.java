@@ -15,12 +15,7 @@ public class StatelessPagingNavigator extends PagingNavigator
 
     public StatelessPagingNavigator(String id, INamedParameters parameters, IPageable pageable)
     {
-        this(id, parameters, pageable, null);
-    }
-
-    public StatelessPagingNavigator(String id, INamedParameters parameters, IPageable pageable, IPagingLabelProvider labelProvider)
-    {
-        super(id, pageable, labelProvider);
+        super(id, pageable);
 
         pageable.setCurrentPage(parameters.get(PAGING_PAGE_PARAMETER).toLong(0));
     }
