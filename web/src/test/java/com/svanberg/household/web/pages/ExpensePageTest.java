@@ -70,7 +70,7 @@ public class ExpensePageTest extends SpringWicketTest
 
         startPage();
 
-        tester().assertInvisible(PAGINATION);
+        tester().assertInvisible(path(FORM, PAGINATION));
     }
 
     @Test
@@ -81,7 +81,7 @@ public class ExpensePageTest extends SpringWicketTest
 
         startPage();
 
-        tester().assertInvisible(PAGINATION);
+        tester().assertInvisible(path(FORM, PAGINATION));
     }
 
     @Test
@@ -92,7 +92,7 @@ public class ExpensePageTest extends SpringWicketTest
 
         startPage();
 
-        tester().assertVisible(PAGINATION);
+        tester().assertVisible(path(FORM, PAGINATION));
     }
 
     @Test

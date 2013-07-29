@@ -8,10 +8,7 @@ import com.svanberg.household.web.components.stateless.SelectColumn;
 import com.svanberg.household.web.components.stateless.SortableHeadersToolbar;
 import com.svanberg.household.web.components.stateless.StatelessPagingNavigator;
 
-import org.apache.wicket.extensions.markup.html.repeater.data.table.DataTable;
-import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
-import org.apache.wicket.extensions.markup.html.repeater.data.table.NoRecordsToolbar;
-import org.apache.wicket.extensions.markup.html.repeater.data.table.PropertyColumn;
+import org.apache.wicket.extensions.markup.html.repeater.data.table.*;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.StatelessForm;
@@ -54,8 +51,8 @@ public class ExpensePage extends HouseholdPage {
 
         form = new StatelessForm<>(FORM);
         form.add(table);
-
-        add(new StatelessPagingNavigator(PAGINATION, getPageParameters(), table)
+        form.add(new NavigatorLabel("results", table));
+        form.add(new StatelessPagingNavigator(PAGINATION, getPageParameters(), table)
         {
             @Override
             protected void onConfigure()
