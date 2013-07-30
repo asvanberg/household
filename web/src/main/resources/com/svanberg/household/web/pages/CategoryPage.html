@@ -5,13 +5,19 @@
 </head>
 <body>
 <wicket:extend>
-    <div wicket:id="add_panel">
+    <form wicket:id="form">
+        <div wicket:id="name">
+            <input type="text" wicket:id="input" />
+        </div>
+        <div wicket:id="description">
+            <textarea wicket:id="input"></textarea>
+        </div>
         <div class="control-group">
             <div class="controls">
                 <button class="btn" type="submit">Add</button>
             </div>
         </div>
-    </div>
+    </form>
 </wicket:extend>
 </body>
 </html>
