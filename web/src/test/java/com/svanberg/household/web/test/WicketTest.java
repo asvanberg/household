@@ -31,7 +31,7 @@ public abstract class WicketTest
         return tester;
     }
 
-    protected String path(Object... parts)
+    protected static String path(Object... parts)
     {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < parts.length; i++)
