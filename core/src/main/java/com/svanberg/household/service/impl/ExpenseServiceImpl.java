@@ -101,7 +101,7 @@ public class ExpenseServiceImpl implements ExpenseService {
             total += expense.getCost();
         }
 
-        double delta = ((last - first) / 1000.0 / 86400);
+        double delta = (last - first) / 1000.0 / 86400;
         if (delta == 0) {
             return total;
         }

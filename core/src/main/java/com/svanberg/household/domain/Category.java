@@ -1,6 +1,7 @@
 package com.svanberg.household.domain;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -10,6 +11,8 @@ import java.util.Collection;
  */
 @Entity
 @Data
+@EqualsAndHashCode(callSuper = false)
+@SuppressWarnings("PMD.UnusedPrivateField")
 public class Category extends DomainObject<Long>
 {
     @Id
