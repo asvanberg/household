@@ -4,7 +4,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
-import java.util.Collection;
 
 /**
  * @author Andreas Svanberg (andreass) <andreas.svanberg@mensa.se>
@@ -24,9 +23,6 @@ public class Category extends DomainObject<Long>
 
     @Basic
     private String description;
-
-    @OneToMany(mappedBy = "category")
-    private Collection<Expense> expenses;
 
     public Category() {
     }

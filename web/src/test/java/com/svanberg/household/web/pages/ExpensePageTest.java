@@ -1,5 +1,6 @@
 package com.svanberg.household.web.pages;
 
+import com.svanberg.household.domain.Category;
 import com.svanberg.household.domain.Expense;
 import com.svanberg.household.service.CategoryService;
 import com.svanberg.household.service.ExpenseService;
@@ -109,6 +110,21 @@ public class ExpensePageTest extends SpringWicketTest
         verify(expenseService, times(1)).delete(captor.capture());
 
         assertEquals(SOME_EXPENSE, captor.getValue());
+    }
+
+    @Test
+    public void renders_expense_with_category() throws Exception
+    {
+        Expense expense = new Expense();
+        Category category = new Category();
+
+        expense.setCategory(category);
+
+        when(expenseService.list(any(Pageable.class))).thenReturn(Arrays.asList(expense));
+
+        startPage();
+
+        tester().assertRenderedPage(ExpensePage.class);
     }
 
     private void markRow(FormTester formTester, int row, boolean selected)
