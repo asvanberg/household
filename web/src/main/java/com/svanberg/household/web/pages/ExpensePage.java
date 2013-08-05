@@ -98,7 +98,7 @@ public class ExpensePage extends HouseholdPage {
                 selectColumn,
                 new PropertyColumn<Expense, String>(new ResourceModel("date"), "date", "date"),
                 new PropertyColumn<Expense, String>(new ResourceModel("description"), "description", "description"),
-                new PropertyColumn<Expense, String>(new ResourceModel("category"), "category", "category"),
+                new PropertyColumn<Expense, String>(new ResourceModel("category"), "category.name", "category.name"),
                 new PropertyColumn<Expense, String>(new ResourceModel("cost"), "cost", "cost")
         );
         DomainProvider<Expense, Long> provider = new DomainProvider<>(expenseService);
