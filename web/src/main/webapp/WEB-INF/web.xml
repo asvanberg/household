@@ -17,10 +17,6 @@
             <param-value>deployment</param-value>
         </init-param>
     </filter>
-    <filter-mapping>
-        <filter-name>wicket</filter-name>
-        <url-pattern>/*</url-pattern>
-    </filter-mapping>
 
     <filter>
         <filter-name>charEncoding</filter-name>
@@ -30,8 +26,24 @@
             <param-value>utf-8</param-value>
         </init-param>
     </filter>
+
+    <filter>
+        <filter-name>osiv</filter-name>
+        <filter-class>org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter</filter-class>
+    </filter>
+
     <filter-mapping>
         <filter-name>charEncoding</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>osiv</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>wicket</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 
