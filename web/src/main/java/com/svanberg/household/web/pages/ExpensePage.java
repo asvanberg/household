@@ -8,6 +8,7 @@ import com.svanberg.household.web.components.stateless.SelectColumn;
 import com.svanberg.household.web.components.stateless.SortableHeadersToolbar;
 import com.svanberg.household.web.components.stateless.StatelessPagingNavigator;
 
+import org.apache.wicket.extensions.markup.html.repeater.data.sort.SortOrder;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.*;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
@@ -102,6 +103,8 @@ public class ExpensePage extends HouseholdPage {
         );
         DomainProvider<Expense, Long> provider = new DomainProvider<>(expenseService);
         DataTable<Expense, String> table = new DataTable<>(TABLE, columns, provider, ROWS_PER_PAGE);
+
+        provider.setSort("date", SortOrder.DESCENDING);
 
         table.addTopToolbar(new SortableHeadersToolbar<>(table, provider, parameters));
         table.addBottomToolbar(new NoRecordsToolbar(table));
